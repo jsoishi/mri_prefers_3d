@@ -125,18 +125,24 @@ def growth_rate(ky,kz,target,N=2):
     problem.namespace['kz'].value = kz
     
     # Solve for eigenvalues with sparse search near target, rebuilding NCCs
-    solver.solve_sparse(solver.pencils[0], N=N, target=target, rebuild_coeffs=True)
+    try:
+        solver.solve_sparse(solver.pencils[0], N=N, target=target, rebuild_coeffs=True)
+        gamma = solver.eigenvalues
+        index = np.argsort(-gamma.real)
+        gamma = gamma[index]
     
-    gamma = solver.eigenvalues
-    index = np.argsort(-gamma.real)
-    gamma = gamma[index]
+        gamma_r = gamma.real[0]
+        gamma_i = gamma.imag[0]
     
-    gamma_r = gamma.real[0]
-    gamma_i = gamma.imag[0]
-    
-    if np.abs(gamma_r) <= 1e-6: gamma_r=0.0
-    if np.abs(gamma_i) <= 1e-6: gamma_i=0.0
-    
+        if np.abs(gamma_r) <= 1e-6: gamma_r=0.0
+        if np.abs(gamma_i) <= 1e-6: gamma_i=0.0
+    except:
+        logger.info("Solver failed for (ky, kz) = (%f, %f)"%(ky, kz))
+
+        gamma_r = np.nan
+        gamma_i = np.nan
+        gamma = []
+        gamma.append(gamma_r + 1j*gamma_i)
     
     logger.info('(ky,kz,gamma,omega) = (%f,%f,%f,%f)' %(ky,kz,gamma_r,gamma_i))
     
