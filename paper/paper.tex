@@ -1,7 +1,7 @@
 %\documentclass[aps,prl,preprint,groupedaddress]{revtex4-1}
 %\documentclass[aps,prl,preprint,superscriptaddress]{revtex4-1}
 \documentclass[aps,prl,reprint,groupedaddress]{revtex4-1}
-
+\usepackage{graphicx}
 % You should use BibTeX and apsrev.bst for references
 % Choosing a journal automatically selects the correct APS
 % BibTeX style file (bst file), so only uncomment the line
@@ -68,7 +68,37 @@ The magnetorotational instability shows growth rates in three dimensions where t
 \section{Method}
 \label{sec:method}
 
+We solve the linearized magnetohydrodynamic equations in a rotating, shearing background. The Navier-Stokes equation is in a fairly standard form,
+\begin{equation}
+  \label{eq:ns}
+  \frac{D \mathbf{v}}{Dt} - f \hat{z} \times \mathbf{v} + S v_x \hat{z} + \mathbf{\nabla}{p} + \nu \mathbf{\nabla} \times \mathbf{\omega} = 0,
+\end{equation}
+where $\omega = \mathbf{\nabla} \times \mathbf{v}$ is the vorticity and $S$ is the background shear rate. We write the induction equation in terms of the $x$ component of the magnetic field,
+\begin{equation}
+  \label{eq:Bx}
+  \frac{D B_x}{Dt} - B_0 \partial_z v_x + \eta (\partial_y J_z - \partial_z J_y) = 0
+\end{equation}
+and the $x$ component of the current density,
+\begin{equation}
+  \label{eq:Jx}
+  \frac{D J_x}{Dt} - B_0 \partial_z \omega_x + S \partial_z B_x - \eta \nabla^2 J_x = 0
+\end{equation}
+We explicitly enforce the divergence constraint on the incompressible velocity field $v$ and the magnetic field,
+\begin{equation}
+  \label{eq:divu}
+  \mathbf{\nabla} \cdot \mathbf{v} = \mathbf{\nabla} \cdot \mathbf{B} = 0.
+\end{equation}
+We consider the behavior of the MRI in a vertically ($z$) and horizontally ($y$) periodic channel of width $L_x = \pi$. The walls at $x = \pm L_x/2$ are perfectly conducting and stress-free.
 
+Using the \emph{Dedalus} pseudospectral framework, we solve equations~(\ref{eq:ns})(\ref{eq:Bx})(\ref{eq:divu})
+\section{Results}
+\label{sec:results}
+
+\begin{figure}[h]
+  \includegraphics[width=0.95\columnwidth]{growth_rates.png}
+  \caption{Growth rate as a function of $k_z$ and $k_y$. The maximum growth rate is far from $k_y = 0$, indicating the MRI is most unstable in a fully three-dimensional configuration.}
+  \label{fig:growth_rate}
+\end{figure}
 % If in two-column mode, this environment will change to single-column
 % format so that long equations can be displayed. Use
 % sparingly.
