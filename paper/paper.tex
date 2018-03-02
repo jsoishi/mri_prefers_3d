@@ -88,9 +88,10 @@ We explicitly enforce the divergence constraint on the incompressible velocity f
   \label{eq:divu}
   \mathbf{\nabla} \cdot \mathbf{v} = \mathbf{\nabla} \cdot \mathbf{B} = 0.
 \end{equation}
-We consider the behavior of the MRI in a vertically ($z$) and horizontally ($y$) periodic channel of width $L_x = \pi$. The walls at $x = \pm L_x/2$ are perfectly conducting and stress-free.
+We consider the behavior of the MRI in a vertically ($z$) and horizontally ($y$) periodic channel of width $L_x = \pi$. The walls at $x = \pm L_x/2$ are perfectly conducting and stress-free. The MRI is a weak-field instability; in the invisicd case 
 
-Using the \emph{Dedalus} pseudospectral framework, we solve equations~(\ref{eq:ns})(\ref{eq:Bx})(\ref{eq:divu})
+We solve equations~(\ref{eq:ns})--~(\ref{eq:divu}) by assuming harmonic perturbations in $y$ and $z$, $f = \hat{f}(x) e^{i(k_y y + k_z) + \gamma t}$. This reduces to an eigenvalue problem in $x$, which we solve using the \emph{Dedalus} pseudospectral framework. 
+
 \section{Results}
 \label{sec:results}
 
