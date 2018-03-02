@@ -118,12 +118,11 @@ def ideal_2D(kz):
     return np.sqrt( ( - b + np.sqrt(b*b - 4*a*c + 0j) ) / (2*a) )
 
 # Create function to compute max growth rate for given ky, kz
-def growth_rate(ky,kz,target,N=2):
+def growth_rate(ky,kz,target,N=15):
     
     # Change ky, kz parameters
     problem.namespace['ky'].value = ky
     problem.namespace['kz'].value = kz
-    
     # Solve for eigenvalues with sparse search near target, rebuilding NCCs
     try:
         solver.solve_sparse(solver.pencils[0], N=N, target=target, rebuild_coeffs=True)
