@@ -25,6 +25,8 @@ logger = logging.getLogger(__name__)
 # Global parameters
 Nx, Lx, B = 128, np.pi, 1
 
+Nmodes = 6 # number of eigenmodes to ask for
+
 R      =  1.01 # 1   = critical
 q      =  3/4. # 3/4 = Keplerian
 
@@ -160,7 +162,7 @@ t1 = time.time()
 gamma_local[0] = ideal_2D(kz_local)
 for i in range(1,Nky):
     for (k,kz) in enumerate(kz_local):
-        gamma_local[i,k] = growth_rate(ky_global[i],kz,gamma_local[i-1,k])
+        gamma_local[i,k] = growth_rate(ky_global[i],kz,gamma_local[i-1,k], N=Nmodes)
 t2 = time.time()
 logger.info('Elapsed solve time: %f' %(t2-t1))
 
@@ -181,5 +183,5 @@ if CW.rank == 0:
     plt.xlabel(r'$k_z$')
     plt.ylabel(r'$k_y$')
     plt.title(r'3D Keplerian MRI growth rates/f  $\left( S/S_{\mathrm{crit.}} = %.2f\right)$' %(R))
-    plt.savefig('growth_rates.png')
+    plt.savefig('growth_rates_Nmodes%d.png'%Nmodes, dpi=300)
 
