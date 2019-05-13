@@ -13,6 +13,7 @@ To run using 4 processes, for instance, you could use:
 """
 
 import time
+import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 import dedalus.public as de
@@ -21,13 +22,18 @@ CW = MPI.COMM_WORLD
 import logging
 logger = logging.getLogger(__name__)
 
+# Parses C/C_crit argument passed to script
+parser = argparse.ArgumentParser(description='Passes values for variables to mri.py')
+parser.add_argument('critical', metavar='Rc', type=float, help='A value for the critical XYZ')
+args = parser.parse_args()
+critical = vars(args)['critical']
 
 # Global parameters
 Nx, Lx, B = 128, np.pi, 1
 
 Nmodes = 6 # number of eigenmodes to ask for
 
-R      =  1.01 # 1   = critical
+R      =  critical # 1   = critical
 q      =  3/4. # 3/4 = Keplerian
 
 kx     =  np.pi/Lx
@@ -35,8 +41,8 @@ S      = -R*B*kx*np.sqrt(q)
 f      =  R*B*kx/np.sqrt(q)
 cutoff =  kx*np.sqrt(R**2 - 1)
 
-kymin, kymax, Nky = 0.00, 0.8, 101 # 2*pi*(Lx/Ly)
-kzmin, kzmax, Nkz = 0.01, 1.0, 100 # 2*pi*(Lx/Ly)
+kymin, kymax, Nky = 0.00, 0.8, 10 # 2*pi*(Lx/Ly)
+kzmin, kzmax, Nkz = 0.01, 1, 10 # 2*pi*(Lx/Ly)
 
 ν, η = 1e-5, 1e-5
 
@@ -174,14 +180,8 @@ else:
     CW.Reduce(gamma_global, gamma_global, op=MPI.SUM, root=0)
 
 # Plot growth rates from root process
+# still need to fix some issues with %s by switching to %e
 if CW.rank == 0:
-    gamma_r = gamma_global.real
-    gamma_r[np.where(gamma_r<0)] = 0.0
-    PCM = plt.pcolormesh(kz_global,ky_global,gamma_r)
-    plt.contour(kz_global,ky_global,gamma_r,10,colors='k')
-    plt.colorbar(PCM)
-    plt.xlabel(r'$k_z$')
-    plt.ylabel(r'$k_y$')
-    plt.title(r'3D Keplerian MRI growth rates/f  $\left( S/S_{\mathrm{crit.}} = %.2f\right)$' %(R))
-    plt.savefig('growth_rates_Nmodes%d.png'%Nmodes, dpi=300)
-
+    datafile = h5py.File('Gamma_Global_C_ratio_%s.h5'%R, 'w')
+    dset = datafile.create_dataset('gamma',data=gamma_global)
+    datafile.close()
