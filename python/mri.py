@@ -12,12 +12,11 @@ Pass it a .cfg file to specify parameters for the particular solve.
 To run using 4 processes, you would use:
     $ mpiexec -n 4 python3 mri.py mri_params.cfg
 
-This script will pull global parameters from an mri_options.config file.
-
 """
 
 import time
 from configparser import ConfigParser
+import argparse
 import numpy as np
 import os
 import h5py
