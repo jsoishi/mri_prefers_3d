@@ -148,18 +148,29 @@ def ideal_2D(kz):
 
 # Create function to compute max growth rate for given ky, kz
 def growth_rate(ky,kz,target,N=15):
-    eigvec = np.zeros((10,128),dtype=np.complex128)
+    eigvec = np.zeros((10,Nx),dtype=np.complex128)
     # Change ky, kz parameters
     problem.namespace['ky'].value = ky
     problem.namespace['kz'].value = kz
     # Solve for eigenvalues with sparse search near target, rebuilding NCCs
+    solver_failed = False
     try:
         solver.solve_sparse(solver.pencils[0], N=N, target=target, rebuild_coeffs=True)
+    except:
+        logger.info("Solver failed for (ky, kz) = (%f, %f)"%(ky, kz))
+        solver_failed = True
+
+    if solver_failed:
+        gamma_r = np.nan
+        gamma_i = np.nan
+        gamma = []
+        gamma.append(gamma_r + 1j*gamma_i)
+    else:
         gamma = solver.eigenvalues
         index = np.argsort(-gamma.real)
         gamma = gamma[index]
     
-        eigvec = np.zeros((10,128),dtype=np.complex128)
+        eigvec = np.zeros((10,Nx),dtype=np.complex128)
 
         for k in range(10):
             solver.set_state(index[0])
@@ -171,14 +182,7 @@ def growth_rate(ky,kz,target,N=15):
     
         if np.abs(gamma_r) <= 1e-6: gamma_r=0.0
         if np.abs(gamma_i) <= 1e-6: gamma_i=0.0
-    except:
-        logger.info("Solver failed for (ky, kz) = (%f, %f)"%(ky, kz))
-
-        gamma_r = np.nan
-        gamma_i = np.nan
-        gamma = []
-        gamma.append(gamma_r + 1j*gamma_i)
-    
+        
     logger.info('(ky,kz,gamma,omega) = (%f,%f,%f,%f)' %(ky,kz,gamma_r,gamma_i))
     
     # Return complex growth rate
@@ -187,7 +191,7 @@ def growth_rate(ky,kz,target,N=15):
 ky_global    = np.linspace(kymin,kymax,Nky)
 kz_global    = np.linspace(kzmin,kzmax,Nkz)
 gamma_global = np.zeros((Nky,Nkz),dtype=np.complex128)
-eigvec_global = np.zeros((Nky,Nkz,10,128),dtype=np.complex128)
+eigvec_global = np.zeros((Nky,Nkz,10,Nx),dtype=np.complex128)
 
 # Compute growth rate over local wavenumbers
 kz_local    =    kz_global[CW.rank::CW.size]
