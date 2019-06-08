@@ -17,6 +17,7 @@ To run using 4 processes, you would use:
 import time
 from configparser import ConfigParser
 import argparse
+from pathlib import Path
 import numpy as np
 import os
 import h5py
@@ -31,11 +32,12 @@ logger = logging.getLogger(__name__)
 parser = argparse.ArgumentParser(description='Passes filename')
 parser.add_argument('filename', metavar='Rc', type=str, help='.h5 file to plot eigenvectors for maximum eigenvalue')
 args = parser.parse_args()
-filename = vars(args)['filename']
+filename = Path(vars(args)['filename'])
+outbase = Path("data")
 
 # Parse .cfg file to set global parameters for script
 config = ConfigParser()
-config.read(filename)
+config.read(str(filename))
 
 logger.info('Running mri.py with the following parameters:')
 logger.info(config.items('parameters'))
@@ -199,7 +201,11 @@ gamma_local = gamma_global[:,CW.rank::CW.size]
 eigvec_local = eigvec_global[:,CW.rank::CW.size]
 
 t1 = time.time()
-gamma_local[0] = ideal_2D(kz_local)
+for k, kz in enumerate(kz_local):
+    soln = growth_rate(0., kz, ideal_2D(kz), N=Nmodes)
+    gamma_local[0,k] = soln[0]
+    eigvec_local[0,k] = soln[1]
+
 for i in range(1,Nky):
     for (k,kz) in enumerate(kz_local):
         soln = growth_rate(ky_global[i],kz,gamma_local[i-1,k], N=Nmodes)
@@ -221,10 +227,13 @@ else:
 # Save either or both eigenvalues and eigenvectors to a single .h5 file
 # Output file will be the .cfg file name with _output.h5
 if CW.rank == 0:
-    output_file_name = filename[0:-4] + '_output.h5'
-    output_file = h5py.File(output_file_name, 'w')
+    output_file_name = Path(filename.stem + '_output.h5')
+    output_file = h5py.File(outbase/output_file_name, 'w')
     if config.getboolean('output','gamma') == True:
         dset = output_file.create_dataset('gamma',data=gamma_global)
     if config.getboolean('output','eigvec') == True:
         dset = output_file.create_dataset('eigvec',data=eigvec_global)
+        dset = output_file.create_dataset('kz', data=kz_global)
+        dset = output_file.create_dataset('ky', data=ky_global)
+        dset = output_file.create_dataset('x', data=x_basis.grid())
     output_file.close()

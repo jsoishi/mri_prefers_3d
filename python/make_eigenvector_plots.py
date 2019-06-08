@@ -12,6 +12,7 @@ with the largest growth rate.
 """
 import h5py
 import argparse
+from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -19,16 +20,15 @@ import matplotlib.pyplot as plt
 parser = argparse.ArgumentParser(description='Passes filename')
 parser.add_argument('filename', metavar='Rc', type=str, help='.h5 file to plot eigenvectors for maximum eigenvalue')
 args = parser.parse_args()
-filename = vars(args)['filename']
+filename = Path(vars(args)['filename'])
+outbase = Path("plots")
 
-x = np.linspace(1,128,128)
-
-spn = 1
 eigenvector_vars = ['p','vx','vy','vz','ωy','ωz','bx','by','bz','jxx']
 
 # Import .h5 file passed to script 
 datafile = h5py.File(filename,'r')
 eigvec = datafile['eigvec'][:,:,:,:]
+x = datafile['x'][:]
 gamma_global = datafile['gamma'][:,:]
 eigvec_real = eigvec.real
 eigvec_imag = eigvec.imag
@@ -39,20 +39,21 @@ gamma_r[np.where(gamma_r<0)] = 0.0
 max_point = np.amax(gamma_r)
 z_max = np.where(gamma_r == max_point)[1][0]
 y_max = np.where(gamma_r == max_point)[0][0]
-zv = kz_global[z_max] #max x value
-yv = ky_global[y_max] #max y value
-maxvalues[0,i] = zv
-maxvalues[1,i] = yv
+# zv = kz_global[z_max] #max x value
+# yv = ky_global[y_max] #max y value
+# maxvalues[0,i] = zv
+# maxvalues[1,i] = yv
+# print(z_max)
+# print(y_max)
 
 plt.figure(figsize=(10,16))
 
 # Create subplots
 for i in range(10):
-	plt.subplot(5,2,spn)
+	plt.subplot(5,2,i+1)
 	plt.title('$' + eigenvector_vars[i] + '$')
 	plt.plot(x,eigvec_real[y_max,z_max,i,:]) # Real values
 	plt.plot(x,eigvec_imag[y_max,z_max,i,:],linestyle='dashed') # Imaginary values
-	spn += 1
 plt.tight_layout()
-plot_file_name = filename + '_eigenvectors.png'
-plt.savefig(plot_file_name, dpi=300)
+plot_file_name = Path(filename.stem + '_eigenvectors.png')
+plt.savefig(outbase/plot_file_name, dpi=300)
