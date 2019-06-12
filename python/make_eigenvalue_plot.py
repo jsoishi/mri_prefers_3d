@@ -24,12 +24,16 @@ datafile = h5py.File(filename,'r')
 gamma_global = datafile['gamma'][:]
 gamma_r = gamma_global.real
 #gamma_r[np.where(gamma_r<0)] = 0.0
+max_gamma = datafile['gamma'].attrs['max growth rate']
+max_ky = datafile['gamma'].attrs['max ky']
+max_kz = datafile['gamma'].attrs['max kz']
 
 ky_global    = datafile['ky']
 kz_global    = datafile['kz']
 
 PCM = plt.pcolormesh(kz_global,ky_global,gamma_r)
 plt.contour(kz_global,ky_global,gamma_r,10,colors='k')
+plt.plot(max_kz, max_ky, 'ro')
 plt.colorbar(PCM)
 plt.xlabel(r'$k_z$')
 plt.ylabel(r'$k_y$')

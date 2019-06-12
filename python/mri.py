@@ -19,6 +19,7 @@ from configparser import ConfigParser
 import argparse
 from pathlib import Path
 import numpy as np
+import scipy.optimize as opt
 import os
 import h5py
 import matplotlib.pyplot as plt
@@ -185,7 +186,7 @@ def growth_rate(ky,kz,target,N=15):
         if np.abs(gamma_r) <= 1e-6: gamma_r=0.0
         if np.abs(gamma_i) <= 1e-6: gamma_i=0.0
         
-    logger.info('(ky,kz,gamma,omega) = (%f,%f,%f,%f)' %(ky,kz,gamma_r,gamma_i))
+    logger.info('(ky,kz,gamma,omega) = (%20.15f,%20.15f,%20.15f,%20.15f)' %(ky,kz,gamma_r,gamma_i))
     
     # Return complex growth rate
     return gamma[0], eigvec
@@ -211,9 +212,6 @@ for i in range(1,Nky):
         soln = growth_rate(ky_global[i],kz,gamma_local[i-1,k], N=Nmodes)
         gamma_local[i,k] = soln[0]
         eigvec_local[i,k,:,:] = soln[1]
-t2 = time.time()
-logger.info('Elapsed solve time: %f' %(t2-t1))
-
 # Reduce growth rates to root process
 gamma_global[:,CW.rank::CW.size] = gamma_local
 eigvec_global[:,CW.rank::CW.size] = eigvec_local
@@ -223,6 +221,8 @@ if CW.rank == 0:
 else:
     CW.Reduce(gamma_global, gamma_global, op=MPI.SUM, root=0)
     CW.Reduce(eigvec_global, eigvec_global, op=MPI.SUM, root=0)
+t2 = time.time()
+logger.info('Elapsed total solve time for all processes: %f' %(t2-t1))
 
 # Save either or both eigenvalues and eigenvectors to a single .h5 file
 # Output file will be the .cfg file name with _output.h5
@@ -230,10 +230,33 @@ if CW.rank == 0:
     output_file_name = Path(filename.stem + '_output.h5')
     output_file = h5py.File(outbase/output_file_name, 'w')
     if config.getboolean('output','gamma'):
-        dset = output_file.create_dataset('gamma',data=gamma_global)
-        dset = output_file.create_dataset('kz', data=kz_global)
-        dset = output_file.create_dataset('ky', data=ky_global)
+        dset_gamma = output_file.create_dataset('gamma',data=gamma_global)
+        dset_kz = output_file.create_dataset('kz', data=kz_global)
+        dset_ky = output_file.create_dataset('ky', data=ky_global)
     if config.getboolean('output','eigvec'):
-        dset = output_file.create_dataset('eigvec',data=eigvec_global)
-        dset = output_file.create_dataset('x', data=x_basis.grid())
+        dset_evec = output_file.create_dataset('eigvec',data=eigvec_global)
+        dset_x = output_file.create_dataset('x', data=x_basis.grid())
+
+find_max = True
+if find_max:
+    if CW.rank == 0:
+        max_growth_guess = gamma_global.max()
+        max_where = np.unravel_index(gamma_global.argmax(), gamma_global.shape)
+        max_guess = [ky_global[max_where[0]], kz_global[max_where[1]]]
+        func = lambda x: -growth_rate(x[0],x[1],max_growth_guess, N=Nmodes)[0].real
+        t1 = time.time()
+        #max_growth_opt = opt.minimize(func, max_guess, method="Nelder-Mead")
+        max_growth_opt = opt.minimize(func, max_guess, method="Powell")
+        t2 = time.time()
+        
+        max_location = max_growth_opt.x
+        max_growth = -max_growth_opt.fun
+        dset_gamma.attrs.create("max growth rate", max_growth)
+        dset_gamma.attrs.create("max ky", max_location[0])
+        dset_gamma.attrs.create("max kz", max_location[1])
+        logger.info("Time to find maximum growth rate: {:f}".format(t2-t1))
+        logger.info("Maximum growth rate {:20.15f} at (ky, kz) = ({:20.15f}, {:20.15f})".format(max_growth, max_location[0], max_location[1]))
+        logger.info("Solver at max: {:22.20e}".format(growth_rate(max_location[0], max_location[1],max_growth_guess, N=Nmodes)[0].real))
+
+if CW.rank == 0:
     output_file.close()
