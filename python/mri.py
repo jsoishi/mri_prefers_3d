@@ -229,11 +229,11 @@ else:
 if CW.rank == 0:
     output_file_name = Path(filename.stem + '_output.h5')
     output_file = h5py.File(outbase/output_file_name, 'w')
-    if config.getboolean('output','gamma') == True:
+    if config.getboolean('output','gamma'):
         dset = output_file.create_dataset('gamma',data=gamma_global)
-    if config.getboolean('output','eigvec') == True:
-        dset = output_file.create_dataset('eigvec',data=eigvec_global)
         dset = output_file.create_dataset('kz', data=kz_global)
         dset = output_file.create_dataset('ky', data=ky_global)
+    if config.getboolean('output','eigvec'):
+        dset = output_file.create_dataset('eigvec',data=eigvec_global)
         dset = output_file.create_dataset('x', data=x_basis.grid())
     output_file.close()
