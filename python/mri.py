@@ -43,6 +43,16 @@ config.read(str(filename))
 logger.info('Running mri.py with the following parameters:')
 logger.info(config.items('parameters'))
 
+try:
+    dense = config.getboolean('solver','dense')
+except:
+    dense = False
+if dense:
+    logger.info("Using dense solver.")
+    dense_threshold = config.getfloat('solver','dense_threshold')
+else:
+    logger.info("Using sparse solver.")
+
 Nx = config.getint('parameters','Nx')
 Lx = eval(config.get('parameters','Lx'))
 B = config.getfloat('parameters','B')
@@ -150,7 +160,7 @@ def ideal_2D(kz):
     return np.sqrt( ( - b + np.sqrt(b*b - 4*a*c + 0j) ) / (2*a) )
 
 # Create function to compute max growth rate for given ky, kz
-def growth_rate(ky,kz,target,N=15):
+def growth_rate(ky,kz,target,N=15, dense=False):
     eigvec = np.zeros((10,Nx),dtype=np.complex128)
     # Change ky, kz parameters
     problem.namespace['ky'].value = ky
@@ -158,7 +168,10 @@ def growth_rate(ky,kz,target,N=15):
     # Solve for eigenvalues with sparse search near target, rebuilding NCCs
     solver_failed = False
     try:
-        solver.solve_sparse(solver.pencils[0], N=N, target=target, rebuild_coeffs=True)
+        if dense:
+            solver.solve_dense(solver.pencils[0], rebuild_coeffs=True)
+        else:
+            solver.solve_sparse(solver.pencils[0], N=N, target=target, rebuild_coeffs=True)
     except:
         logger.info("Solver failed for (ky, kz) = (%f, %f)"%(ky, kz))
         solver_failed = True
@@ -170,6 +183,8 @@ def growth_rate(ky,kz,target,N=15):
         gamma.append(gamma_r + 1j*gamma_i)
     else:
         gamma = solver.eigenvalues
+        if dense:
+            gamma = gamma[np.abs(gamma) < dense_threshold]
         index = np.argsort(-gamma.real)
         gamma = gamma[index]
     
@@ -203,13 +218,13 @@ eigvec_local = eigvec_global[:,CW.rank::CW.size]
 
 t1 = time.time()
 for k, kz in enumerate(kz_local):
-    soln = growth_rate(0., kz, ideal_2D(kz), N=Nmodes)
+    soln = growth_rate(0., kz, ideal_2D(kz), N=Nmodes, dense=dense)
     gamma_local[0,k] = soln[0]
     eigvec_local[0,k] = soln[1]
 
 for i in range(1,Nky):
     for (k,kz) in enumerate(kz_local):
-        soln = growth_rate(ky_global[i],kz,gamma_local[i-1,k], N=Nmodes)
+        soln = growth_rate(ky_global[i],kz,gamma_local[i-1,k], N=Nmodes, dense=dense)
         gamma_local[i,k] = soln[0]
         eigvec_local[i,k,:,:] = soln[1]
 # Reduce growth rates to root process
@@ -256,7 +271,11 @@ if find_max:
         dset_gamma.attrs.create("max kz", max_location[1])
         logger.info("Time to find maximum growth rate: {:f}".format(t2-t1))
         logger.info("Maximum growth rate {:20.15f} at (ky, kz) = ({:20.15f}, {:20.15f})".format(max_growth, max_location[0], max_location[1]))
-        logger.info("Solver at max: {:22.20e}".format(growth_rate(max_location[0], max_location[1],max_growth_guess, N=Nmodes)[0].real))
+        gamma_max = growth_rate(max_location[0], max_location[1],max_growth_guess, N=Nmodes)[0].real
+        logger.info("Solver at max: {:22.20e}".format(gamma_max))
+        logger.info("(gamma_max - gamma_guess)/gamma_guess = {:22.20e}".format((max_growth-max_growth_guess)/max_growth_guess))
+        kdist = np.sqrt((max_guess[0] - max_location[0])**2 + (max_guess[1] - max_location[1])**2)
+        logger.info("kdist from guess: {:22.20e}".format(kdist))
 
 if CW.rank == 0:
     output_file.close()
