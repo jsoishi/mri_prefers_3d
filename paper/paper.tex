@@ -1,6 +1,7 @@
 %\documentclass[aps,prl,preprint,groupedaddress]{revtex4-1}
 %\documentclass[aps,prl,preprint,superscriptaddress]{revtex4-1}
 \documentclass[aps,prl,reprint,groupedaddress]{revtex4-1}
+\newcommand{\SSC}{S/S_{c}}
 \usepackage{graphicx}
 % You should use BibTeX and apsrev.bst for references
 % Choosing a journal automatically selects the correct APS
@@ -32,6 +33,8 @@
 % \affiliation can be followed by \email, \homepage, \thanks as well.
 \author{Dedalus}
 \author{Andrew Swan}
+\author{Morgan Baxter}
+
 % \email[]{Your e-mail address}
 %\homepage[]{Your web page}
 %\thanks{}
@@ -48,7 +51,7 @@
 \date{\today}
 
 \begin{abstract}
-The magnetorotational instability shows growth rates in three dimensions where the two dimensional problem shows nothing. NOTHING!
+Write abstract last.
 \end{abstract}
 
 % insert suggested PACS numbers in braces on next line
@@ -68,12 +71,12 @@ The magnetorotational instability shows growth rates in three dimensions where t
 \section{Method}
 \label{sec:method}
 
-We solve the linearized magnetohydrodynamic equations in a rotating, shearing background. The Navier-Stokes equation is in a fairly standard form,
+We solve the linearized magnetohydrodynamic equations in a frame rotating with angular frequency $\Omega$. The Navier-Stokes equations is in a fairly standard form,
 \begin{equation}
   \label{eq:ns}
   \frac{D \mathbf{v}}{Dt} - f \hat{z} \times \mathbf{v} + S v_x \hat{z} + \mathbf{\nabla}{p} + \nu \mathbf{\nabla} \times \mathbf{\omega} = 0,
 \end{equation}
-where $\omega = \mathbf{\nabla} \times \mathbf{v}$ is the vorticity and $S$ is the background shear rate. We write the induction equation in terms of the $x$ component of the magnetic field,
+where $\omega = \mathbf{\nabla} \times \mathbf{v}$ is the vorticity, $f = 2 \Omega$ is the Coriolis parameter, and $S$ is the background shear rate. $Df/Dt = \partial f/\partial t + S x \partial f/\partial y$ is the advective derivative including the background linear shear velocity.  We write the induction equation in terms of the $x$ component of the magnetic field,
 \begin{equation}
   \label{eq:Bx}
   \frac{D B_x}{Dt} - B_0 \partial_z v_x + \eta (\partial_y J_z - \partial_z J_y) = 0
@@ -88,19 +91,40 @@ We explicitly enforce the divergence constraint on the incompressible velocity f
   \label{eq:divu}
   \mathbf{\nabla} \cdot \mathbf{v} = \mathbf{\nabla} \cdot \mathbf{B} = 0.
 \end{equation}
-We consider the behavior of the MRI in a vertically ($z$) and horizontally ($y$) periodic channel of width $L_x = \pi$. The walls at $x = \pm L_x/2$ are perfectly conducting and stress-free. The MRI is a weak-field instability; in the invisicd case 
+The magnetic field is expressed in Alfven units, $\mathbf{B} = \mathbf{B_*}/\sqrt{\mu_0 \rho}$.
+We consider the behavior of the MRI in a vertically ($z$) and horizontally ($y$) periodic channel of width $L_x = \pi$. The walls at $x = \pm L_x/2$ are perfectly conducting and stress-free. The MRI is a weak-field instability; in the invisicd, ideal case the critical shear rate for instability in two dimensions is given by
+\begin{equation}
+  \label{eq:Sc}
+  S_c = \frac{-\pi^2 B^2}{f d^2}.
+\end{equation}
+Here, we use $\SSC$ as our control parameter. 
 
-We solve equations~(\ref{eq:ns})--~(\ref{eq:divu}) by assuming harmonic perturbations in $y$ and $z$, $f = \hat{f}(x) e^{i(k_y y + k_z) + \gamma t}$. This reduces to an eigenvalue problem in $x$, which we solve using the \emph{Dedalus} pseudospectral framework. 
+We solve equations~(\ref{eq:ns})--~(\ref{eq:divu}) by assuming harmonic perturbations in $y$ and $z$, $f = \hat{f}(x) e^{i(k_y y + k_z) + \gamma t}$. This reduces to an eigenvalue problem in $x$, which we solve using the \emph{Dedalus} pseudospectral framework. The advantage of this particular form is that it can be expressed as a set of ten first-order equations with Dirichlet boundary conditions on all ten variables.
 
 \section{Results}
 \label{sec:results}
+Our most surprising result is that at very small values of supercriticality, the fastest growing mode is not axisymmetric. Figure~\ref{fig:growth_rate} shows the growth rates for three values of $\SSC$. At $\SSC = 1.01$, the maximum growth rate is $(k_y, k_z) \simeq (0.263, 0.447)$. 
 
 \begin{figure}[h]
-  \includegraphics[width=0.95\columnwidth]{growth_rates.png}
+  \includegraphics[width=0.33\textwidth]{run_11_output_growthrates.png}
+  \includegraphics[width=0.33\textwidth]{run_12_output_growthrates.png}
+  \includegraphics[width=0.33\textwidth]{run_13_output_growthrates.png}
   \caption{Growth rate as a function of $k_z$ and $k_y$. The maximum growth rate is far from $k_y = 0$, indicating the MRI is most unstable in a fully three-dimensional configuration.}
   \label{fig:growth_rate}
 \end{figure}
-% If in two-column mode, this environment will change to single-column
+
+Numerical simulations have consistently axisymmetric modes dominating early evolution of the MRI (cite Stone 95, etc) before parasitic modes cause a breakdown into MHD turbulence. However, our results recover this limit, as $\SSC$ becomes large. In this case
+
+\begin{figure}[h]
+  \includegraphics[width=\columnwidth]{alpha_vs_ssc.png}
+  \caption{Angle $\alpha$ vs $\SSC$.}
+  \label{fig:alpha}
+\end{figure}
+\section{Non-Normality}
+\label{sec:non-normality}
+
+The linear operator for the MRI, like other shearing systems, is non-normal. 
+%If in two-column mode, this environment will change to single-column
 % format so that long equations can be displayed. Use
 % sparingly.
 %\begin{widetext}
