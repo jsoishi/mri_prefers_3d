@@ -12,6 +12,8 @@ from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 
+plt.style.use('prl')
+
 # Parses filename passed to script
 parser = argparse.ArgumentParser(description='Passes filename')
 parser.add_argument('filename', metavar='Rc', type=str, help='.h5 file to plot eigenvectors for maximum eigenvalue')
@@ -31,12 +33,13 @@ max_kz = datafile['gamma'].attrs['max kz']
 ky_global    = datafile['ky']
 kz_global    = datafile['kz']
 
-PCM = plt.pcolormesh(kz_global,ky_global,gamma_r)
+PCM = plt.pcolormesh(kz_global,ky_global,gamma_r, vmin=-0.01,vmax=0.071)
 plt.contour(kz_global,ky_global,gamma_r,10,colors='k')
 plt.plot(max_kz, max_ky, 'ro')
 plt.colorbar(PCM)
 plt.xlabel(r'$k_z$')
 plt.ylabel(r'$k_y$')
+plt.tight_layout()
 #plt.title(r'3D Keplerian MRI growth rates/f  $\left( S/S_{\mathrm{crit.}} = %.2f\right)$' %(R[i]))
 plot_file_name = Path(filename.stem + '_growthrates.png')
 plt.savefig(outbase/plot_file_name, dpi=300)
