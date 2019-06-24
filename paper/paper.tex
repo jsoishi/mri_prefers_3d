@@ -68,6 +68,12 @@ Write abstract last.
 \section{Introduction}
 \label{sec:intro}
 
+\begin{itemize}
+\item 3D $\to$ dynamo
+\item stars, NSSL
+\item experiments
+\end{itemize}
+
 \section{Method}
 \label{sec:method}
 
@@ -99,30 +105,40 @@ We consider the behavior of the MRI in a vertically ($z$) and horizontally ($y$)
 \end{equation}
 Here, we use $\SSC$ as our control parameter. 
 
-We solve equations~(\ref{eq:ns})--~(\ref{eq:divu}) by assuming harmonic perturbations in $y$ and $z$, $f = \hat{f}(x) e^{i(k_y y + k_z) + \gamma t}$. This reduces to an eigenvalue problem in $x$, which we solve using the \emph{Dedalus} pseudospectral framework. The advantage of this particular form is that it can be expressed as a set of ten first-order equations with Dirichlet boundary conditions on all ten variables.
+We solve equations~(\ref{eq:ns})--~(\ref{eq:divu}) by assuming harmonic perturbations in $y$ and $z$, $f = \hat{f}(x) e^{i(k_y y + k_z z) + \gamma t}$. This reduces to an eigenvalue problem in $x$, which we solve using the \emph{Dedalus} pseudospectral framework. The advantage of this particular form is that it can be expressed as a set of ten first-order equations with Dirichlet boundary conditions for either no-slip or stress-free boundary conditions. 
+
+Our interest is in nearly ideal ($\eta = 0$), inviscid ($\nu = 0$) conditions; we thus set $\eta=\nu=10^{-5}$, though we have confirmed our main results are insensitive to this particular value. 
 
 \section{Results}
 \label{sec:results}
 Our most surprising result is that at very small values of supercriticality, the fastest growing mode is not axisymmetric. Figure~\ref{fig:growth_rate} shows the growth rates for three values of $\SSC$. At $\SSC = 1.01$, the maximum growth rate is $(k_y, k_z) \simeq (0.263, 0.447)$. 
 
 \begin{figure}[h]
-  \includegraphics[width=0.33\textwidth]{run_11_output_growthrates.png}
-  \includegraphics[width=0.33\textwidth]{run_12_output_growthrates.png}
-  \includegraphics[width=0.33\textwidth]{run_13_output_growthrates.png}
+  \includegraphics[width=\columnwidth]{run_11_output_growthrates.png}
+  \includegraphics[width=\columnwidth]{run_12_output_growthrates.png}
+  \includegraphics[width=\columnwidth]{run_13_output_growthrates.png}
   \caption{Growth rate as a function of $k_z$ and $k_y$. The maximum growth rate is far from $k_y = 0$, indicating the MRI is most unstable in a fully three-dimensional configuration.}
   \label{fig:growth_rate}
 \end{figure}
 
-Numerical simulations have consistently axisymmetric modes dominating early evolution of the MRI (cite Stone 95, etc) before parasitic modes cause a breakdown into MHD turbulence. However, our results recover this limit, as $\SSC$ becomes large. In this case
+Numerical simulations have consistently axisymmetric modes dominating early evolution of the MRI (cite Stone 95, etc) before parasitic modes cause a breakdown into MHD turbulence. However, our results recover this limit, as $\SSC$ becomes large. Figure~\ref{fig:alpha} plots $\alpha = \arctan k_y/k_z$ as  function of $\SSC$. Above $\SSC \gtrsim 2$, $\alpha$ is zero, indicating that axisymmetric modes have the fastest growth rates.
 
 \begin{figure}[h]
-  \includegraphics[width=\columnwidth]{alpha_vs_ssc.png}
-  \caption{Angle $\alpha$ vs $\SSC$.}
+  \includegraphics[width=\columnwidth]{alpha_vs_ssc_grid.pdf}
+  \caption{Angle $\alpha$ vs $\SSC$. Stability limit is at $\SSC \simeq 0.102$}
   \label{fig:alpha}
 \end{figure}
 \section{Non-Normality}
 \label{sec:non-normality}
 
+\section{Speculations}
+\label{sec:speculations}
+
+\begin{itemize}
+\item non-normal and $k_y$ even when $\alpha = 0$ implies important role for linear dynamics at early times. 
+\item Following Squire + Bhattacharjee, this suggests that important stellar layers may in fact be driven by linear dynamics
+\item why is MRI non-oscillatory when hydro shear is oscil or stable?
+\end{itemize}
 The linear operator for the MRI, like other shearing systems, is non-normal. 
 %If in two-column mode, this environment will change to single-column
 % format so that long equations can be displayed. Use
