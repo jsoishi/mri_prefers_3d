@@ -263,19 +263,23 @@ if find_max:
         #max_growth_opt = opt.minimize(func, max_guess, method="Nelder-Mead")
         max_growth_opt = opt.minimize(func, max_guess, method="Powell")
         t2 = time.time()
-        
-        max_location = max_growth_opt.x
-        max_growth = -max_growth_opt.fun
-        dset_gamma.attrs.create("max growth rate", max_growth)
-        dset_gamma.attrs.create("max ky", max_location[0])
-        dset_gamma.attrs.create("max kz", max_location[1])
-        logger.info("Time to find maximum growth rate: {:f}".format(t2-t1))
-        logger.info("Maximum growth rate {:20.15f} at (ky, kz) = ({:20.15f}, {:20.15f})".format(max_growth, max_location[0], max_location[1]))
-        gamma_max = growth_rate(max_location[0], max_location[1],max_growth_guess, N=Nmodes)[0].real
-        logger.info("Solver at max: {:22.20e}".format(gamma_max))
-        logger.info("(gamma_max - gamma_guess)/gamma_guess = {:22.20e}".format((max_growth-max_growth_guess)/max_growth_guess))
-        kdist = np.sqrt((max_guess[0] - max_location[0])**2 + (max_guess[1] - max_location[1])**2)
-        logger.info("kdist from guess: {:22.20e}".format(kdist))
+
+        if max_growth_opt.success:
+            max_location = max_growth_opt.x
+            max_growth = -max_growth_opt.fun
+            dset_gamma.attrs.create("max growth rate", max_growth)
+            dset_gamma.attrs.create("max ky", max_location[0])
+            dset_gamma.attrs.create("max kz", max_location[1])
+            logger.info("Time to find maximum growth rate: {:f}".format(t2-t1))
+            logger.info("Maximum growth rate {:20.15f} at (ky, kz) = ({:20.15f}, {:20.15f})".format(max_growth, max_location[0], max_location[1]))
+            gamma_max = growth_rate(max_location[0], max_location[1],max_growth_guess, N=Nmodes)[0].real
+            logger.info("Solver at max: {:22.20e}".format(gamma_max))
+            logger.info("(gamma_max - gamma_guess)/gamma_guess = {:22.20e}".format((max_growth-max_growth_guess)/max_growth_guess))
+            kdist = np.sqrt((max_guess[0] - max_location[0])**2 + (max_guess[1] - max_location[1])**2)
+            logger.info("kdist from guess: {:22.20e}".format(kdist))
+            logger.info("Message from optimzier: {}".format(max_growth_opt.message))
+        else:
+            logger.info("Optimizer failed! Message from optimzier: {}".format(max_growth_opt.message))
 
 if CW.rank == 0:
     output_file.close()
