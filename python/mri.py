@@ -15,6 +15,7 @@ To run using 4 processes, you would use:
 """
 
 import time
+import configparser
 from configparser import ConfigParser
 import argparse
 from pathlib import Path
@@ -65,6 +66,13 @@ q      =  config.getfloat('parameters','q')
 kymin = config.getfloat('parameters','kymin')
 kymax = config.getfloat('parameters','kymax')
 Nky = config.getint('parameters','Nky')
+
+# in case you don't start ky at zero (for zoom in calculations)
+# you can supply a guess here
+try:
+    ky_start_guess = config.getfloat('parameters','ky_start_guess')
+except configparser.NoOptionError:
+    ky_start_guess = False
 
 kzmin = config.getfloat('parameters','kzmin')
 kzmax = config.getfloat('parameters','kzmax')
@@ -218,7 +226,10 @@ eigvec_local = eigvec_global[:,CW.rank::CW.size]
 
 t1 = time.time()
 for k, kz in enumerate(kz_local):
-    soln = growth_rate(0., kz, ideal_2D(kz), N=Nmodes, dense=dense)
+    if ky_start_guess:
+        soln = growth_rate(ky_global[0], kz, ky_start_guess, N=Nmodes, dense=dense)
+    else:
+        soln = growth_rate(0., kz, ideal_2D(kz), N=Nmodes, dense=dense)
     gamma_local[0,k] = soln[0]
     eigvec_local[0,k] = soln[1]
 
