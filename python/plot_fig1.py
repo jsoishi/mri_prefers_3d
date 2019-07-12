@@ -124,7 +124,7 @@ spec_ax.yaxis.tick_right()
 spec_ax.yaxis.set_label_position("right")
 spec_ax.xaxis.set_major_locator(plt.MultipleLocator(0.1))
 
-fig.savefig('plots/fig_1_evalue_panel.pdf')#,bbox_inches='tight')
+fig.savefig('plots/fig_1.pdf')#,bbox_inches='tight')
 
 
 
