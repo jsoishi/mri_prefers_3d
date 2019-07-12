@@ -1,7 +1,7 @@
-"""plot_spectrum.py [--R=<R>] <filename>
+"""plot_spectrum.py [--asymptotic] <filename>
 
 Usage:
-    plot_spectrum.py [--R=<R> --kz=<kz> --ky=<ky>] <filename>
+    plot_spectrum.py [--asymptotic] <filename>
 
 """
 
@@ -10,32 +10,32 @@ import sys
 from pathlib import Path
 import h5py
 import matplotlib.pyplot as plt
+from calc_asymptotic_approx import calc_asymptotic_growth
 
 from docopt import docopt
 
 # parse arguments
 args = docopt(__doc__)
 filename = args['<filename>']
-R = float(args['--R'])
-ky = float(args['--ky'])
-kz = float(args['--kz'])
-
-# check asymptotic calculation
-if R:
-    Rprime = R**2 - 1
-    q = 0.75
-    B = 1.
-    d = np.pi
-    omega2 = q*B**2/(q+1)*(kz**2*(d**2/np.pi**2 * kz**2 - Rprime) - ((6 + np.pi**2)*q + np.pi**2 - 6)*ky**2/12.)
-    omega = np.sqrt(-omega2)
-    print("asymptotic omega = {}".format(omega))
+asymptotic = args['--asymptotic']
 
 outbase = Path("plots")
 filename = Path(filename)
 data = h5py.File(filename, 'r')
+spectrum = data['eigvals'][:]
+R = data['eigvals'].attrs['R']
+B = data['eigvals'].attrs['B']
+q = data['eigvals'].attrs['q']
+d = data['eigvals'].attrs['d']
+ky = data['eigvals'].attrs['ky']
+kz = data['eigvals'].attrs['kz']
+# check asymptotic calculation
+if asymptotic:
+    omega = calc_asymptotic_growth(R, q, B, d, ky, kz)
+    print("asymptotic omega = {}".format(omega))
 
 thresh = 2
-spectrum = data['eigvec'][:]
+
 
 spec_thresh = spectrum[np.abs(spectrum) < thresh]
 plt.scatter(spec_thresh[spec_thresh.real <= 0].real, spec_thresh[spec_thresh.real <= 0].imag)
