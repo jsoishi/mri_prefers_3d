@@ -33,10 +33,17 @@ max_kz = datafile['gamma'].attrs['max kz']
 ky_global    = datafile['ky']
 kz_global    = datafile['kz']
 
-PCM = plt.pcolormesh(kz_global,ky_global,gamma_r, vmin=-0.01,vmax=0.071)
-plt.contour(kz_global,ky_global,gamma_r,10,colors='k')
+print("max growth rate on grid = {}".format(gamma_r.max()))
+
+contour_levels = np.linspace(0,gamma_r.max(),10)
+vmin = 0.
+vmax = 0.071
+PCM = plt.pcolormesh(kz_global,ky_global,gamma_r, vmin=vmin,vmax=vmax)
+
+plt.contour(kz_global,ky_global,gamma_r,levels=contour_levels,colors='k')
+plt.contour(kz_global,ky_global,gamma_r,levels=[0.],colors='w')
 plt.plot(max_kz, max_ky, 'ro')
-plt.colorbar(PCM)
+plt.colorbar(PCM, label=r'$\gamma$')
 plt.xlabel(r'$k_z$')
 plt.ylabel(r'$k_y$')
 plt.tight_layout()
