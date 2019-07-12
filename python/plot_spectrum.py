@@ -14,6 +14,8 @@ from calc_asymptotic_approx import calc_asymptotic_growth
 
 from docopt import docopt
 
+plt.style.use('prl')
+
 # parse arguments
 args = docopt(__doc__)
 filename = args['<filename>']
@@ -49,4 +51,5 @@ plt.xlabel("real")
 plt.ylabel("imag")
 
 plot_file_name = Path(filename.stem + '_spectrum.png')
+plt.tight_layout()
 plt.savefig(outbase/plot_file_name, dpi=300)
