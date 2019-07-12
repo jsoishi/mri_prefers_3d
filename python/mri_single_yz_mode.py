@@ -158,5 +158,10 @@ logger.info("Solve time: {}".format(t2-t1))
 if CW.rank == 0:
     output_file_name = Path(filename.stem + '_single_mode.h5')
     output_file = h5py.File(outbase/output_file_name, 'w')
-    dset_evec = output_file.create_dataset('eigvec',data=solver.eigenvalues)
-
+    dset_evec = output_file.create_dataset('eigvals',data=solver.eigenvalues)
+    dset_evec.attrs.create("ky", ky)
+    dset_evec.attrs.create("kz", kz)
+    dset_evec.attrs.create("R", R)
+    dset_evec.attrs.create("B", B)
+    dset_evec.attrs.create("q", q)
+    dset_evec.attrs.create("d", Lx)
