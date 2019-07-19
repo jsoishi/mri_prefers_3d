@@ -11,7 +11,7 @@ plt.style.use('prl')
 filebase = 'data/run_{:d}_output.h5'
 runs = [15, 39, 12, 13]
 SSC = [0.64, 1.002001, 1.0201, 2.]
-index = 50
+index = 0
 
 fig = plt.figure(figsize=(16,8))
 # grid = AxesGrid(fig, (0.125, 0.5,0.8,0.35),
@@ -42,7 +42,7 @@ for i,r in enumerate(runs):
     contour_levels = np.linspace(0,gamma_r.max(),5)
     vmin = 0.
     vmax = 0.071
-    c = ax.pcolormesh(kz_global,ky_global,gamma_r, vmin=vmin,vmax=vmax)
+    c = ax.imshow(gamma_r, extent=[kz_global[:].min(),kz_global[:].max(),ky_global[:].min(),ky_global[:].max()], vmin=vmin,vmax=vmax, origin='lower')
 
     ax.contour(kz_global,ky_global,gamma_r,levels=contour_levels,colors='k')
     ax.contour(kz_global,ky_global,gamma_r,levels=[0.],colors='w')
@@ -68,7 +68,7 @@ xloc = grid[0].get_position().x0
 w_lower = 2*w + pad
 asymp_ax = fig.add_axes([0.1,0.1,w_lower,0.35])
 
-filename = 'data/run_39_output.h5'
+filename = 'data/run_41_output.h5'
 data = h5py.File(filename, "r")
 gamma_global = data['gamma'][:]
 gamma_r = gamma_global.real
@@ -83,7 +83,7 @@ R = 1.001
 B = 1
 d = np.pi
 q = 0.75
-ky_an = np.linspace(0.055,0.2,200)
+ky_an = np.linspace(0.05,0.2,200)
 omega = calc_asymptotic_growth(R, q, B, d, ky_an, kz)
 
 asymp_ax.plot(ky,gamma_r[:,index], label='numerical')
