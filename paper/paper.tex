@@ -89,8 +89,6 @@ Because evidence from weakly non-linear analysis suggests that the MRI saturates
 % body of paper here - Use proper section commands
 % References should be done using the \cite, \ref, and \label commands
 
-\section{Introduction}
-\label{sec:intro}
 The magnetorotational instability (MRI) is an extremely important instability in astrophysical fluid dynamics.
 By changing the stabiliity criterion for differentially rotating flows from a negative angular \emph{momentum} gradient to a negative angular \emph{velocity} gradient, a weak magnetic field allows the Keplerian velocity profile due to a central point mass to drive turbulence \citep[e.g.][]{1998RvMP...70....1B}.
 This discovery provided a pathway to explain the ubiquitous accretion onto compact objects at rates compatible with observations and may play a significant role in the formation of planets \citep[e.g.][]{2007Natur.448.1022J}.
@@ -110,14 +108,14 @@ These results strongly suggest that the non-normality of the linear operator lea
 % \item Do eigenvalue solution for B growth? i.e.\ check if it is a dynamo?
 % \end{itemize}
 
-\section{Method}
-\label{sec:method}
 We solve the linearized magnetohydrodynamic equations in a frame rotating with angular frequency $\Omega$. The Navier-Stokes equation is in a fairly standard form,
 \begin{equation}
   \label{eq:ns}
   \frac{D \mathbf{v}}{Dt} - f \hat{z} \times \mathbf{v} + S v_x \hat{z} + \mathbf{\nabla}{p} + \nu \mathbf{\nabla} \times \mathbf{\omega} = 0,
 \end{equation}
-where $\omega = \mathbf{\nabla} \times \mathbf{v}$ is the vorticity, $f = 2 \Omega$ is the Coriolis parameter, and $S$ is the background shear rate. $Df/Dt = \partial f/\partial t + S x \partial f/\partial y$ is the advective derivative including the background linear shear velocity.  We write the induction equation in terms of the $x$ component of the magnetic field,
+where $\omega = \mathbf{\nabla} \times \mathbf{v}$ is the vorticity, $f = 2 \Omega$ is the Coriolis parameter, and $S$ is the background shear rate.
+It is common in the accretion disk literature to relate $S$ and $f$ via the $q = S/f$ parameter; for all runs here, $q = 0.75$.
+$Df/Dt = \partial f/\partial t + S x \partial f/\partial y$ is the advective derivative including the background linear shear velocity.  We write the induction equation in terms of the $x$ component of the magnetic field,
 \begin{equation}
   \label{eq:Bx}
   \frac{D B_x}{Dt} - B_0 \partial_z v_x + \eta (\partial_y J_z - \partial_z J_y) = 0
@@ -140,18 +138,14 @@ We consider the behavior of the MRI in a vertically ($z$) and horizontally ($y$)
 \end{equation}
 Here, we use $\SSC$ as our control parameter. 
 
-We solve equations~(\ref{eq:ns})--~(\ref{eq:divu}) by assuming harmonic perturbations in $y$ and $z$, $f = \hat{f}(x) e^{i(k_y y + k_z z) + \gamma t}$. This reduces to an eigenvalue problem in $x$, which we solve using the \emph{Dedalus} framework. The advantage of this particular form is that it can be expressed as a set of ten first-order equations with Dirichlet boundary conditions for the stress-free, perfect conductor boundary conditions we use. 
-
+We solve equations~(\ref{eq:ns})--~(\ref{eq:divu}) by assuming harmonic perturbations in $y$ and $z$, $f = \hat{f}(x) e^{i(k_y y + k_z z) + \sigma t}$, where $\sigma = \gamma + i\omega$ with $\gamma$ and $\omega$ real. This reduces to an eigenvalue problem in $x$, which we solve using the \emph{Dedalus} framework. The advantage of this particular form is that it can be expressed as a set of ten first-order equations with Dirichlet boundary conditions for the stress-free, perfect conductor boundary conditions we use. 
 Our interest is in nearly ideal ($\eta = 0$), inviscid ($\nu = 0$) conditions.
 However, in order to avoid critical layers in the stable solutions, we set $\eta=\nu=10^{-5}$.
 We have confirmed our main results are insensitive to this particular value. 
 
-\section{Results}
-\label{sec:results}
-Our most surprising result is that at very small values of supercriticality, the fastest growing mode is not axisymmetric. 
+Our most surprising result is that at small values of supercriticality, the fastest growing mode is not axisymmetric. 
 Figure~\ref{fig:growth_rate}a shows the growth rates for four values of $\SSC$. 
-At $\SSC = 1.02$, the maximum growth rate is $(k_y, k_z) \simeq (0.263, 0.447)$.
-Figure~\ref{fig:growth_rate}b compares the numerically growth rates for $\SSC=1.002$ between $0 <= k_y < 0.2$ to an asymptotic calculation.
+At $\SSC = 1.02$, the maximum growth rate is found at $(k_y, k_z) \simeq (0.263, 0.447)$.
 By expanding equations~(\ref{eq:ns}-~\ref{eq:divu}) in terms of $S = \SSC + \epsilon R$, we compute the leading order correction to the growth rate from three-dimensional effects as
 \begin{widetext}
 \begin{equation}
@@ -160,6 +154,8 @@ By expanding equations~(\ref{eq:ns}-~\ref{eq:divu}) in terms of $S = \SSC + \eps
    ^2-6}{12 } \, k_{y}^{2}  \right] \ + \ ...
 \end{equation}
 \end{widetext}
+Figure~\ref{fig:growth_rate}b compares the numerically growth rates for $\SSC=1.002$ between $0 <= k_y < 0.2$ to this asymptotic approximation, showing that the numerical calculations accurately reproduce the analytic ones in the region where the latter is valid.
+All unstable modes are purely growing (figure~\ref{fig:growth_rate}c); the stable modes are rotationally modified Alfven waves found in left- and right- going pairs, consistent with the analytic predictions for two-dimensional stability calculations.
 %
 \onecolumngrid
 
@@ -170,29 +166,29 @@ By expanding equations~(\ref{eq:ns}-~\ref{eq:divu}) in terms of $S = \SSC + \eps
 \end{figure*}
 \twocolumngrid
 %
-Numerical simulations have consistently shown axisymmetric modes dominating early evolution of the MRI before parasitic modes cause a breakdown into MHD turbulence \citep[e.g.][]{1995ApJ...440..742H,2018ApJ...853..174H,2019ApJS..241...26D}. 
+Numerical simulations have consistently shown axisymmetric modes dominating early evolution of the MRI before parasitic modes cause a breakdown into MHD turbulence \citep{1995ApJ...440..742H,2018ApJ...853..174H,2019ApJS..241...26D}. 
 In order to reconcile our results with these simulations, in figure~\ref{fig:alpha} we plot the angle $\alpha = \arctan k_y/k_z$ of the fastest growing mode as function of $\SSC$.
 Above $\SSC \gtrsim 2.05$, $\alpha$ is zero, indicating that axisymmetric modes have the fastest growth rates.
 For the fiducial run in \citet{1996ApJ...464..690H}, $\SSC \simeq 4.84$ (similar values are found in most works); thus we recover these results.
-
+%
 \begin{figure}[h!]
   \includegraphics[width=\columnwidth]{alpha_vs_ssc_grid.pdf}
   \caption{Angle $\alpha$ vs $\SSC$. Stability limit is at $\SSC \simeq 0.102$}
   \label{fig:alpha}
 \end{figure}
+%
+However, even for $\SSC> 2.05$ there are significant swaths of unstable three-dimensional modes with growth rates comparable to the two-dimensional mode (figure~\ref{fig:growth_rate}a).
 
-\section{Non-Normality}
-\label{sec:non-normality}
+The linear operator for the MRI, like other shearing systems, is non-normal.
+As such, significant non-modal transient amplification occurs even for stable systems.
 
-\section{Speculations}
-\label{sec:speculations}
 
-\begin{itemize}
-\item non-normal and $k_y$ even when $\alpha = 0$ implies important role for linear dynamics at early times. 
-\item Following Squire + Bhattacharjee, this suggests that important stellar layers may in fact be driven by linear dynamics
-\item why is MRI non-oscillatory when hydro shear is oscil or stable?
-\end{itemize}
-The linear operator for the MRI, like other shearing systems, is non-normal. 
+% \begin{itemize}
+% \item non-normal and $k_y$ even when $\alpha = 0$ implies important role for linear dynamics at early times. 
+% \item Following Squire + Bhattacharjee, this suggests that important stellar layers may in fact be driven by linear dynamics
+% \item why is MRI non-oscillatory when hydro shear is oscil or stable?
+% \end{itemize}
+
 %If in two-column mode, this environment will change to single-column
 % format so that long equations can be displayed. Use
 % sparingly.
