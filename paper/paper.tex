@@ -131,7 +131,7 @@ We explicitly enforce the divergence constraint on the incompressible velocity f
   \mathbf{\nabla} \cdot \mathbf{v} = \mathbf{\nabla} \cdot \mathbf{B} = 0.
 \end{equation}
 The magnetic field is expressed in Alfven units, $\mathbf{B} = \mathbf{B_*}/\sqrt{\mu_0 \rho}$.
-We consider the behavior of the MRI in a vertically ($z$) and horizontally ($y$) periodic channel of width $L_x = \pi$. The walls at $x = \pm L_x/2$ are perfectly conducting and stress-free. The MRI is a weak-field instability; in the inviscid, ideal case the critical shear rate for instability in two dimensions is given by
+We consider the behavior of the MRI in a vertically ($z$) and horizontally ($y$) periodic channel of width $d = \pi$. The walls at $x = \pm d/2$ are perfectly conducting and stress-free. The MRI is a weak-field instability; in the inviscid, ideal case the critical shear rate for instability in two dimensions is given by
 \begin{equation}
   \label{eq:Sc}
   S_c = \frac{-\pi^2 B^2}{f d^2}.
@@ -143,19 +143,27 @@ Our interest is in nearly ideal ($\eta = 0$), inviscid ($\nu = 0$) conditions.
 However, in order to avoid critical layers in the stable solutions, we set $\eta=\nu=10^{-5}$.
 We have confirmed our main results are insensitive to this particular value. 
 
-Our most surprising result is that at small values of supercriticality, the fastest growing mode is not axisymmetric. 
+Our main result is that at small values of supercriticality, the fastest growing mode is not axisymmetric. 
 Figure~\ref{fig:growth_rate}a shows the growth rates for four values of $\SSC$. 
 At $\SSC = 1.02$, the maximum growth rate is found at $(k_y, k_z) \simeq (0.263, 0.447)$.
-By expanding equations~(\ref{eq:ns}-~\ref{eq:divu}) in terms of $S = \SSC + \epsilon R$, we compute the leading order correction to the growth rate from three-dimensional effects as
+In fact, at $\SSC = 0.640$, there are no unstable two-dimensional modes, but three-dimensional instability is present.
+
+While surprising, this result can be predicted analytically.
+By expanding equations~(\ref{eq:ns}-\ref{eq:divu}) in terms of $S = S_c + \epsilon R$, we compute the leading order correction to the growth rate from three-dimensional effects as
 \begin{widetext}
 \begin{equation}
   \label{eq:asymp}
-\omega^{2} \ = \ \frac{q\,B^{2}}{(q+1)} \left[ k_z^2 \left(\frac{d^2}{\pi^{2}} k_z^2-R\right) \ - \ \frac{\left(6+\pi ^2\right) q+\pi
+\sigma^{2} \ = -\frac{q\,B^{2}}{(q+1)} \left[ k_z^2 \left(\frac{d^2}{\pi^{2}} k_z^2-R\right) \ - \ \frac{\left(6+\pi ^2\right) q+\pi
    ^2-6}{12 } \, k_{y}^{2}  \right] \ + \ ...
 \end{equation}
 \end{widetext}
-Figure~\ref{fig:growth_rate}b compares the numerically growth rates for $\SSC=1.002$ between $0 <= k_y < 0.2$ to this asymptotic approximation, showing that the numerical calculations accurately reproduce the analytic ones in the region where the latter is valid.
-All unstable modes are purely growing (figure~\ref{fig:growth_rate}c); the stable modes are rotationally modified Alfven waves found in left- and right- going pairs, consistent with the analytic predictions for two-dimensional stability calculations.
+The first term in equation~(\ref{eq:asymp}) is the result from a two-dimensional calculation.
+The second term is negative definite and proportional to $k_y^2$: for sufficiently large $k_y$, it leads to instability even when the two-dimensional modes are stable.
+
+Figure~\ref{fig:growth_rate}b compares the numerically growth rates for $\SSC=1.002$ between $0 \le k_y \le 0.2$ to this asymptotic approximation, showing that the numerical calculations accurately reproduce the analytic ones in the region where the latter is valid.
+We provide the full spectrum for the most unstable parameter values for $\SSC = 1.02$ in figure~\ref{fig:growth_rate}c.
+The single unstable mode is purely growing (orange dot), and its complex conjugate is also present (blue dot at $\omega = 0$), consistent with equation~(\ref{eq:asymp}).
+The other stable modes (blue dots) are rotationally modified Alfven waves found in left- and right- going pairs, consistent with the analytic predictions for two-dimensional stability calculations.
 %
 \onecolumngrid
 
