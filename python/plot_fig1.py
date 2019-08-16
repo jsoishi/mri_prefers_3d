@@ -67,35 +67,43 @@ cbar.set_label(r'$\gamma$')
 xloc = grid[0].get_position().x0
 w_lower = 2*w + pad
 asymp_ax = fig.add_axes([0.1,0.1,w_lower,0.35])
+asymp_sub = asymp_ax.inset_axes([0.6,0.25,0.3,0.3*w_lower/0.35])
 
 filename = 'data/run_41_output.h5'
 data = h5py.File(filename, "r")
 gamma_global = data['gamma'][:]
 gamma_r = gamma_global.real
-
+gamma_i = gamma_global.imag
 ky_global    = data['ky']
 kz_global    = data['kz']
 
 ky = ky_global[:]
 kz = kz_global[index]
-grid[1].axvline(kz,alpha=0.4)
+grid[1].axvline(kz, ymin=0, ymax=0.2, alpha=0.7)
 R = 1.001
 B = 1
 d = np.pi
 q = 0.75
-ky_an = np.linspace(0.05,0.2,200)
-omega = calc_asymptotic_growth(R, q, B, d, ky_an, kz)
+ky_an = np.linspace(0.0,0.2,400)
+omega, omega2 = calc_asymptotic_growth(R, q, B, d, ky_an, kz)
 
 asymp_ax.plot(ky,gamma_r[:,index], label='numerical')
 asymp_ax.plot(ky_an, omega, label='asymptotic')
+asymp_sub.plot(ky,-(gamma_r[:,index] + 1j*gamma_i[:,index])**2, label='numerical')
+asymp_sub.plot(ky_an, omega2, label='asymptotic')
+
 #asymp_ax.legend(loc='upper right')
 asymp_ax.text(0.125, 0.048, 'numerical', fontsize=18)
 asymp_ax.text(0.035, 0.03, 'asymptotic', fontsize=18)
 asymp_ax.set_ylim(0, 0.06)
 asymp_ax.set_xlim(0,0.2)
 asymp_ax.set_xlabel(r'$k_y$')
-asymp_ax.set_ylabel(r'$\gamma$')
-asymp_ax.xaxis.set_major_locator(plt.MultipleLocator(0.1))
+asymp_ax.set_ylabel(r'$\gamma = Re(\sigma)$')
+asymp_ax.xaxis.set_major_locator(plt.MultipleLocator(0.05))
+asymp_sub.set_ylim(-0.005, 0.005)
+asymp_sub.set_xlim(0.03,0.09)
+asymp_sub.set_xlabel(r'$k_y$')
+asymp_sub.set_ylabel(r'$\sigma^2$')
 # spectrum
 
 grid[1].annotate("",
@@ -106,6 +114,7 @@ grid[1].annotate("",
                             color='k',
                             alpha=0.4),
             )
+
 spec_ax = fig.add_axes([xgutter+w_lower+pad,0.1,w_lower,0.35])
 
 filename = 'data/run_39_single_mode.h5'
@@ -119,7 +128,7 @@ spec_ax.scatter(spec_thresh[spec_thresh.real > 0].real, spec_thresh[spec_thresh.
 spec_ax.set_xlim(-0.25,0.1)
 spec_ax.set_ylim(-0.8,0.8)
 spec_ax.set_xlabel(r"$\gamma$")
-spec_ax.set_ylabel(r"$Re(\omega)$")
+spec_ax.set_ylabel(r"$\omega = Im(\sigma)$")
 spec_ax.yaxis.tick_right()
 spec_ax.yaxis.set_label_position("right")
 spec_ax.xaxis.set_major_locator(plt.MultipleLocator(0.1))
