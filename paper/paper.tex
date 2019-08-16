@@ -66,10 +66,11 @@
 
 \date{\today}
 
-\begin{abstract}
-The magnetorotational instability (MRI) is a powerful instability in which conducting fluids with weak magnetic fields and decreasing angular velocity are linearly unstable.
-The MRI is thought to be essential to the operation of astrophysical accretion disks, where the angular velocity graident is supplied by the gravitational field of the central object.
-However, the MRI may also be important in the internal shear layers of stars, where the MRI may operate in a poorly studied regime where the shear is near critical but the dissipative forces are negligable.
+\begin{abstract}Ú
+The magnetorotational instability (MRI) is a powerful instability where a weak magnetic can destabilize an electrically conducting fluid with a decreasing angular velocity shear.
+The MRI is thought to be essential to the operation of astrophysical accretion disks, where the central object supplies a Keplerian angular velocity gradient.
+The MRI may also be important in the internal shear layers of stars.
+In stellar interiors, the shear can take a wide range to shear profiles, including near-critical, but with negligible dissipative the MRI may operate in a poorly studied regime where the shear is near critical but the dissipative forces are negligible.
 Here, we consider the linear stability of three-dimensional perturbations to a nearly inviscid and ideal magnetofluid and show that the fastest growing modes are three dimensional when the instability is near onset.
 These three dimensional modes are unstable at shear rates down to 0.10 $S_c$, the critical value in two dimensions, and they have growth rates exceeding the fastest two dimensional modes until the shear parameter is about $2.05 S_c$.
 These modes are significant, as they suggest the possibility of direct dynamo action from the linear instability itself.
@@ -112,62 +113,68 @@ These results strongly suggest that the non-normality of the linear operator dri
 % \end{itemize}
 
 We solve the linearized magnetohydrodynamic equations in rotating plane Couette geometry.
-This corresponds to a Cartesian frame rotating with angular frequency $\Omega$ and a linear background shear, $v_{y0} = Sx$. 
+This corresponds to a Cartesian frame rotating with angular frequency $\Omega$ and a linear background shear, $V_{y} = Sx$. 
 We cast the Navier-Stokes equation in a fairly standard form,
 \begin{equation}
-  \label{eq:ns}
-  \frac{D \mathbf{v}}{Dt} - f \hat{z} \times \mathbf{v} + S v_x \hat{z} + \mathbf{\nabla}{p} + \nu \mathbf{\nabla} \times \mathbf{\omega} = 0,
+  \label{eq:mhd}
+  \frac{D \mathbf{v}}{Dt} + f \hat{z} \times \mathbf{v} + S v_x \hat{z} + \mathbf{\nabla}{p} + \nu \mathbf{\nabla} \times \mathbf{\omega} = B_{0} \partial_{z} \mathbf{b},
 \end{equation}
-where $\omega = \mathbf{\nabla} \times \mathbf{v}$ is the vorticity, $f = 2 \Omega$ is the Coriolis parameter, and $S$ is the background shear rate.
-It is common in the accretion disk literature to relate $S$ and $f$ via the $q = S/f$ parameter; for all runs here, $q = 0.75$.
-$Df/Dt = \partial f/\partial t + S x \partial f/\partial y$ is the advective derivative including the background linear shear velocity.  We write the induction equation in terms of the $x$ component of the magnetic field,
+where
+\begin{equation}
+\omega = \mathbf{\nabla} \times \mathbf{v}, \quad \text{and} \quad \frac{D}{Dt} \ = \ \partial_{t} + S x \partial_{y}
+\end{equation}
+The main input parameters are the Coriolis parameter, $f = 2 \Omega$; the background shear rate, $S = dV_{y}/dx < 0$;  the vertical magnetic field $B_{0}$ (in Alfv\'{e}n units $\mu_{0} \rho_{0} = 1$); and the horizontal domain width $-d/2 \le x \le d/2$.
+The accretion disk literature usually relates $S$ to $f$ via the $q = |S|/f$ parameter; for all calculations here, $q = 3/4$ (Keplerian).
+We write the induction equation in terms of the $x$ component of the magnetic field,
 \begin{equation}
   \label{eq:Bx}
-  \frac{D B_x}{Dt} - B_0 \partial_z v_x + \eta (\partial_y J_z - \partial_z J_y) = 0
+  \frac{D b_x}{Dt} - B_0 \partial_z v_x + \eta (\partial_y j_z - \partial_z j_y) = 0
 \end{equation}
-and the $x$ component of the current density,
+and the $x$ component of the current density ($j_{x} = \partial_{y}b_{z} - \partial_{z} b_{y}$),
 \begin{equation}
   \label{eq:Jx}
-  \frac{D J_x}{Dt} - B_0 \partial_z \omega_x + S \partial_z B_x - \eta \nabla^2 J_x = 0
+  \frac{D j_x}{Dt} - B_0 \partial_z \omega_x + S \partial_z B_x - \eta \nabla^2 j_x = 0
 \end{equation}
 We explicitly enforce the divergence constraint on the incompressible velocity field $v$ and the magnetic field,
 \begin{equation}
   \label{eq:divu}
-  \mathbf{\nabla} \cdot \mathbf{v} = \mathbf{\nabla} \cdot \mathbf{B} = 0.
+  \mathbf{\nabla} \cdot \mathbf{v} = \mathbf{\nabla} \cdot \mathbf{b} = 0.
 \end{equation}
-The magnetic field is expressed in Alfven units, $\mathbf{B} = \mathbf{B_*}/\sqrt{\mu_0 \rho}$.
-We consider the behavior of the MRI in a vertically ($z$) and horizontally ($y$) periodic channel of width $d = \pi$. The walls at $x = \pm d/2$ are perfectly conducting and stress-free. The MRI is a weak-field instability; in the inviscid, ideal case the critical shear rate for instability in two dimensions is given by
+We consider the behavior of the MRI in a vertically ($z$) and horizontally ($y$) periodic channel of width $d = \pi$. The boundary conditions are impenetrable stress-free and perfectly conducting; $v_{x} = \omega_{y} = \omega_{z} = b_{x} = \partial_{x}j_{x} = 0$. The MRI is a weak-field instability; in the inviscid, ideal case the critical shear rate for instability in \textit{two dimensions} is
 \begin{equation}
   \label{eq:Sc}
-  S_c = \frac{-\pi^2 B^2}{f d^2}.
+  S_c = -\frac{\pi^2 B_{0}^2}{f d^2}.
 \end{equation}
 Here, we use $\SSC$ as our control parameter. 
 
-We solve equations~(\ref{eq:ns})--~(\ref{eq:divu}) by assuming harmonic perturbations in $y$ and $z$, $f = \hat{f}(x) e^{i(k_y y + k_z z) + \sigma t}$, where $\sigma = \gamma + i\omega$ with $\gamma$ and $\omega$ real. This reduces to an eigenvalue problem in $x$, which we solve using the \emph{Dedalus} framework. The advantage of this particular form is that it can be expressed as a set of ten first-order equations with Dirichlet boundary conditions for the stress-free, perfect conductor boundary conditions we use. 
+We assume harmonic perturbations in $y$ and $z$, (e.g. pressure) $p = \hat{p}(x) e^{i(k_y y + k_z z) + \sigma t}$ . We use a complex-valued growth rate $\sigma = \gamma + i\omega$ with $\gamma$ and $\omega$ real. 
+The system reduces to a $\sigma$-eigenvalue problem of ten first-order ODEs in $x$ with Dirichlet boundary conditions.
+We pose and solve the system in the same formulation as equations~(\ref{eq:mhd}-\ref{eq:divu}) using the \emph{Dedalus} framework. 
+
 Our interest is in ideal ($\eta = 0$), inviscid ($\nu = 0$) conditions.
-However, in order to avoid critical layers in the stable solutions, we set $\eta=\nu=10^{-5}$.
-We have confirmed our main results are insensitive to this particular value. 
-1For each $(k_y, k_z)$ pair, we solve an eigenvalue problem with $n_x = 128$ modes; our results are identical at double the resolution\footnote{All code used in this paper can be found at \protect\url{https://github.com/jsoishi/mri\_prefers\_3d}}.
+However, we set $\eta=\nu=10^{-5}$ to avoid critical layers in for the \textit{stable} solution branch.
+We confirmed our results are insensitive to the presence of small diffusion. 
+For each $(k_y, k_z)$ pair, we solve using $n_x = 128$ modes; all our results are identical at double the resolution\footnote{All code used in this paper can be found at \protect\url{https://github.com/jsoishi/mri\_prefers\_3d}}.
 
-
-Our main result is that at small values of supercriticality, the fastest growing mode is not axisymmetric. 
+Our two main results are: (I) When the first two-dimensional mode becomes unstable, there already exist three-dimensional modes with positive growth rate. (II) When the criticality becomes sufficiently large, the fastest-growing mode becomes purely two-dimensional. These results are pertinent in two ways. First, the MRI contains a ``Goldilocks regime" with possible direct dynamo action, and this regime likely most applies to stellar interiors. Second, our results accord with well-established results for accretion disk that expect primary two-dimensional linear modes.
 Figure~\ref{fig:growth_rate}a shows the growth rates for four values of $\SSC$. 
-At $\SSC = 1.02$, the maximum growth rate is found at $(k_y, k_z) \simeq (0.263, 0.447)$.
-In fact, the first panel of figure~\ref{fig:growth_rate}a shows $\SSC = 0.640$, where there are no unstable two-dimensional modes, but three-dimensional instability is present.
-The critical shear for three dimensional perturbations is at $S_{c,3D} \simeq 0.
+At $\SSC = 1.02$, the maximum growth rate happens at $(k_y, k_z) \simeq (0.263, 0.447)$.
+The first panel of figure~\ref{fig:growth_rate}a shows $\SSC = 0.640$, which contains only three-dimensional instability.
+The overall critical shear for three-dimensional modes is $S_{c,3D} \simeq 0.
 102 S_c$.
 
 While surprising, that three-dimensional perturbations grow faster than two-dimensional ones can be predicted analytically.
-By expanding equations~(\ref{eq:ns}-\ref{eq:divu}) in terms of $S = S_c + \epsilon R$, such that the shear is asymptotically close to the critical rate for two dimensional perturbations, we compute the leading order correction to the growth rate from three-dimensional effects as
+We analyze equations~(\ref{eq:mhd}-\ref{eq:divu}) with the shear asymptotically close to the critical two-dimensional rate,  and compute the leading-order correction to the growth rate from three-dimensional effects as
 \begin{widetext}
 \begin{equation}
   \label{eq:asymp}
-\sigma^{2} \ = -\frac{q\,B^{2}}{(q+1)} \left[ k_z^2 \left(\frac{d^2}{\pi^{2}} k_z^2-R\right) \ - \ \frac{\left(6+\pi ^2\right) q+\pi
-   ^2-6}{12 } \, k_{y}^{2}  \right] \ + \ ...
+\sigma^{2} \ = -\frac{q\,B^{2}}{(q+1)} \left[ k_z^2 \left(\frac{d^2}{\pi^{2}} k_z^2-R^{2}\right) \ - \ \frac{\left(6+\pi ^2\right) q+\pi
+   ^2-6}{12 } \, k_{y}^{2}  \right] \ + \  \ldots,
 \end{equation}
 \end{widetext}
+where $S = S_c - \epsilon \sqrt{R}$, $k_{z} \sim \mathcal{O}(\epsilon)$, $\sigma \sim k_{y} \sim \mathcal{O}(\epsilon^{2})$.
 The first term in equation~(\ref{eq:asymp}) is the result from a two-dimensional calculation.
-The second term is negative definite and proportional to $k_y^2$: for sufficiently large $k_y$, it leads to instability even when the two-dimensional modes are stable.
+The second term is negative definite and proportional to $k_{y}^2$, which leads to an ultraviolet catastrophe in the absence of higher-order effects.
 
 Figure~\ref{fig:growth_rate}b compares the numerically growth rates for $\SSC=1.002$ between $0 \le k_y \le 0.2$ to this asymptotic approximation, showing that the numerical calculations accurately reproduce the analytic ones in the region where the latter is valid.
 We provide the full spectrum for the most unstable parameter values for $\SSC = 1.02$ in figure~\ref{fig:growth_rate}c.
