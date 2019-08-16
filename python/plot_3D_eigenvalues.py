@@ -44,8 +44,9 @@ kz = datafile['gamma'].attrs['max kz']
 Ly = 2*np.pi/ky
 Lz = 2*np.pi/kz
 
-y = np.linspace(0, Ly, 768, endpoint=False)
-z = np.linspace(0, Lz, 768, endpoint=False)
+n_yz = 128
+y = np.linspace(0, Ly, n_yz, endpoint=False)
+z = np.linspace(0, Lz, n_yz, endpoint=False)
 
 zz,yy,xx = np.meshgrid(z,y,x,indexing='ij')
 fig = plt.figure(figsize=(6,6))
@@ -59,6 +60,28 @@ w = (eigvec[y_max, z_max,3,:]*yz_dep).real
 Bx =(eigvec[y_max, z_max,6,:]*yz_dep).real
 By =(eigvec[y_max, z_max,7,:]*yz_dep).real
 Bz =(eigvec[y_max, z_max,8,:]*yz_dep).real
+
+save_vtk = True
+save_h5 = True
+if save_vtk:
+    vtkfile = filename.stem + '.vtk'
+    from pyevtk.hl import gridToVTK 
+    pointData = {'p':p.copy(), 'u':u.copy(), 'v':v.copy(), 'w':w.copy(),
+                 'Bx':Bx.copy(), 'By':By.copy(), 'Bz':Bz.copy()}
+    print("p flags", pointData['p'].flags)
+
+    gridToVTK(vtkfile, xx, yy, zz, pointData=pointData)
+if save_h5:
+    h5file = filename.stem + '.h5'
+    datafile = h5py.File(h5file, 'w')
+    datafile.create_dataset('u', data=u)
+    datafile.create_dataset('v', data=v)
+    datafile.create_dataset('w', data=w)
+    datafile.create_dataset('Bx', data=Bx)
+    datafile.create_dataset('By', data=By)
+    datafile.create_dataset('Bz', data=Bz)
+    datafile.create_dataset('x_grid', data=xx)
+    datafile.close()
 
 
 grid = ImageGrid(fig, 111, nrows_ncols=(4,1),axes_pad=0.5, cbar_mode='each', cbar_location='top',cbar_size="10%", cbar_pad=0)
@@ -84,7 +107,7 @@ plot_file_name = Path(filename.stem + '_3D_v_eigenvector.png')
 fig.savefig(outbase/plot_file_name, dpi=300)
 
 fig.clear()
-grid = ImageGrid(fig, 111, nrows_ncols=(3,1),axes_pad=0.1, cbar_mode='each', cbar_location='top')
+grid = ImageGrid(fig, 111, nrows_ncols=(3,1),axes_pad=0.5, cbar_mode='each', cbar_location='top',cbar_size="10%", cbar_pad=0)
 im = grid[0].imshow(Bx[0].T, extent=[0,Ly, -np.pi/2, np.pi/2])
 cax = grid.cbar_axes[0]
 cax.colorbar(im)
