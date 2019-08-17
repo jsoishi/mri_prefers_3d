@@ -1,0 +1,223 @@
+\documentclass[aps,prl,preprint
+,superscriptaddress]{revtex4-1}\newcommand{\SSC}{S/S_{c}}
+\newcommand{\mnras}{Monthly Notices of the Royal Astronomical Society}
+\newcommand{\apjs}{The Astrophysical Journal Supplement Series}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+% You should use BibTeX and apsrev.bst for references
+% Choosing a journal automatically selects the correct APS
+% BibTeX style file (bst file), so only uncomment the line
+% below if necessary.
+%\bibliographystyle{apsrev4-1}
+
+\newcommand\Beq{\begin{eqnarray}} 
+\newcommand\Eeq{\end{eqnarray}}
+
+\newcommand{\Eq}[1]{Eq.~(\ref{#1})}
+\newcommand{\Eqs}[2]{Eqs.~(\ref{#1})--(\ref{#2})}
+\newcommand{\eq}[1]{eq.~(\ref{#1})}
+\newcommand{\eqs}[2]{eqs.~(\ref{#1})--(\ref{#2})}
+
+\newcommand{\Prob}[2]{\mathbb{P}[\, #1 \, | \, #2 \, ] }
+\newcommand{\Pro}[1]{\mathbb{P}[\, #1 \, ] }
+
+\newcommand{\inv}[1]{\frac{1}{#1}}
+\newcommand{\pd}[1]{\partial_{#1}}
+
+\newcommand{\Ra}{R}
+\newcommand{\Ve}{\mbox{\textit{Ve}}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\del}{\delta}
+\newcommand{\e}[1]{\eps^{#1}}
+\newcommand{\f}{2\Omega}
+
+\newcommand{\n}{\hat{n}}
+
+
+\newcommand{\dat}{\cdot}
+\newcommand{\dd}[1]{\,\mathrm{d}{#1}}
+\newcommand{\cc}{\mathrm{c.c.}}
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand{\grad}{\nabla}
+\renewcommand{\div}{\nabla \dat}
+\newcommand{\Tr}{\text{Tr}}
+
+
+\newcommand{\pren}[1]{ \left(#1\right) }
+\newcommand{\brac}[1]{\left[\,#1\,\right]}
+
+\newcommand{\ave}[1]{\big<#1\big>}
+
+\renewcommand{\l}{\ell}
+
+\newcommand{\txt}[1]{\quad \text{#1} \quad }
+
+\begin{document}
+
+% Use the \preprint command to place your local institutional report
+% number in the upper righthand corner of the title page in preprint mode.
+% Multiple \preprint commands are allowed.
+% Use the 'preprintnumbers' class option to override journal defaults
+% to display numbers if necessary
+%\preprint{}
+
+%Title of paper
+\title{Supplemental Information for: The Magnetorotational Instability Prefers Three Dimensions}
+
+\section{Table of Runs}
+\label{sec:runs}
+
+\section{Resolution and Reynolds number study}
+\label{sec:resolution}
+
+\section{Asymptotic Calculation}
+\label{sec:asymp}
+Define the domain as $ - d/2 < x < d/2$. Make it symmetric so to make the shear simpler. The shear has no net. Otherwise it means we are not exactly in the rotating frame we thought we were. 
+\Beq
+\int_{-d/2}^{d/2} S x \text{d} x  \ = \ 0
+\Eeq
+This is very important later. 
+
+The full linear equations:
+\Beq
+\pd{t} u + S x \pd{y} u - f v + \pd{x} p - B \pd{z} b_{x} &=& 0\\
+\pd{t} v + S x \pd{y} v + (S+f) u + \pd{y} p - B \pd{z} b_{y} &=& 0\\
+\pd{t} w + S x \pd{y} w + \pd{z} p - B \pd{z} b_{z} &=& 0 \\
+\pd{x} u + \pd{y} v + \pd{z} w  &=& 0\\
+\pd{t} b_{x} + S x \pd{y} b_{x} - B \pd{z} u &=& 0\\
+\pd{t} b_{y} + S x \pd{y} b_{y} - B \pd{z} v - S b_{x}  &=& 0\\
+\pd{t} b_{z} + S x \pd{y} b_{z} - B \pd{z} w &=& 0
+\Eeq
+
+Assume all variable take the form
+\Beq
+g = \hat{G}(x) e^{ i ( \omega t + k z + \ell y ) } 
+\Eeq
+
+Define the ``parameter''
+\Beq
+\omega_{S} \ \equiv \ \omega + S x \ell 
+\Eeq
+
+We can use equations (2)--(7) to find all amplitudes in terms of $\hat{U}(x)$ and $\hat{U}'(x)$. 
+\Beq
+\hat{V} &=& \frac{i \left(k^2 \hat{U}(x) \left(B^2 k^2 S-(f+S) \omega
+   _S^2\right)+\ell  \omega _S \hat{U}'(x) \left(B^2 k^2-\omega
+   _S^2\right)\right)}{\left(k^2+\ell ^2\right) \omega _S
+   \left(B^2 k^2-\omega _S^2\right)}\\
+\hat{W} &=& -\frac{i k \left(\ell  \hat{U}(x) \left(B^2 k^2 S-(f+S) \omega
+   _S^2\right)+\omega _S U'(x) \left(\omega _S^2-B^2
+   k^2\right)\right)}{\left(k^2+\ell ^2\right) \omega _S
+   \left(B^2 k^2-\omega _S^2\right)}\\
+   \hat{P} &=& -\frac{i \left(\ell  \hat{U}(x) \left(B^2 k^2 S-(f+S) \omega
+   _S^2\right)+\omega _S U'(x) \left(\omega _S^2-B^2
+   k^2\right)\right)}{\left(k^2+\ell ^2\right) \omega _S^2}\\
+   \hat{B}_{x} &=& \frac{B k \hat{U}(x)}{\omega _S}\\
+   \hat{B}_{y} &=& -\frac{i B k \left(\hat{U}(x) \left(B^2 k^2 S \ell ^2+\omega _S^2
+   \left(f k^2-S \ell ^2\right)\right)+\ell  \omega _S
+   U'(x) \left(\omega _S^2-B^2
+   k^2\right)\right)}{\left(k^2+\ell ^2\right) \omega _S^2
+   \left(B^2 k^2-\omega _S^2\right)}\\
+   \hat{B}_{z} &=& -\frac{i B k^2 \left(\ell  \hat{U}(x) \left(B^2 k^2 S-(f+S)
+   \omega _S^2\right)+\omega _S U'(x) \left(\omega _S^2-B^2
+   k^2\right)\right)}{\left(k^2+\ell ^2\right) \omega _S^2
+   \left(B^2 k^2-\omega _S^2\right)}
+\Eeq
+
+We can then substitute everything into equation (1) to get a second-order equation for $\hat{U}$. 
+
+When we do this, we get something of the form 
+\Beq
+\alpha(x) \hat{U}''(x) + \beta(x) \hat{U}'(x) + \gamma(x) \hat(U)(x) \ = \ 0
+\Eeq
+where
+\Beq
+\alpha(x) &=& \frac{i \left(B^2 k^2-\omega _s^2\right)}{\left(k^2+\ell
+   ^2\right) \omega _s} \\ 
+   \beta(x) &=& -\frac{2 i B^2 k^2 S \ell }{\left(k^2+\ell ^2\right) \omega
+   _s^2} \\
+   \gamma(x) &=& \frac{i \left(\omega _s^4 \left(\frac{f^2
+   k^2}{\left(k^2+\ell ^2\right) \left(B^2 k^2-\omega
+   _s^2\right)}+1\right)-k^2 \omega _s^2 \left(B^2+\frac{f
+   S}{k^2+\ell ^2}\right)+\frac{2 B^2 k^2 S^2 \ell
+   ^2}{k^2+\ell ^2}\right)}{\omega _s^3}
+\Eeq
+
+We can eliminate the first-order term via
+\Beq
+\hat{U}(x) \ = \ \chi(x) \psi(x) 
+\Eeq
+if 
+\Beq
+\chi'(x) \  = \ -\frac{\beta (x) \chi (x)}{2 \alpha (x)}
+\Eeq
+\Beq
+\psi''(x) + \Phi(x) \psi(x) \ = \ 0
+\Eeq
+\Beq
+\Phi(x)  \ = \ -\frac{-2 \beta (x) \alpha '(x)+2 \alpha (x) \left(\beta'(x)-2 \gamma (x)\right)+\beta (x)^2}{4 \alpha (x)^2}
+\Eeq
+Putting everything together 
+\Beq
+\Phi(x) \ = \ \tfrac{k^2 \omega _S^2 \left(2 B^2 \left(k^2+\ell
+   ^2\right)+f (f+S)\right)-B^2 k^2 \left(B^2 k^2
+   \left(k^2+\ell ^2\right)+S \left(f k^2-S \ell
+   ^2\right)\right)-\left(k^2+\ell ^2\right) \omega
+   _S^4}{\left(\omega _S^2-B^2 k^2\right){}^2}
+\Eeq
+
+Now we want to rescale everything in terms of a bookkeeping parameter, $\eps$.
+\Beq
+S  \ \to \  - \frac{\pi ^2 B^2}{d^2 f} ( 1 + \eps^{2} R) 
+\Eeq 
+\Beq
+\omega \ \to \ \eps^{2} \omega , \quad k \ \to \ \eps k, \quad \ell \ \to \ \eps^{2} \ell 
+\Eeq
+Also 
+\Beq
+q  \ \equiv  \ \frac{\pi ^2 B^2}{d^2 f^{2}}
+\Eeq
+
+Expanding to $\mathcal{O}(\eps^{2})$, 
+\Beq
+\Phi(x) \ = \ \frac{\pi^{2}}{d^{2}} + \frac{\epsilon ^2 \left(-B^4 k^4+B^2 f^2 q \left(k^2 R+q
+   \ell ^2\right)+f^2 (q+1) (\omega -f q x \ell
+   )^2\right)}{B^4 k^2}
+\Eeq
+
+Now do the perturbations 
+
+\Beq
+\psi_{0}''(x) + \frac{\pi^{2}}{d^{2}}  \psi_{0}(x) \ = \ 0 
+\Eeq
+\Beq
+\psi_{2}''(x) + \frac{\pi^{2}}{d^{2}}  \psi_{2}(x) + \Phi_{2}(x)\psi_{0}(x)\ = \ 0 
+\Eeq
+
+Remember we are on $-d/2 < x < d/2$ Therefore 
+\Beq
+\psi_{0}(x) \ = \ \cos(\pi x / d)
+\Eeq
+This satisfies the equation and boundary condition. The solvability condition for $\psi_{2}(x)$ is 
+
+\Beq
+\int_{-d/2}^{d/2} \Phi_{2}(x)\psi_{0}(x)^{2} \text{d} x \ = \ 0.
+\Eeq
+
+
+This works out to 
+\Beq
+\left(\pi ^2 B^2+d^2 f^2 \right) \omega^{2} - B^4 k^2 \left(d^2 k^2-\pi ^2 R\right)   \ + \ \frac{\pi ^2 B^4 \ell ^2}{12}  \left(\left(6+\pi ^2\right) q+\pi ^2-6\right) \ = \ 0
+\Eeq
+
+
+
+\Beq
+\omega^{2} \ = \ \frac{q\,B^{2}}{(q+1)} \left[ k_z^2 \left(\frac{d^2}{\pi^{2}} k_z^2-R\right) \ - \ \frac{\left(6+\pi ^2\right) q+\pi
+   ^2-6}{12 } \, k_{y}^{2}  \right] \ + \ ...
+\Eeq
+
+
+\end{document}
