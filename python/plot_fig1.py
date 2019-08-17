@@ -123,8 +123,10 @@ spectrum = data['eigvals'][:]
 
 thresh = 2
 spec_thresh = spectrum[np.abs(spectrum) < thresh]
-spec_ax.scatter(spec_thresh[spec_thresh.real <= 0].real, spec_thresh[spec_thresh.real <= 0].imag)
+spec_ax.scatter(spec_thresh[(spec_thresh.real < 0) & (np.abs(spec_thresh.imag) < 1e-8)].real,spec_thresh[(spec_thresh.real < 0) & (np.abs(spec_thresh.imag) < 1e-8)].imag,zorder=10)
 spec_ax.scatter(spec_thresh[spec_thresh.real > 0].real, spec_thresh[spec_thresh.real > 0].imag)
+spec_ax.scatter(spec_thresh[spec_thresh.real <= 0].real, spec_thresh[spec_thresh.real <= 0].imag, color='lightgrey',zorder=3)
+
 spec_ax.set_xlim(-0.25,0.1)
 spec_ax.set_ylim(-0.8,0.8)
 spec_ax.set_xlabel(r"$\gamma$")
