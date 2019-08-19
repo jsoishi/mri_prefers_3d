@@ -25,5 +25,5 @@ plt.plot(x[0,0,:], alpha_yz)
 plt.xlabel(r"$x$")
 plt.ylabel(r"$\alpha$")
 plt.tight_layout()
-plt.savefig('plots/mean_field_alpha_{}.png'.format(dfname))
+plt.savefig('plots/mean_field_alpha_{}.pdf'.format(dfname))
 
