@@ -26,12 +26,18 @@ datafile = h5py.File(filename,'r')
 gamma_global = datafile['gamma'][:]
 gamma_r = gamma_global.real
 #gamma_r[np.where(gamma_r<0)] = 0.0
-max_gamma = datafile['gamma'].attrs['max growth rate']
-max_ky = datafile['gamma'].attrs['max ky']
-max_kz = datafile['gamma'].attrs['max kz']
-
+#max_gamma = datafile['gamma'].attrs['max growth rate']
 ky_global    = datafile['ky']
 kz_global    = datafile['kz']
+print(ky_global.shape)
+print(gamma_r.shape)
+try:
+    max_ky = datafile['gamma'].attrs['max ky']
+    max_kz = datafile['gamma'].attrs['max kz']
+except KeyError:
+    ky_index, kz_index = np.where(gamma_r == gamma_r.max())
+    max_ky = ky_global[ky_index[0]]
+    max_kz = kz_global[kz_index[0]]
 
 print("max growth rate on grid = {}".format(gamma_r.max()))
 
@@ -47,6 +53,7 @@ plt.colorbar(PCM, label=r'$\gamma$')
 plt.xlabel(r'$k_z$')
 plt.ylabel(r'$k_y$')
 plt.tight_layout()
+
 #plt.title(r'3D Keplerian MRI growth rates/f  $\left( S/S_{\mathrm{crit.}} = %.2f\right)$' %(R[i]))
 plot_file_name = Path(filename.stem + '_growthrates.png')
 plt.savefig(outbase/plot_file_name, dpi=300)
