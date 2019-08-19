@@ -4,7 +4,10 @@ The magnetorotational instability prefers three dimensions.
 Single mode calculation. Returns spectrum.
 
 Usage:
-    mri_single_yz_mode.py <config_file> <ky> <kz>
+    mri_single_yz_mode.py [--ideal] <config_file> <ky> <kz>
+
+Options:
+    --ideal    Use Ideal MHD
 """
 
 from docopt import docopt
@@ -23,6 +26,7 @@ logger = logging.getLogger(__name__)
 args = docopt(__doc__)
 ky = float(args['<ky>'])
 kz = float(args['<kz>'])
+ideal = args['--ideal']
 filename = Path(args['<config_file>'])
 outbase = Path("data")
 
@@ -75,7 +79,9 @@ domain = de.Domain([x_basis], grid_dtype=np.complex128, comm=MPI.COMM_SELF)
 
 # 3D MRI
 
-problem_variables = ['p','vx','vy','vz','ωy','ωz','bx','by','bz','jxx']
+problem_variables = ['p','vx','vy','vz','bx','by','bz']
+if not ideal:
+    problem_variables += ['ωy','ωz','jxx']
 problem = de.EVP(domain, variables=problem_variables, eigenvalue='gamma')
 problem.meta[:]['x']['dirichlet'] = True
 
@@ -107,36 +113,46 @@ problem.substitutions['jz'] = "dx(by) - dy(bx)"
 # Hydro equations: p, vx, vy, vz, ωy, ωz
 
 problem.add_equation("dx(vx) + dy(vy) + dz(vz) = 0")
+if ideal:
+    problem.add_equation("Dt(vx)  -     f*vy + dx(p) - B*dz(bx) = 0")
+    problem.add_equation("Dt(vy)  + (f+S)*vx + dy(p) - B*dz(by) = 0")
+    problem.add_equation("Dt(vz)             + dz(p) - B*dz(bz) = 0")
+else:
+    problem.add_equation("Dt(vx)  -     f*vy + dx(p) - B*dz(bx) + ν*(dy(ωz) - dz(ωy)) = 0")
+    problem.add_equation("Dt(vy)  + (f+S)*vx + dy(p) - B*dz(by) + ν*(dz(ωx) - dx(ωz)) = 0")
+    problem.add_equation("Dt(vz)             + dz(p) - B*dz(bz) + ν*(dx(ωy) - dy(ωx)) = 0")
 
-problem.add_equation("Dt(vx)  -     f*vy + dx(p) - B*dz(bx) + ν*(dy(ωz) - dz(ωy)) = 0")
-problem.add_equation("Dt(vy)  + (f+S)*vx + dy(p) - B*dz(by) + ν*(dz(ωx) - dx(ωz)) = 0")
-problem.add_equation("Dt(vz)             + dz(p) - B*dz(bz) + ν*(dx(ωy) - dy(ωx)) = 0")
-
-problem.add_equation("ωy - dz(vx) + dx(vz) = 0")
-problem.add_equation("ωz - dx(vy) + dy(vx) = 0")
+    problem.add_equation("ωy - dz(vx) + dx(vz) = 0")
+    problem.add_equation("ωz - dx(vy) + dy(vx) = 0")
 
 # MHD equations: bx, by, bz, jxx
-
 problem.add_equation("dx(bx) + dy(by) + dz(bz) = 0")
+if ideal:
+    problem.add_equation("Dt(bx) - B*dz(vx)            = 0")
+    problem.add_equation("Dt(jx) - B*dz(ωx) + S*dz(bx) = 0")
 
-problem.add_equation("Dt(bx) - B*dz(vx)            + η*( dy(jz) - dz(jy) )                   = 0")
-problem.add_equation("Dt(jx) - B*dz(ωx) + S*dz(bx) - η*( dx(jxx) + dy(dy(jx)) + dz(dz(jx)) ) = 0")
+else:
+    problem.add_equation("Dt(bx) - B*dz(vx)            + η*( dy(jz) - dz(jy) )                   = 0")
+    problem.add_equation("Dt(jx) - B*dz(ωx) + S*dz(bx) - η*( dx(jxx) + dy(dy(jx)) + dz(dz(jx)) ) = 0")
 
-problem.add_equation("jxx - dx(jx) = 0")
+    problem.add_equation("jxx - dx(jx) = 0")
 
 # Boundary Conditions: stress-free, perfect-conductor
 
 problem.add_bc("left(vx)   = 0")
-problem.add_bc("left(ωy)   = 0")
-problem.add_bc("left(ωz)   = 0")
 problem.add_bc("left(bx)   = 0")
-problem.add_bc("left(jxx)  = 0")
+if not ideal:
+    problem.add_bc("left(ωy)   = 0")
+    problem.add_bc("left(ωz)   = 0")
+    problem.add_bc("left(jxx)  = 0")
 
 problem.add_bc("right(vx)  = 0")
-problem.add_bc("right(ωy)  = 0")
-problem.add_bc("right(ωz)  = 0")
-problem.add_bc("right(bx)  = 0")
-problem.add_bc("right(jxx) = 0")
+
+if not ideal:
+    problem.add_bc("right(bx)  = 0")
+    problem.add_bc("right(ωy)  = 0")
+    problem.add_bc("right(ωz)  = 0")
+    problem.add_bc("right(jxx) = 0")
 
 # GO
 
@@ -153,15 +169,35 @@ solver.solve_dense(solver.pencils[0], rebuild_coeffs=True)
 t2 = time.time()
 
 logger.info("Solve time: {}".format(t2-t1))
+
+gamma = solver.eigenvalues
+dense_threshold=1
+gamma = gamma[np.abs(gamma) < dense_threshold]
+index = np.argsort(-gamma.real)
+gamma = gamma[index]
+print("saving eigenvector with gamma = {}".format(gamma[0]))
+nvars = len(problem_variables)
+eigvec = np.zeros((nvars,Nx),dtype=np.complex128)
+
+for k in range(nvars):
+    solver.set_state(index[0])
+    eigvec[k,:] = solver.state[problem_variables[k]]['g']
+
 # Save either or both eigenvalues and eigenvectors to a single .h5 file
 # Output file will be the .cfg file name with _output.h5
 if CW.rank == 0:
-    output_file_name = Path(filename.stem + '_single_mode.h5')
+    tail = '_single_mode.h5'
+    if ideal:
+        tail = '_ideal' + tail
+    output_file_name = Path(filename.stem + tail)
     output_file = h5py.File(outbase/output_file_name, 'w')
-    dset_evec = output_file.create_dataset('eigvals',data=solver.eigenvalues)
-    dset_evec.attrs.create("ky", ky)
-    dset_evec.attrs.create("kz", kz)
-    dset_evec.attrs.create("R", R)
-    dset_evec.attrs.create("B", B)
-    dset_evec.attrs.create("q", q)
-    dset_evec.attrs.create("d", Lx)
+    dset_eval = output_file.create_dataset('eigvals',data=solver.eigenvalues)
+    dset_eval.attrs.create("ky", ky)
+    dset_eval.attrs.create("kz", kz)
+    dset_eval.attrs.create("R", R)
+    dset_eval.attrs.create("B", B)
+    dset_eval.attrs.create("q", q)
+    dset_eval.attrs.create("d", Lx)
+    dset_evec = output_file.create_dataset('eigvecs',data=eigvec)
+    dset_evec.attrs.create('x',x_basis.grid())
+    
