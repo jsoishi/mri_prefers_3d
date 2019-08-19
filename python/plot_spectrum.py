@@ -43,8 +43,9 @@ spec_thresh = spectrum[np.abs(spectrum) < thresh]
 plt.scatter(spec_thresh[spec_thresh.real <= 0].real, spec_thresh[spec_thresh.real <= 0].imag)
 plt.scatter(spec_thresh[spec_thresh.real > 0].real, spec_thresh[spec_thresh.real > 0].imag)
 plt.gca().set_prop_cycle(None)
-plt.plot(-omega, 0., marker='^')
-plt.plot(omega, 0., marker='^')
+if asymptotic:
+    plt.plot(-omega, 0., marker='^')
+    plt.plot(omega, 0., marker='^')
 plt.xlim(-0.25,0.25)
 plt.ylim(-0.8,0.8)
 plt.xlabel("real")
