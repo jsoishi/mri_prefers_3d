@@ -203,4 +203,32 @@ if CW.rank == 0:
     dset_eval.attrs.create("d", Lx)
     dset_evec = output_file.create_dataset('eigvecs',data=eigvec)
     dset_evec.attrs.create('x',x_basis.grid())
-    
+
+    n_yz = 128
+    Ly = 2*np.pi/ky
+    Lz = 2*np.pi/kz
+    x = x_basis.grid()
+    y = np.linspace(0, Ly, n_yz, endpoint=False)
+    z = np.linspace(0, Lz, n_yz, endpoint=False)
+
+    zz,yy,xx = np.meshgrid(z,y,x,indexing='ij')
+    yz_dep = np.exp(1j*(ky*yy +kz*zz))
+
+    p = (eigvec[0,:]*yz_dep).real
+    u = (eigvec[1,:]*yz_dep).real
+    v = (eigvec[2,:]*yz_dep).real
+    w = (eigvec[3,:]*yz_dep).real
+    Bx =(eigvec[6,:]*yz_dep).real
+    By =(eigvec[7,:]*yz_dep).real
+    Bz =(eigvec[8,:]*yz_dep).real
+
+    save_vtk = False
+    if save_vtk:
+        vtkfile = filename.stem + '.vtk'
+        from pyevtk.hl import gridToVTK 
+        pointData = {'p':p.copy(), 'u':u.copy(), 'v':v.copy(), 'w':w.copy(),
+                     'Bx':Bx.copy(), 'By':By.copy(), 'Bz':Bz.copy()}
+        print("p flags", pointData['p'].flags)
+
+        gridToVTK(vtkfile, xx, yy, zz, pointData=pointData)
+
