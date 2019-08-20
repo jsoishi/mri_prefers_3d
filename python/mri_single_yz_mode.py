@@ -94,8 +94,9 @@ problem.parameters['B'] = B
 problem.parameters['ky'] = ky
 problem.parameters['kz'] = kz
 
-problem.parameters['ν'] = ν
-problem.parameters['η'] = η
+if not ideal:
+    problem.parameters['ν'] = ν
+    problem.parameters['η'] = η
 
 # Operator substitutions for y,z, and t derivatives
 
@@ -105,10 +106,12 @@ problem.substitutions['Dt(A)'] = "gamma*f*A + S*x*dy(A)"
 
 # Variable substitutions
 
-problem.substitutions['ωx'] = "dy(vz) - dz(vy)"
-problem.substitutions['jx'] = "dy(bz) - dz(by)"
-problem.substitutions['jy'] = "dz(bx) - dx(bz)"
-problem.substitutions['jz'] = "dx(by) - dy(bx)"
+if not ideal:
+    problem.substitutions['ωx'] = "dy(vz) - dz(vy)"
+    problem.substitutions['jx'] = "dy(bz) - dz(by)"
+    problem.substitutions['jy'] = "dz(bx) - dx(bz)"
+    problem.substitutions['jz'] = "dx(by) - dy(bx)"
+    probelm.substitutions['L(A)'] = "d(A,y=2) + d(A,z=2)"
 
 # Hydro equations: p, vx, vy, vz, ωy, ωz
 
@@ -117,6 +120,12 @@ if ideal:
     problem.add_equation("Dt(vx)  -     f*vy + dx(p) - B*dz(bx) = 0")
     problem.add_equation("Dt(vy)  + (f+S)*vx + dy(p) - B*dz(by) = 0")
     problem.add_equation("Dt(vz)             + dz(p) - B*dz(bz) = 0")
+
+    # Frozen-in field
+    problem.add_equation("Dt(bx) - B*dz(vx)        = 0")
+    problem.add_equation("Dt(by) - B*dz(vy) - S*bx = 0")
+    problem.add_equation("Dt(bz) - B*dz(vz)        = 0")
+
 else:
     problem.add_equation("Dt(vx)  -     f*vy + dx(p) - B*dz(bx) + ν*(dy(ωz) - dz(ωy)) = 0")
     problem.add_equation("Dt(vy)  + (f+S)*vx + dy(p) - B*dz(by) + ν*(dz(ωx) - dx(ωz)) = 0")
@@ -125,30 +134,22 @@ else:
     problem.add_equation("ωy - dz(vx) + dx(vz) = 0")
     problem.add_equation("ωz - dx(vy) + dy(vx) = 0")
 
-# MHD equations: bx, by, bz, jxx
-problem.add_equation("dx(bx) + dy(by) + dz(bz) = 0")
-if ideal:
-    problem.add_equation("Dt(bx) - B*dz(vx)            = 0")
-    problem.add_equation("Dt(jx) - B*dz(ωx) + S*dz(bx) = 0")
-
-else:
-    problem.add_equation("Dt(bx) - B*dz(vx)            + η*( dy(jz) - dz(jy) )                   = 0")
-    problem.add_equation("Dt(jx) - B*dz(ωx) + S*dz(bx) - η*( dx(jxx) + dy(dy(jx)) + dz(dz(jx)) ) = 0")
-
+    # MHD equations: bx, by, bz, jxx
+    problem.add_equation("dx(bx) + dy(by) + dz(bz) = 0")
+    problem.add_equation("Dt(bx) - B*dz(vx) + η*( dy(jz) - dz(jy) )            = 0")
+    problem.add_equation("Dt(jx) - B*dz(ωx) + S*dz(bx) - η*( dx(jxx) + L(jx) ) = 0")
     problem.add_equation("jxx - dx(jx) = 0")
 
 # Boundary Conditions: stress-free, perfect-conductor
 
 problem.add_bc("left(vx)   = 0")
-problem.add_bc("left(bx)   = 0")
+problem.add_bc("right(vx)  = 0")
 if not ideal:
+    problem.add_bc("left(bx)   = 0")
     problem.add_bc("left(ωy)   = 0")
     problem.add_bc("left(ωz)   = 0")
     problem.add_bc("left(jxx)  = 0")
 
-problem.add_bc("right(vx)  = 0")
-
-if not ideal:
     problem.add_bc("right(bx)  = 0")
     problem.add_bc("right(ωy)  = 0")
     problem.add_bc("right(ωz)  = 0")
