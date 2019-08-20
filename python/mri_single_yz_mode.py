@@ -111,7 +111,7 @@ if not ideal:
     problem.substitutions['jx'] = "dy(bz) - dz(by)"
     problem.substitutions['jy'] = "dz(bx) - dx(bz)"
     problem.substitutions['jz'] = "dx(by) - dy(bx)"
-    probelm.substitutions['L(A)'] = "d(A,y=2) + d(A,z=2)"
+    probelm.substitutions['L(A)'] = "dy(dy(A)) + dz(dz(A))"
 
 # Hydro equations: p, vx, vy, vz, ωy, ωz
 
