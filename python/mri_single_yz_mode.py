@@ -111,7 +111,7 @@ if not ideal:
     problem.substitutions['jx'] = "dy(bz) - dz(by)"
     problem.substitutions['jy'] = "dz(bx) - dx(bz)"
     problem.substitutions['jz'] = "dx(by) - dy(bx)"
-    probelm.substitutions['L(A)'] = "dy(dy(A)) + dz(dz(A))"
+    problem.substitutions['L(A)'] = "dy(dy(A)) + dz(dz(A))"
 
 # Hydro equations: p, vx, vy, vz, ωy, ωz
 
@@ -173,15 +173,17 @@ logger.info("Solve time: {}".format(t2-t1))
 
 gamma = solver.eigenvalues
 dense_threshold=1
-gamma = gamma[np.abs(gamma) < dense_threshold]
+
+thresh = (np.abs(gamma) < dense_threshold)
+gamma = gamma[thresh]
+solver.eigenvectors = solver.eigenvectors[:,thresh]
 index = np.argsort(-gamma.real)
-gamma = gamma[index]
-print("saving eigenvector with gamma = {}".format(gamma[0]))
+
+logger.info("saving eigenvector with gamma = {}".format(gamma[index[0]]))
 nvars = len(problem_variables)
 eigvec = np.zeros((nvars,Nx),dtype=np.complex128)
-
+solver.set_state(index[0])
 for k in range(nvars):
-    solver.set_state(index[0])
     eigvec[k,:] = solver.state[problem_variables[k]]['g']
 
 # Save either or both eigenvalues and eigenvectors to a single .h5 file
