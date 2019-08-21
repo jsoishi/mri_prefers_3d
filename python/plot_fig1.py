@@ -45,7 +45,7 @@ for i,r in enumerate(runs):
     c = ax.imshow(gamma_r, extent=[kz_global[:].min(),kz_global[:].max(),ky_global[:].min(),ky_global[:].max()], vmin=vmin,vmax=vmax, origin='lower')
 
     ax.contour(kz_global,ky_global,gamma_r,levels=contour_levels,colors='k')
-    ax.contour(kz_global,ky_global,gamma_r,levels=[0.],colors='w')
+    ax.contour(kz_global,ky_global,gamma_r,levels=[0.],colors='grey')
     ax.text(0.05,0.9,r'$S/S_c = {:5.3f}$'.format(SSC[i]), color='w',fontsize=18)
     ax.plot(max_kz, max_ky, 'ro')
     #ax.colorbar(PCM, label=r'$\gamma$')
