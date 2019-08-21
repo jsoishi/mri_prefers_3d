@@ -74,148 +74,119 @@
 
 \section{Asymptotic Calculation}
 \label{sec:asymp}
-Define the domain as $ - d/2 < x < d/2$. Make it symmetric so to make the shear simpler. The shear has no net. Otherwise it means we are not exactly in the rotating frame we thought we were. 
+Define the domain as $ - d/2 < x < d/2$. Being in the rotating frame means the shear has no net
 \Beq
-\int_{-d/2}^{d/2} S x \text{d} x  \ = \ 0
+\int_{-d/2}^{d/2} V_{y}(x) \text{d} x  \ = \ 0, \quad \implies  \quad V_{y}(x) \ = \ S\, x
 \Eeq
-This is very important later. 
-
-The full linear equations:
+The full linear ideal equations are:
 \Beq
-\pd{t} u + S x \pd{y} u - f v + \pd{x} p - B \pd{z} b_{x} &=& 0\\
-\pd{t} v + S x \pd{y} v + (S+f) u + \pd{y} p - B \pd{z} b_{y} &=& 0\\
-\pd{t} w + S x \pd{y} w + \pd{z} p - B \pd{z} b_{z} &=& 0 \\
+\pd{t} u + S x \pd{y} u - f v + \pd{x} p - B_{0} \pd{z} b_{x} &=& 0\\
+\pd{t} v + S x \pd{y} v + (S+f) u + \pd{y} p - B_{0} \pd{z} b_{y} &=& 0\\
+\pd{t} w + S x \pd{y} w + \pd{z} p - B_{0} \pd{z} b_{z} &=& 0 \\
 \pd{x} u + \pd{y} v + \pd{z} w  &=& 0\\
-\pd{t} b_{x} + S x \pd{y} b_{x} - B \pd{z} u &=& 0\\
-\pd{t} b_{y} + S x \pd{y} b_{y} - B \pd{z} v - S b_{x}  &=& 0\\
-\pd{t} b_{z} + S x \pd{y} b_{z} - B \pd{z} w &=& 0
+\pd{t} b_{x} + S x \pd{y} b_{x} - B_{0} \pd{z} u &=& 0\\
+\pd{t} b_{y} + S x \pd{y} b_{y} - B_{0} \pd{z} v - S b_{x}  &=& 0\\
+\pd{t} b_{z} + S x \pd{y} b_{z} - B_{0} \pd{z} w &=& 0
 \Eeq
 
 Assume all variable take the form
 \Beq
 g = \hat{G}(x) e^{ i ( \omega t + k z + \ell y ) } 
 \Eeq
-
-Define the ``parameter''
+Define the frequency ``parameters'' 
 \Beq
-\omega_{S} \ \equiv \ \omega + S x \ell 
+\omega_{S}(x) \ \equiv \ \omega + S x \ell, \quad \omega_{A}  \ \equiv \ B_{0} k
 \Eeq
-
 We can use equations (2)--(7) to find all amplitudes in terms of $\hat{U}(x)$ and $\hat{U}'(x)$. 
 \Beq
-\hat{V} &=& \frac{i \left(k^2 \hat{U}(x) \left(B^2 k^2 S-(f+S) \omega
-   _S^2\right)+\ell  \omega _S \hat{U}'(x) \left(B^2 k^2-\omega
-   _S^2\right)\right)}{\left(k^2+\ell ^2\right) \omega _S
-   \left(B^2 k^2-\omega _S^2\right)}\\
-\hat{W} &=& -\frac{i k \left(\ell  \hat{U}(x) \left(B^2 k^2 S-(f+S) \omega
-   _S^2\right)+\omega _S U'(x) \left(\omega _S^2-B^2
-   k^2\right)\right)}{\left(k^2+\ell ^2\right) \omega _S
-   \left(B^2 k^2-\omega _S^2\right)}\\
-   \hat{P} &=& -\frac{i \left(\ell  \hat{U}(x) \left(B^2 k^2 S-(f+S) \omega
-   _S^2\right)+\omega _S U'(x) \left(\omega _S^2-B^2
-   k^2\right)\right)}{\left(k^2+\ell ^2\right) \omega _S^2}\\
-   \hat{B}_{x} &=& \frac{B k \hat{U}(x)}{\omega _S}\\
-   \hat{B}_{y} &=& -\frac{i B k \left(\hat{U}(x) \left(B^2 k^2 S \ell ^2+\omega _S^2
-   \left(f k^2-S \ell ^2\right)\right)+\ell  \omega _S
-   U'(x) \left(\omega _S^2-B^2
-   k^2\right)\right)}{\left(k^2+\ell ^2\right) \omega _S^2
-   \left(B^2 k^2-\omega _S^2\right)}\\
-   \hat{B}_{z} &=& -\frac{i B k^2 \left(\ell  \hat{U}(x) \left(B^2 k^2 S-(f+S)
-   \omega _S^2\right)+\omega _S U'(x) \left(\omega _S^2-B^2
-   k^2\right)\right)}{\left(k^2+\ell ^2\right) \omega _S^2
-   \left(B^2 k^2-\omega _S^2\right)}
-\Eeq
-
-We can then substitute everything into equation (1) to get a second-order equation for $\hat{U}$. 
-
-When we do this, we get something of the form 
+\hat{V}(x) &=& \frac{i \left(\ell 
+   \hat{U}'(x) + k^{2} \frac{ \left((f+S) \omega
+   _S^2-S \omega _A^2\right)}{\omega _S
+   \left(\omega _S^2-\omega _A^2\right)} \hat{U}(x)\right)}{k^2+\ell ^2} \\
+\hat{W}(x) &=& \frac{i k \left(\hat{U}'(x)- \frac{ \left((f+S) \omega
+   _S^2-S \omega _A^2\right)}{\omega _S
+   \left(\omega _S^2-\omega _A^2\right)}  \ell 
+   \hat{U}(x)\right)}{k^2+\ell ^2} \\
+   \hat{P}(x) &=& \frac{i \left(\omega _A^2-\omega _S^2\right)
+   \left(\hat{U}'(x) -  \ell \frac{ \left((f+S) \omega
+   _S^2-S \omega _A^2\right)}{\omega _S
+   \left(\omega _S^2-\omega _A^2\right)}
+   \hat{U}(x)\right)}{\left(k^2+\ell ^2\right)
+   \omega _S} \\
+   \hat{B}_{x}(x) &=& \frac{\omega _A \hat{U}(x)}{\omega _S} \\
+   \hat{B}_{y}(x) &=&\frac{\omega _A \hat{V}(x)}{\omega _S} -\frac{i S \omega _A \hat{U}(x)}{\omega _S^2} \\
+   \hat{B}_{z}(x) &=& \frac{\omega _A \hat{W}(x)}{\omega _S}
+   \Eeq
+We can then substitute everything into equation (1) to get a second-order equation for $\hat{U}(x)$ of the general form 
 \Beq
-\alpha(x) \hat{U}''(x) + \beta(x) \hat{U}'(x) + \gamma(x) \hat(U)(x) \ = \ 0
+\alpha(x) \hat{U}''(x) + \beta(x) \hat{U}'(x) + \gamma(x) \hat{U}(x) \ = \ 0
 \Eeq
 where
 \Beq
-\alpha(x) &=& \frac{i \left(B^2 k^2-\omega _s^2\right)}{\left(k^2+\ell
-   ^2\right) \omega _s} \\ 
-   \beta(x) &=& -\frac{2 i B^2 k^2 S \ell }{\left(k^2+\ell ^2\right) \omega
-   _s^2} \\
-   \gamma(x) &=& \frac{i \left(\omega _s^4 \left(\frac{f^2
-   k^2}{\left(k^2+\ell ^2\right) \left(B^2 k^2-\omega
-   _s^2\right)}+1\right)-k^2 \omega _s^2 \left(B^2+\frac{f
-   S}{k^2+\ell ^2}\right)+\frac{2 B^2 k^2 S^2 \ell
-   ^2}{k^2+\ell ^2}\right)}{\omega _s^3}
+\alpha(x) &=& \omega _S^2-\omega _A^2 \\ 
+   \beta(x) &=& \frac{2 S \ell  \omega _A^2}{\omega _S} \\
+   \gamma(x) &=& \omega _A^2 \left(\frac{f^2 k^2}{\omega
+   _S^2-\omega _A^2}-\frac{2 S^2 \ell
+   ^2}{\omega _S^2}+k^2+\ell ^2\right)+f k^2
+   (f+S)-\left(k^2+\ell ^2\right) \omega _S^2
 \Eeq
+
 
 We can eliminate the first-order term via
 \Beq
-\hat{U}(x) \ = \ \chi(x) \psi(x) 
-\Eeq
-if 
-\Beq
-\chi'(x) \  = \ -\frac{\beta (x) \chi (x)}{2 \alpha (x)}
+\hat{U}(x) \ = \ \chi(x) \psi(x) \quad \text{where} \quad \chi'(x) \  = \ -\frac{\beta (x) \chi (x)}{2 \alpha (x)}
 \Eeq
 \Beq
-\psi''(x) + \Phi(x) \psi(x) \ = \ 0
+-\psi''(x) + \Phi(x) \psi(x) \ = \ 0
 \Eeq
 \Beq
-\Phi(x)  \ = \ -\frac{-2 \beta (x) \alpha '(x)+2 \alpha (x) \left(\beta'(x)-2 \gamma (x)\right)+\beta (x)^2}{4 \alpha (x)^2}
+\Phi(x)  \ = \ \frac{-2 \beta (x) \alpha '(x)+2 \alpha (x)
+   \left(\beta '(x)-2 \gamma (x)\right)+\beta
+   (x)^2}{4 \alpha (x)^2}
 \Eeq
 Putting everything together 
 \Beq
-\Phi(x) \ = \ \tfrac{k^2 \omega _S^2 \left(2 B^2 \left(k^2+\ell
-   ^2\right)+f (f+S)\right)-B^2 k^2 \left(B^2 k^2
-   \left(k^2+\ell ^2\right)+S \left(f k^2-S \ell
-   ^2\right)\right)-\left(k^2+\ell ^2\right) \omega
-   _S^4}{\left(\omega _S^2-B^2 k^2\right){}^2}
+\Phi(x) \ = \ \frac{S  \left(f k^2-S \ell
+   ^2\right) \omega _A^2 -f k^2 (f+S) \omega
+   _S^2}{\left(\omega _A^2-\omega
+   _S^2\right){}^2} + k^{2} + \ell^{2}
 \Eeq
 
-Now we want to rescale everything in terms of a bookkeeping parameter, $\eps$.
+Rescale everything in terms of a bookkeeping parameter, $\eps$.
 \Beq
-S  \ \to \  - \frac{\pi ^2 B^2}{d^2 f} ( 1 + \eps^{2} R) 
+S  \ \to \  - \frac{\pi ^2 B_{0}^2}{d^2 f} ( 1 + \eps^{2} R) 
 \Eeq 
 \Beq
 \omega \ \to \ \eps^{2} \omega , \quad k \ \to \ \eps k, \quad \ell \ \to \ \eps^{2} \ell 
 \Eeq
 Also 
 \Beq
-q  \ \equiv  \ \frac{\pi ^2 B^2}{d^2 f^{2}}
+q  \ \equiv  \ \frac{\pi ^2 B_{0}^2}{d^2 f^{2}}
 \Eeq
-
 Expanding to $\mathcal{O}(\eps^{2})$, 
 \Beq
-\Phi(x) \ = \ \frac{\pi^{2}}{d^{2}} + \frac{\epsilon ^2 \left(-B^4 k^4+B^2 f^2 q \left(k^2 R+q
+\Phi(x) \ = \ \frac{\pi^{2}}{d^{2}} + \frac{\epsilon ^2 \left(-B_{0}^4 k^4+B_{0}^2 f^2 q \left(k^2 R+q
    \ell ^2\right)+f^2 (q+1) (\omega -f q x \ell
-   )^2\right)}{B^4 k^2}
+   )^2\right)}{B_{0}^4 k^2}
 \Eeq
-
-Now do the perturbations 
-
+Going order-by-order
 \Beq
 \psi_{0}''(x) + \frac{\pi^{2}}{d^{2}}  \psi_{0}(x) \ = \ 0 
 \Eeq
 \Beq
 \psi_{2}''(x) + \frac{\pi^{2}}{d^{2}}  \psi_{2}(x) + \Phi_{2}(x)\psi_{0}(x)\ = \ 0 
 \Eeq
-
-Remember we are on $-d/2 < x < d/2$ Therefore 
+Therefore 
 \Beq
 \psi_{0}(x) \ = \ \cos(\pi x / d)
 \Eeq
 This satisfies the equation and boundary condition. The solvability condition for $\psi_{2}(x)$ is 
-
 \Beq
 \int_{-d/2}^{d/2} \Phi_{2}(x)\psi_{0}(x)^{2} \text{d} x \ = \ 0.
 \Eeq
-
-
-This works out to 
+This implies 
 \Beq
-\left(\pi ^2 B^2+d^2 f^2 \right) \omega^{2} - B^4 k^2 \left(d^2 k^2-\pi ^2 R\right)   \ + \ \frac{\pi ^2 B^4 \ell ^2}{12}  \left(\left(6+\pi ^2\right) q+\pi ^2-6\right) \ = \ 0
-\Eeq
-
-
-
-\Beq
-\omega^{2} \ = \ \frac{q\,B^{2}}{(q+1)} \left[ k_z^2 \left(\frac{d^2}{\pi^{2}} k_z^2-R\right) \ - \ \frac{\left(6+\pi ^2\right) q+\pi
+\omega^{2} \ = \ \frac{q\,B_{0}^{2}}{(q+1)} \left[ k_z^2 \left(\frac{d^2}{\pi^{2}} k_z^2-R\right) \ - \ \frac{\left(6+\pi ^2\right) q+\pi
    ^2-6}{12 } \, k_{y}^{2}  \right] \ + \ ...
 \Eeq
 
