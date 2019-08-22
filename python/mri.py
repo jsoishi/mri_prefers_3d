@@ -74,6 +74,12 @@ try:
 except configparser.NoOptionError:
     ky_start_guess = False
 
+try:
+    ky_start_dense = config.getboolean('parameters','ky_start_dense')
+    dense_threshold = config.getfloat('solver','dense_threshold')
+except configparser.NoOptionError:
+    ky_start_dense = False
+
 kzmin = config.getfloat('parameters','kzmin')
 kzmax = config.getfloat('parameters','kzmax')
 Nkz = config.getint('parameters','Nkz')
@@ -181,7 +187,7 @@ def growth_rate(ky,kz,target,N=15, dense=False):
         else:
             solver.solve_sparse(solver.pencils[0], N=N, target=target, rebuild_coeffs=True)
     except:
-        logger.info("Solver failed for (ky, kz) = (%f, %f)"%(ky, kz))
+        logger.warning("Solver failed for (ky, kz) = (%f, %f)"%(ky, kz))
         solver_failed = True
 
     if solver_failed:
@@ -228,6 +234,9 @@ t1 = time.time()
 for k, kz in enumerate(kz_local):
     if ky_start_guess:
         soln = growth_rate(ky_global[0], kz, ky_start_guess, N=Nmodes, dense=dense)
+    elif ky_start_dense:
+        logger.info("Using dense solve at ky=0 for initial guess.")
+        soln = growth_rate(0., kz, ideal_2D(kz), dense=True)
     else:
         soln = growth_rate(0., kz, ideal_2D(kz), N=Nmodes, dense=dense)
     gamma_local[0,k] = soln[0]
@@ -263,7 +272,7 @@ if CW.rank == 0:
         dset_evec = output_file.create_dataset('eigvec',data=eigvec_global)
         dset_x = output_file.create_dataset('x', data=x_basis.grid())
 
-find_max = True
+find_max = False
 if find_max:
     if CW.rank == 0:
         max_growth_guess = gamma_global.max()
