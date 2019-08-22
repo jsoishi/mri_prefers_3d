@@ -47,7 +47,7 @@ dk = np.array(dk)
 
 fig, ax = plt.subplots()
 c = ax.scatter(ssc, phi, marker='o', c=growth, yunits=radians, zorder=2)#,edgecolor='k',linewidth=0.8)
-fig.colorbar(c, ax = ax, label='$\gamma$')
+fig.colorbar(c, ax = ax, label='$\gamma/S$')
 ax.set_xlabel(r"$S/S_c$")
 ax.set_ylabel(r"$\phi$")
 ax.set_yticklabels([0, "$\pi/8$", "$\pi/4$"])
