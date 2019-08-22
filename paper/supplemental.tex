@@ -1,5 +1,6 @@
 \documentclass[aps,prl,preprint
-,superscriptaddress]{revtex4-1}\newcommand{\SSC}{S/S_{c}}
+,superscriptaddress]{revtex4-1}
+\newcommand{\SSC}{S/S_{c}}
 \newcommand{\mnras}{Monthly Notices of the Royal Astronomical Society}
 \newcommand{\apjs}{The Astrophysical Journal Supplement Series}
 \usepackage{graphicx}
@@ -66,8 +67,53 @@
 %Title of paper
 \title{Supplemental Information for: The Magnetorotational Instability Prefers Three Dimensions}
 
-\section{Table of Runs}
-\label{sec:runs}
+\section{Numerical Methods}
+\label{sec:methods}
+
+For both the ideal and non-ideal MHD equations, we solve the eigenvalue problem in the $x$ direction using the EigenValueProblem mode in \emph{Dedalus} for a grid of $N_y \times N_z$ modes in the $y$ and $z$ directions.
+For most of our runs, we use a targeted, sparse eigenvalue solver solving for the 15 modes closest to a guess for the maximum growth rate.
+We use the ideal 2D growth rate as input for the smallest $k_y > 0$ mode at each $k_z$ and then use the output from each previous $k_y$ as an input guess for the next mode.
+Our solver is parallelized over the $k_y, k_z$ modes.
+We have confirmed that dense solvers retrieve identical results.
+For the spectrum in figure 1 of the main text, we used a dense eigenvalue solver.
+
+In order to ensure our results are converged, we have repeated runs at $n_x=256$ Chebyshev modes as well as doubling the number of modes in $y$ and $z$.
+
+\begin{tabular}{cccccccccccccc}
+\textbf{Run} & \textbf{$\SSC$} & \textbf{$\nu$} & \textbf{$\eta$} & \textbf{$q$} & \textbf{$N_x$} & \textbf{$N_{k_y}$} & \textbf{$N_{k_z}$} & \textbf{Sparse/Dense}& \\
+1  &   1.02 & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & resolution study\\
+2  &   1.02 & $10^{-5}$ & $10^{-5}$ & 0.75 & 256 & 200 & 200 & sparse & \\
+3  &   1.02 & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & dense  & \\
+4  &   1.02 & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 512 & 512 & sparse & \\
+5  &   1.02 & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 100 & 100 & sparse & \\
+6  &   0.2  & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & $\SSC$ variation\\
+7  &   0.3  & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+8  &   0.4  & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+9  &   0.5  & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+10 &   0.64 & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+11 & 1.020  & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+12 & 1.44   & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+13 & 1.75   & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+14 & 1.891  & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+15 & 2.     & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+16 & 2.01   & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+17 & 2.015  & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+18 & 2.031  & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+19 & 2.05   & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+20 & 2.1    & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+21 & 2.25   & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+22 & 2.5    & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+23 & 4      & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+24 & 1.02   & $10^{-6}$ & $10^{-6}$ & 0.75 & 128 & 200 & 200 & sparse & Reynolds number study\\
+25 & 1.02   & $10^{-4}$ & $10^{-4}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+26 & 1.02   & $10^{-3}$ & $10^{-3}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+27 & 1.02   & $10^{-2}$ & $10^{-2}$ & 0.75 & 128 & 200 & 200 & sparse & \\
+28 & 1.02   & $10^{-5}$ & $10^{-5}$ & 0.1  & 128 & 200 & 200 & sparse & Solar Rossby\\ 
+29 & 1.02   & $10^{-6}$ & $10^{-2}$ & 0.1  & 128 & 200 & 200 & sparse & Liquid metal case\\ 
+\end{tabular}
+%\label{simulations}
+
+
 
 \section{Resolution and Reynolds number study}
 \label{sec:resolution}
