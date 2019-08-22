@@ -1,7 +1,20 @@
+% PRL Length limits
+% Displayed Math 	The word equivalent for displayed math is 16 words per row for single-column equations. Two-column equations count as 32 words per row.
+% Figures 	To estimate the word equivalent for figures use the figure’s aspect ratio (width / height). The estimate is [(150 / aspect ratio) + 20 words] for single-column figures, and [300 / (0.5 * aspect ratio)] + 40 words for double-column figures.
+
+% Fig 1: A = w/h = 2. Double column, words = 340
+% Fig 2: A = 4/3. Single column, words = 133
+% Fig 3: A = 1. Single column, words = 170
+% Fig 4: A = 0.5 Single column, words = 320
+% equations: 8 * 16 = 128
+
+% current word count: 1780 + 128 + 340 + 133 + 170 + 320
+% limit: 3750
 % \documentclass[aps,prl,preprint,groupedaddress]{revtex4-1}
 %\documentclass[aps,prl,preprint,superscriptaddress]{revtex4-1}
 \documentclass[aps,prl,reprint,superscriptaddress]{revtex4-1}
 \newcommand{\SSC}{S/S_{c}}
+\newcommand{\Prm}{\mbox{\textit{Pm}}}
 \newcommand{\mnras}{Monthly Notices of the Royal Astronomical Society}
 \newcommand{\apjs}{The Astrophysical Journal Supplement Series}
 \usepackage{graphicx}
@@ -67,7 +80,7 @@
 
 \date{\today}
 
-\begin{abstract}Ú
+\begin{abstract}
 The magnetorotational instability (MRI) occurs when a weak magnetic field destabilizes a rotating electrically conducting fluid with an inwardly increasing angular velocity shear.
 The MRI is considered essential to the operation of astrophysical accretion disks, with the central object supplying a Keplerian rotation profile.
 The MRI should also exist for the internal shear layers of stars.
@@ -159,6 +172,11 @@ Our interest is in ideal ($\eta = 0$), inviscid ($\nu = 0$) conditions.
 However, we set $\eta=\nu=10^{-5}$ to avoid critical layers in for the \textit{stable} solution branch.
 We confirmed our results are insensitive to the presence of small diffusion. 
 For each $(k_y, k_z)$ pair, we solve using $n_x = 128$ modes; all our results are identical at double the resolution\footnote{All code used in this paper can be found at \protect\url{https://github.com/jsoishi/mri\_prefers\_3d}}.
+\begin{figure*}[ht]
+  \includegraphics[width=\textwidth]{fig_1.pdf}
+  \caption{Growth rates for three-dimensional MRI modes. a) growth rates $\gamma$ over a grid of $k_y$ and $k_z$ for four values of supercriticality $\SSC$. The gray contour highlights $\gamma = 0$; the red dots indicate the fastest growing mode. At $\SSC = 0.640$, there are no two dimensional modes. b) Growth rate vs $k_y$ for $k_z = ???$ at $\SSC = 1.002$ (highlighted by the blue line in a). The orange line gives the asymptotic result from equation~(\ref{eq:asymp}) and the blue line are the numerical results. The asymptotic form is valid as $\SSC \to 1$ and $k_y \ll 1$. c) The full discrete spectrum of the MRI for $(k_y, k_z) \simeq (0.263, 0.447)$. The unstable mode is plotted in orange, its stable complex conjugate is blue, and all other modes are gray.}
+  \label{fig:growth_rate}
+\end{figure*}
 
 Our two main results are: (I) When the first two-dimensional mode becomes unstable, there already exist three-dimensional modes with positive growth rate. (II) When the criticality becomes sufficiently large, the fastest-growing mode becomes purely two-dimensional. These results are pertinent in two ways. First, the MRI contains a substantial ``Goldilocks regime" with possible direct dynamo action, and this regime likely most applies to stellar interiors. Second, our results accord with well-established results for accretion disks that expect primary two-dimensional linear modes.
 Figure~\ref{fig:growth_rate}a shows the growth rates for four values of $\SSC$. 
@@ -179,26 +197,38 @@ where
 \end{equation}
 %\end{widetext}
 The first term in equation~(\ref{eq:asymp}) results from the two-dimensional calculation.
-The second term is negative definite and leads ultraviolet divergence in the absence of higher-order effects.
+The second term is positive definite: it \emph{always} leads to enhanced growth rates when $k_y \neq 0$.
+Of course, it ultimately leads to ultraviolet divergence in the absence of higher-order effects.
 
 Figure~\ref{fig:growth_rate}b compares the numerical growth rates for $\SSC=1.002$ between $0 \le k_y \le 0.2$ to the asymptotic approximation, showing good agreement where the latter is valid.
 Figure~\ref{fig:growth_rate}c shows the full spectrum for $\SSC = 1.02$.
 The plot shows a purely growing/decaying complex-conjugate pair (orange/blue dots on the real axis) consistent with equation~(\ref{eq:asymp}).
 The other stable modes (gray dots) are rotationally modified Alfv\'{e}n waves found in left- and right-going pairs, consistent with the analytic predictions for two-dimensional stability calculations.
-%\onecolumngrid
+
+It is useful to examine the eigenvectors for these three dimensional modes.
+Because we are only interested in the \emph{unstable} modes, which have $\omega = 0$, critical layers do not form.
+We therefore do not need viscosity or resistivity to regularize the solutions.
+In order to test that our non-ideal solutions are sufficiently close to the ideal case we are interested in, we reformulated equations~(\ref{eq:mhd}--~(\ref{eq:divu})) without viscous and resistive terms and solved the corresponding eigenvalue problem.
+The ideal MHD system is second order in $x$ and thus only two boundary conditions can be set.
+We choose impenetrable ($v_x = 0$) conditions on both walls in this case.
+Figure~\ref{fig:eigvec} shows the eigenvectors for the most unstable mode at $\SSC = 1.02$ using ideal MHD. 
+The tilted structures of $v_x$ and $v_y$ as well as $b_x$ and $b_y$, show that the eigenmodes have non-trivial Reynolds and Maxwell stresses.
+The eigenfunctions are indistinguishable from those at finite resistivity and viscosity, lending additional confidence that our other results are sufficiently in the ideal regime.
+
 %
-\begin{figure*}[h!]
-  \includegraphics[width=\textwidth]{fig_1.pdf}
-  \caption{Growth rates for three-dimensional MRI modes. a) growth rates $\gamma$ over a grid of $k_y$ and $k_z$ for four values of supercriticality $\SSC$. The white contour highlights $\gamma = 0$; the red dots indicate the fastest growing mode. At $\SSC = 0.640$, there are no two dimensional modes. b) Growth rate vs $k_y$ for $k_z = ???$ at $\SSC = 1.002$ (highlighted by the blue line in a). The orange line gives the asymptotic result from equation~(\ref{eq:asymp}) and the blue line are the numerical results. The asymptotic form is valid as $\SSC \to 1$ and $k_y \ll 1$. c) The full discrete spectrum of the MRI for $(k_y, k_z) \simeq (0.263, 0.447)$. The unstable mode is plotted in orange, its stable complex conjugate is blue, and all other modes are gray.}
-  \label{fig:growth_rate}
-\end{figure*}
-%\twocolumngrid
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{eigvecs_xy_run_11_ideal_single_mode.pdf}
+  \caption{Eigenvectors of the velocity and magnetic field perturbations for the most unstable mode when $\SSC = 1.02$. This calculation is \emph{ideal}: $\eta = \nu = 0$; calculations at $\eta = \nu = 10^{-5}$ are indistinguishable.  The top row shows $v_x$, $v_y$, $v_z$ (red is negative, blue positive); the bottom row shows $b_x$, $b_y$, $b_z$ (purple is negative, orange positive). As these are linear calculations, the amplitudes are arbitrary.}
+  \label{fig:eigvec}
+\end{figure}
 %
-Numerical simulations consistently show axisymmetric modes dominating the early evolution of the MRI before breaking down into 3D MHD turbulence \citep{1995ApJ...440..742H,2018ApJ...853..174H,2019ApJS..241...26D}. 
+
+Numerical simulations aimed at understanding the MRI in accretion disks consistently show axisymmetric modes dominating the early evolution of the MRI before breaking down into 3D MHD turbulence \citep{1995ApJ...440..742H,2018ApJ...853..174H,2019ApJS..241...26D}. 
 These ``channel modes'' are exact non-linear solutions for $x$-shearing-periodic domains, and can only saturate via parasitic shear instabilities \citep{1994ApJ...432..213G}.
 We use impenetrable, stress-free boundary conditions that are more applicable to stellar interiors. 
 But even in disks, any kind of finite radial extent will cutoff the unbounded growth of channel modes. 
-We reconcile our results with earlier simulations by showing that the MRI indeed prefers two dimensions for the larger values of  criticality found in disk simulations. 
+We reconcile our results with earlier simulations by showing that the MRI indeed prefers two dimensions for the larger values of criticality found in disk simulations. 
 Figure~\ref{fig:phi} shows the phase angle $\phi = \arctan k_y/k_z$ of the fastest growing mode as function of $\SSC$.
 Above $\SSC \gtrsim 2.05$ $\phi=0$, indicating that axisymmetric modes have the fastest growth rates.
 For the fiducial run in \citet{1996ApJ...464..690H}, $\SSC \simeq 4.84$ (most works use similar values).
@@ -215,6 +245,22 @@ Even for $\SSC> 2.05$ there are significant swaths of unstable three-dimensional
 Also, non-normality generically accompanies non-axisymmetry in shearing systems \citep[see][for a discussion relevant to the MRI]{1992MNRAS.255P..25K}.
 In non-normal systems, transient amplification can occur for stable modes, and can even cause turbulence.
 Therefore significant three dimensionality likely implies important non-normal behavior near onset.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\columnwidth]{run_47_output_growthrates.pdf}\\
+  \includegraphics[width=\columnwidth]{run_49_output_growthrates.pdf}
+  \caption{(top) Growth rates for q=0.1. (bottom) Growth rates for $\nu=10^{-6}$, $\eta = 0.1$.}
+  \label{fig:other_params}
+\end{figure}
+Finally, we vary two important parameters:
+$q$ and the magnetic Prandtl number $\Prm = \nu/\eta$.
+Figure~\ref{fig:other_params} shows the growth rates for $\SSC = 1.02$.
+The left panel shows $q = 0.1$ holding all other parameters equal to their fiducial values; the right panel shows $\Prm = 10^{-5}$ with all other parameters equal to their fiducial.
+The former is a Rossby number relevant to the Sun, while the latter is $\Prm$ close to those found in liquid metal experiments.
+For the liquid metal run, we choose $\nu = 10^{-6}$, implying a Reynolds number of $10^6$.
+At $\Prm = 10^{-5}$, the MRI is just supercritical; this is very similar to the experimental conditions of the Princeton MRI experiment \citep{2002JFM...462..365G}.
+Importantly, for both cases, the MRI remains dominated by three dimensional modes.
 
 The second implication of the three dimensional modes is of considerably more importance.
 These modes produce dynamo action in the linear regime, as evidenced by the presence of non-trivial eigenmodes for all three components of the magnetic field.
