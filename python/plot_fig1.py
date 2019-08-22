@@ -81,7 +81,7 @@ kz_global    = data['kz']
 
 ky = ky_global[:]
 kz = kz_global[index]
-print("kx for asymptotic comparison: {}".format(kz))
+print("kx for asymptotic comparison: {}".format(kz));
 grid[1].axvline(kz, ymin=0, ymax=0.2, alpha=0.7)
 R = 1.001
 B = 1
@@ -96,8 +96,8 @@ asymp_sub.plot(ky,-(gamma_r[:,index]/q + 1j*gamma_i[:,index]/q)**2, label='numer
 asymp_sub.plot(ky_an, omega2/q**2, label='asymptotic')
 
 #asymp_ax.legend(loc='upper right')
-asymp_ax.text(0.125, 0.048, 'numerical', fontsize=18)
-asymp_ax.text(0.035, 0.03, 'asymptotic', fontsize=18)
+asymp_ax.text(0.125, 0.048/q, 'numerical', fontsize=18)
+asymp_ax.text(0.035, 0.03/q, 'asymptotic', fontsize=18)
 asymp_ax.set_ylim(0, 0.06/q)
 asymp_ax.set_xlim(0,0.2)
 asymp_ax.set_xlabel(r'$k_y$')
