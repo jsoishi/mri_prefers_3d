@@ -43,6 +43,7 @@ for i,r in enumerate(runs):
     contour_levels = np.linspace(0,gamma_r.max(),5)
     vmin = 0.
     vmax = 0.1
+    print("max gamma_r/S = {}".format(gamma_r.max()))
     c = ax.imshow(gamma_r, extent=[kz_global[:].min(),kz_global[:].max(),ky_global[:].min(),ky_global[:].max()], vmin=vmin,vmax=vmax, origin='lower')
 
     ax.contour(kz_global,ky_global,gamma_r,levels=contour_levels,colors='k')
@@ -80,6 +81,7 @@ kz_global    = data['kz']
 
 ky = ky_global[:]
 kz = kz_global[index]
+print("kx for asymptotic comparison: {}".format(kz))
 grid[1].axvline(kz, ymin=0, ymax=0.2, alpha=0.7)
 R = 1.001
 B = 1
