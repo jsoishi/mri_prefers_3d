@@ -47,21 +47,21 @@ The MRI is considered essential to the operation of astrophysical accretion disk
 The MRI should also exist for the internal shear layers of stars.
 Stellar-interior shears can take a wide range of profiles, including near-critical, but with negligible dissipation. 
 Here, we show that the fastest growing unstable modes of an ideal magnetofluid are three dimensional provided the shear rate, $S$, is close to the two-dimensional onset value, $S_c$.
-Three-dimensional modes are unstable down to $S \approx 0.10 S_c$, and dominate the two-dimensional modes until $S \approx 2.05 S_c$.
-Significant numbers of fast three dimensional modes remain well past $2.05 S_{c}$. 
+For a Keplerian shear, three-dimensional modes are unstable down to $S \approx 0.10 S_c$, and dominate the two-dimensional modes until $S \approx 2.05 S_c$.
+Significant numbers of fast three-dimensional modes remain well past $2.05 S_{c}$. 
 These finding are significant in three ways. 
 First, evidence from weakly nonlinear theory suggests that the MRI saturates by pushing the shear rate to its critical value. 
 This can happen for systems, like stars, that can rearrange their angular velocity profiles.
 Second, the non-normal character and large transient growth of the MRI should be important anytime strong three-dimensionality exists.
 Finally, three-dimensional growth suggest the possibility of direct dynamo action driven from the linear instability itself.
-We demonstrate that three dimensional modes dominate the dynamics for shear profiles relevant to the Solar interior and at the very low magnetic Prandtl numbers relevant to liquid metal laboratory experiments.
+We also demonstrate that three-dimensional modes dominate for shear profiles relevant to stellar interiors and at the tiny magnetic Prandtl numbers relevant to liquid metal laboratory experiments.
 \end{abstract}
 
 \pacs{}
 \maketitle
 
 The magnetorotational instability (MRI) is extremely important in astrophysical fluid dynamics.
-By changing the stability criterion for differentially rotating flows from a negative angular \emph{momentum} gradient to a negative angular \emph{velocity} gradient, a weak magnetic field allows the Keplerian velocity profile due to a central point mass to drive turbulence \citep[e.g.][]{1998RvMP...70....1B,2010RSPTA.368.1607J}.
+By changing the stability criterion for differentially rotating flows from a negative angular \emph{momentum} gradient to a negative angular \emph{velocity} gradient, a weak magnetic field catalyzes turbulence in a Keplerian shear \citep[e.g.][]{1998RvMP...70....1B,2010RSPTA.368.1607J}.
 This discovery explained the ubiquitous accretion onto compact objects at rates compatible with observations, and may also influence the formation of planets \citep[e.g.][]{2007Natur.448.1022J}.
 In disks, the gravitational field dominates the local plasma dynamics, and thus the MRI cannot significantly affect the background shear; it must saturate by other means \citep{2018MNRAS.474.3451X}.
 However, stars and liquid metal Taylor-Couette experiments have differential rotation profiles driven by much weaker stresses.
@@ -70,13 +70,13 @@ Stellar interiors have extremely high fluid and magnetic Reynolds numbers, but m
 This critical shear is set by the background magnetic field strength for axisymmetric perturbations in a channel of a given size.
 Despite the extensive literature on the accretion disk case of strong shear and high Reynolds numbers and the liquid metal literature on weak shear and lower Reynolds numbers, even the linear dynamics of the MRI are not well studied in the weak shear, high Reynolds number regime.
 
-Here, we investigate the stability of three dimensional perturbations near the two dimensional critical shear rate $S_c$ for a nearly invisicd, ideal MHD flow.
-We find that the first destabilized modes are three-dimensional, and thus can act as a dynamo even in the absence of secondary instability.
+Here, we investigate the stability of three-dimensional perturbations near the two-dimensional critical shear rate $S_c$ for a nearly invisicd, ideal MHD flow.
+We find that the first destabilized modes are three-dimensional, and thus could act as a dynamo even in the absence of secondary instability.
 These results strongly suggest that the non-normality of the linear operator driving the MRI are always important, even when axisymmetric modes dominate.
 
 We solve the linearized magnetohydrodynamic equations in rotating plane-Couette geometry.
-This corresponds to a Cartesian frame rotating with angular frequency $\Omega$ and a linear background shear, $V_{y} = Sx$. 
-We cast the Navier-Stokes equation in a fairly standard form,
+This corresponds to a Cartesian frame rotating with angular frequency $\Omega$ and a linear background shear, $V_{y} = Sx$; \citep[see][]{2015RSPSA.47140699V}.
+We cast the Navier-Stokes equation in the form,
 \begin{equation}
   \label{eq:mhd}
   \frac{D \mathbf{v}}{Dt} + f \hat{z} \times \mathbf{v} + S v_x \hat{z} + \mathbf{\nabla}{p} + \nu \mathbf{\nabla} \times \mathbf{\omega} = B_{0} \partial_{z} \mathbf{b},
@@ -86,8 +86,8 @@ where
 \omega = \mathbf{\nabla} \times \mathbf{v}, \quad \text{and} \quad \frac{D}{Dt} \ = \ \partial_{t} + S x \partial_{y}
 \end{equation}
 The main input parameters are the Coriolis parameter, $f = 2 \Omega$; the background shear rate, $S = dV_{y}/dx < 0$;  the vertical magnetic field $B_{0}$ (in Alfv\'{e}n units $\mu_{0} \rho_{0} = 1$); and the horizontal domain width $-d/2 \le x \le d/2$.
-Accretion disk modelling usually considers the Rossby number $q = -S/f < 1$; $q=1$ corresponds to purely hydrodynamical Rayleigh unstable shear.
-For all calculations here, we use $q = 3/4$ (Keplerian).
+Accretion-disk modelling usually considers the Rossby number $q = -S/f < 1$; $q=1$ corresponds to purely hydrodynamical Rayleigh unstable shear.
+Unless otherwise stated $q = 3/4$ (Keplerian).
 We write the induction equation in terms of the $x$ component of the magnetic field,
 \begin{equation}
   \label{eq:Bx}
@@ -98,12 +98,14 @@ and the $x$ component of the current density ($j_{x} = \partial_{y}b_{z} - \part
   \label{eq:Jx}
   \frac{D j_x}{Dt} - B_0 \partial_z \omega_x + S \partial_z B_x - \eta \nabla^2 j_x = 0
 \end{equation}
-We explicitly enforce the divergence constraint on the incompressible velocity field $v$ and the magnetic field,
+We explicitly enforce divergence-free velocity and magnetic field,
 \begin{equation}
   \label{eq:divu}
   \mathbf{\nabla} \cdot \mathbf{v} = \mathbf{\nabla} \cdot \mathbf{b} = 0.
 \end{equation}
-We consider the behavior of the MRI in a vertically ($z$) and horizontally ($y$) periodic channel of width $d = \pi$. The boundary conditions are impenetrable stress-free and perfectly conducting; $v_{x} = \omega_{y} = \omega_{z} = b_{x} = \partial_{x}j_{x} = 0$. The MRI is a weak-field instability; in the inviscid, ideal case the critical shear rate for instability in \textit{two dimensions} is
+The spatial domain is a vertically ($z$) and horizontally ($y$) periodic channel of width $d = \pi$. 
+The boundary conditions are impenetrable stress-free and perfectly conducting; $v_{x} = \omega_{y} = \omega_{z} = b_{x} = \partial_{x}j_{x} = 0$. 
+The MRI is a weak-field instability; in the inviscid, ideal case the critical shear rate for instability in \textit{two dimensions} is
 \begin{equation}
   \label{eq:Sc}
   S_c = -\frac{\pi^2 B_{0}^2}{f d^2}.
@@ -113,11 +115,11 @@ We use $\SSC$ as our instability control parameter.
 We assume harmonic perturbations in $y$ and $z$, (e.g. pressure) $p = \hat{p}(x) e^{i(k_y y + k_z z) + \sigma t}$ . 
 We use a complex-valued growth rate $\sigma = \gamma + i\omega$ with $\gamma, \omega$ both real. 
 The system reduces to a $\sigma$-eigenvalue problem of 10 first-order ODEs in $x$ with Dirichlet boundary conditions.
-We pose and solve the system in the same formulation as equations~(\ref{eq:mhd}-\ref{eq:divu}) using the \emph{Dedalus} framework. 
+We pose and solve equations~(\ref{eq:mhd}-\ref{eq:divu}) using the \emph{Dedalus} framework. 
 
-Our interest is in ideal ($\eta = 0$), inviscid ($\nu = 0$) conditions.
+Our main interest is in ideal ($\eta = 0$), inviscid ($\nu = 0$) conditions.
 However, we set $\eta=\nu=10^{-5}$ to avoid critical layers in for the \textit{stable} solution branch.
-We confirmed our results are insensitive to the presence of small diffusion. 
+We confirmed our results are totally insensitive to small diffusion. 
 For each $(k_y, k_z)$ pair, we solve using $n_x = 128$ modes; all our results are identical at double the resolution\footnote{All code used in this paper can be found at \protect\url{https://github.com/jsoishi/mri\_prefers\_3d}}.
 \begin{figure*}[ht]
   \includegraphics[width=\textwidth]{fig_1.pdf}
@@ -125,41 +127,43 @@ For each $(k_y, k_z)$ pair, we solve using $n_x = 128$ modes; all our results ar
   \label{fig:growth_rate}
 \end{figure*}
 
-Our two main results are: (I) When the first two-dimensional mode becomes unstable, there already exist three-dimensional modes with positive growth rate. (II) When the criticality becomes sufficiently large, the fastest-growing mode becomes purely two-dimensional. These results are pertinent in two ways. First, the MRI contains a substantial ``Goldilocks regime" with possible direct dynamo action, and this regime likely most applies to stellar interiors. Second, our results accord with well-established results for accretion disks that expect primary two-dimensional linear modes.
+Our two main results are: 
+(I) When the first two-dimensional mode becomes unstable, there already exist three-dimensional modes with positive growth rate. 
+(II) When the criticality becomes sufficiently large, the fastest-growing mode becomes purely two-dimensional. 
+These results are pertinent in two ways. 
+First, the MRI contains a substantial ``Goldilocks regime" with possible direct dynamo action, and this regime likely most applies to stellar interiors. 
+Second, our results accord with well-established results for accretion disks that expect primary two-dimensional linear modes.
 Figure~\ref{fig:growth_rate}a shows the growth rates for four values of $\SSC$. 
 At $\SSC = 1.02$, the maximum growth rate ($\gamma/S = 0.
 093$) happens at $(k_y, k_z) \simeq (0.263, 0.447)$.
 The first panel of figure~\ref{fig:growth_rate}a shows $\SSC = 0.640$, which contains only three-dimensional instability.
 The overall critical shear for three-dimensional modes is $S_{c,3D} \simeq 0.102 S_c$.
 
-While surprising, the MRI's preference for three-dimensional modes can be predicted analytically.
-We analyze equations~(\ref{eq:mhd}-\ref{eq:divu}) with the shear asymptotically close to the critical two-dimensional rate, and compute the leading-order correction to the growth rate from three-dimensional effects assuming $S = S_c - \epsilon \sqrt{R}$, $k_{z} \sim \mathcal{O}(\epsilon)$, $\sigma \sim k_{y} \sim \mathcal{O}(\epsilon^{2})$, 
+The MRI's preference for three-dimensional modes can be predicted analytically.
+We analyze equations~(\ref{eq:mhd}-\ref{eq:divu}) asymptotically close to $S_{c}$, and compute the leading-order correction to the growth rate from three-dimensional effects assuming $\SSC = 1 + \epsilon^{2} R$, $k_{z} \sim \mathcal{O}(\epsilon)$, $\sigma \sim k_{y} \sim \mathcal{O}(\epsilon^{2})$, 
 \begin{equation}
   \label{eq:asymp}
-\sigma^{2} =  \frac{q\,B_{0}^{2}}{(q+1)} \left[ k_z^2 \left( R^{2} - \frac{d^2}{\pi^{2}} k_z^2 \right)  +  \Upsilon \, k_{y}^{2}  \right] +  \ldots,
+\sigma^{2} =  \frac{q\,B_{0}^{2}}{(q+1)} \left[ k_z^2 \left( R - \frac{d^2}{\pi^{2}} k_z^2 \right)  +  \Upsilon \, k_{y}^{2}  \right] +  \ldots,
 \end{equation}
 where
 \begin{equation}
-\Upsilon \ = \ \frac{\left(6+\pi ^2\right) q+\pi^2-6}{12 }\  \approx \ 1.31 \ \  \text{for}  \ \  q = \frac{3}{4}.
+\Upsilon \ = \ \frac{\left(\pi ^2+6\right) q+\pi^2-6}{12 }\  \approx \ 1.31 \ \  \text{for}  \ \  q = \frac{3}{4}.
 \end{equation}
 The first term in equation~(\ref{eq:asymp}) results from the two-dimensional calculation.
-The second term is positive definite: it \emph{always} leads to enhanced growth rates when $k_y \neq 0$.
-Of course, it ultimately leads to ultraviolet divergence in the absence of higher-order effects.
+The second term is positive definite: it \emph{always} leads to enhanced growth rates when $k_y \neq 0$ and ultraviolet divergence in the absence of higher-order effects.
 
 Figure~\ref{fig:growth_rate}b compares the numerical growth rates for $\SSC=1.002$ between $0 \le k_y \le 0.2$ to the asymptotic approximation, showing good agreement where the latter is valid.
 Figure~\ref{fig:growth_rate}c shows the full spectrum for $\SSC = 1.02$.
 The plot shows a purely growing/decaying complex-conjugate pair (orange/blue dots on the real axis) consistent with equation~(\ref{eq:asymp}).
 The other stable modes (gray dots) are rotationally modified Alfv\'{e}n waves found in left- and right-going pairs, consistent with the analytic predictions for two-dimensional stability calculations.
 
-It is useful to examine the eigenvectors for these three dimensional modes.
-Because we are only interested in the \emph{unstable} modes, which have $\omega = 0$, critical layers do not form.
-We therefore do not need viscosity or resistivity to regularize the solutions.
-In order to test that our non-ideal solutions are sufficiently close to the ideal case we are interested in, we reformulated equations~(\ref{eq:mhd}--~(\ref{eq:divu})) without viscous and resistive terms and solved the corresponding eigenvalue problem.
-The ideal MHD system is second order in $x$ and thus only two boundary conditions can be set.
-We choose impenetrable ($v_x = 0$) conditions on both walls in this case.
+It is useful to examine the eigenvectors for the three-dimensional unstable modes.
+No critical layers can form for $\gamma \ne 0$.
+We can therefore solve equations~(\ref{eq:mhd}--~(\ref{eq:divu})) without dissipation as a 2nd-order system in $\partial_{x}$;
+we impose only $v_x = 0$ on both walls.
 Figure~\ref{fig:eigvec} shows the eigenvectors for the most unstable mode at $\SSC = 1.02$ using ideal MHD. 
-The tilted structures of $v_x$ and $v_y$ as well as $b_x$ and $b_y$, show that the eigenmodes have non-trivial Reynolds and Maxwell stresses.
-The eigenfunctions are indistinguishable from those at finite resistivity and viscosity, lending additional confidence that our other results are sufficiently in the ideal regime.
+The tilted structures of $v_x$ and $v_y$ as well as $b_x$ and $b_y$, imply non-trivial Reynolds and Maxwell stresses.
+The eigenfunctions are indistinguishable from those at finite dissipation, lending additional confidence to our other results.
 
 \begin{figure}[h!]
   \centering
@@ -168,9 +172,9 @@ The eigenfunctions are indistinguishable from those at finite resistivity and vi
   \label{fig:eigvec}
 \end{figure}
 
-Numerical simulations aimed at understanding the MRI in accretion disks consistently show axisymmetric modes dominating the early evolution of the MRI before breaking down into 3D MHD turbulence \citep{1995ApJ...440..742H,2018ApJ...853..174H,2019ApJS..241...26D}. 
+Numerical simulations of the MRI in accretion disks consistently show axisymmetric modes dominating the early evolution of the MRI before breaking down into 3D MHD turbulence \citep{1995ApJ...440..742H,2018ApJ...853..174H,2019ApJS..241...26D}. 
 These ``channel modes'' are exact non-linear solutions for $x$-shearing-periodic domains, and can only saturate via parasitic shear instabilities \citep{1994ApJ...432..213G}.
-We use impenetrable, stress-free boundary conditions that are more applicable to stellar interiors. 
+Impenetrable and stress-free boundary conditions are more applicable to stellar interiors. 
 But even in disks, any kind of finite radial extent will cutoff the unbounded growth of channel modes. 
 We reconcile our results with earlier simulations by showing that the MRI indeed prefers two dimensions for the larger values of criticality found in disk simulations. 
 Figure~\ref{fig:phi} shows the phase angle $\phi = \arctan k_y/k_z$ of the fastest growing mode as function of $\SSC$.
@@ -179,7 +183,7 @@ For the fiducial run in \citet{1996ApJ...464..690H}, $\SSC \simeq 4.84$ (most wo
 Thus, we predict axisymmetric modes should dominate the linear dynamics for parameters studied in prior numerical simulations.
 \begin{figure}[h!]
   \includegraphics[width=\columnwidth]{{mean_field_alpha_run_11_output.h5}.pdf}
-  \caption{Mean field $\alpha$ coefficient.}
+  \caption{Mean-field $\alpha$ coefficient.}
   \label{fig:phi}
 \end{figure}
 
@@ -188,12 +192,13 @@ Also, non-normality generically accompanies non-axisymmetry in shearing systems 
 In non-normal systems, transient amplification can occur for stable modes, and can even cause turbulence.
 Therefore significant three dimensionality likely implies important non-normal behavior near onset.
 
-The second implication of the three dimensional modes is of considerably more importance.
-These modes produce dynamo action in the linear regime, as evidenced by the presence of non-trivial eigenmodes for all three components of the magnetic field.
-This is of considerable significance, as it leads to the possibility of a laminar MRI dynamo operating directly in regions of weak shear.
-MRI dynamos have been studied in a number of different contexts \citep{2007PhRvL..98y4502R,2011ApJ...740...18O,2015PhRvL.114h5002S}, but all except one have focused on the turbulent dynamo. The lone exception, \citet{2016MNRAS.462..818B}, is a numerical study that discovered the exponential growth of mean magnetic fields during the linear growth phase of the MRI far from stability.
+The second implication of the three-dimensional modes is considerably more important.
+These modes will generate a mean electromotive force in linear regime, as evidenced by the presence of non-trivial eigenmodes for all three components of the magnetic field.
+This is of considerable significance, as it leads to the possibility of a laminar MRI dynamo operating directly in regions of weak shear at large Reynolds number.
+MRI dynamos have been studied in a number of different contexts \citep{2007PhRvL..98y4502R,2011ApJ...740...18O,2015PhRvL.114h5002S}, but all except one focused on turbulent dynamos. 
+The lone exception, \citet{2016MNRAS.462..818B}, is a numerical study that discovered the exponential growth of mean magnetic fields during the linear growth phase of the MRI far from stability.
 Our work explains this result in terms of purely linear dynamics:
-non-axisymmetric MRI unstable modes drive the exponential growth of magnetic fields.
+non-axisymmetric MRI unstable modes drive the dynamo growth of magnetic fields.
 
 \begin{figure}[h!]
   \centering
@@ -205,20 +210,20 @@ non-axisymmetric MRI unstable modes drive the exponential growth of magnetic fie
 Finally, we vary two important parameters:
 $q$ and the magnetic Prandtl number $\Prm = \nu/\eta$.
 Figure~\ref{fig:other_params} shows the growth rates for $\SSC = 1.02$.
-The upper panel shows $q = 0.1$ holding all other parameters equal to their fiducial values.
-This corresponds a Rossby number relevant to the Sun, and it shows very similar growth rates to the Keplerian cases presented above, $\gamma_{max}/S \simeq 0.1$.
-Again, MRI remains dominated by three dimensional modes near onset.
+The upper panel shows $q = 1/10$ holding all other parameters equal to their fiducial values.
+This corresponds a Rossby number relevant to stellar interiors, and it shows very behavior to the $q=3/4$ cases, $\gamma_{max}/S \simeq 0.1$.
+Again, MRI remains dominated by three-dimensional modes near onset.
 The lower panel shows $\nu = 10^{-6}$ and $\eta = 0.1$ with all other parameters equal to their fiducial. 
 This is $\Prm = 10^{-5}$ close to those found in liquid metal experiments.
 At this $\Prm$, the MRI is only slightly supercritical; this is very similar to the experimental conditions of the Princeton MRI experiment \citep{2002JFM...462..365G}.
-Our results are for the rotating Plane Couette geometry\footnote{This is equivalent to Taylor-Couette flow in the limit that the gap between cylinders $R_2 - R_1 \to 0$.} with highly idealized boundary conditions.
-Nevertheless, it is very suggestive that near onset in both shear and resistivity at very low $\Prm$, the MRI is \emph{only} unstable to three dimensional modes.
+Our results are for the rotating plane-Couette geometry\footnote{This is equivalent to Taylor-Couette flow in the limit that the gap between cylinders $R_2 - R_1 \to 0$.} with highly idealized boundary conditions.
+Nevertheless, it is very suggestive that near onset in both shear and resistivity at very low $\Prm$, the MRI is \emph{only} unstable to three-dimensional modes.
 
-Our results show that that whenever the MRI is near its critical shear values,  three-dimensional modes grow faster than their better-studied two dimensional counterparts.
-While we have focused on the Keplerian case ($q=0.75$), we have also demonstrated that the effect is robust and occurs at Rossby numbers $q=0.1$ relevant to the Sun.
+Our results show that that whenever the MRI is near its critical shear values,  three-dimensional modes grow faster than their better-studied two-dimensional counterparts.
+While we have focused on the Keplerian case ($q=3/4$), we also demonstrate robustness for low Rossby numbers $q=1/10$.
 There are several important future directions this work suggests.
-First, the Sun possesses two internal shear layers, the tachocline and the near surface shear layer.
-The latter in particular, though unstable to convection, may also host slower MRI-driven dynamics.
+First, the Sun possesses two internal shear layers with inwardly increasing shear, the high-latitude tachocline, and the near-surface shear layer.
+The latter in particular, though unstable to small-scale convection, may also host slower MRI-driven dynamics.
 In order to further elucidate this processes, understanding the non-linear saturation of the linear instability presented here is crucial, as is its robustness to perturbations driven by the fast convective dynamics.
 Second, our results at low $\Prm$ suggest that three-dimensional MRI modes may be the easiest to excite in liquid metal experiments.
 Followup work including more complex boundary conditions and full, cylindrical Taylor-Couette geometries are required to determine if experiments should consider the signatures of these non-axisymmetric modes.
