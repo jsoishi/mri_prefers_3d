@@ -11,6 +11,7 @@ plt.style.use('prl')
 filebase = 'data/run_{:d}_output.h5'
 runs = [15, 39, 12, 13]
 SSC = [0.64, 1.002001, 1.0201, 2.]
+q = 0.75
 index = 0
 
 fig = plt.figure(figsize=(16,8))
@@ -34,14 +35,14 @@ for i,r in enumerate(runs):
     ky_global    = datafile['ky']
     kz_global    = datafile['kz']
     gamma_global = datafile['gamma'][:]
-    gamma_r = gamma_global.real
+    gamma_r = gamma_global.real/q # scale by S
     #gamma_r[np.where(gamma_r<0)] = 0.0
     max_gamma = datafile['gamma'].attrs['max growth rate']
     max_ky = datafile['gamma'].attrs['max ky']
     max_kz = datafile['gamma'].attrs['max kz']
     contour_levels = np.linspace(0,gamma_r.max(),5)
     vmin = 0.
-    vmax = 0.071
+    vmax = 0.1
     c = ax.imshow(gamma_r, extent=[kz_global[:].min(),kz_global[:].max(),ky_global[:].min(),ky_global[:].max()], vmin=vmin,vmax=vmax, origin='lower')
 
     ax.contour(kz_global,ky_global,gamma_r,levels=contour_levels,colors='k')
@@ -61,7 +62,7 @@ for i,r in enumerate(runs):
 
 cax = fig.add_axes([xgutter+4*(w+pad), 0.55,0.02,h])
 cbar = fig.colorbar(c, cax=cax)
-cbar.set_label(r'$\gamma$')
+cbar.set_label(r'$\gamma/S$')
 
 # asymptotics
 xloc = grid[0].get_position().x0
@@ -87,23 +88,23 @@ q = 0.75
 ky_an = np.linspace(0.0,0.2,400)
 omega, omega2 = calc_asymptotic_growth(R, q, B, d, ky_an, kz)
 
-asymp_ax.plot(ky,gamma_r[:,index], label='numerical')
-asymp_ax.plot(ky_an, omega, label='asymptotic')
-asymp_sub.plot(ky,-(gamma_r[:,index] + 1j*gamma_i[:,index])**2, label='numerical')
-asymp_sub.plot(ky_an, omega2, label='asymptotic')
+asymp_ax.plot(ky,gamma_r[:,index]/q, label='numerical')
+asymp_ax.plot(ky_an, omega/q, label='asymptotic')
+asymp_sub.plot(ky,-(gamma_r[:,index]/q + 1j*gamma_i[:,index]/q)**2, label='numerical')
+asymp_sub.plot(ky_an, omega2/q**2, label='asymptotic')
 
 #asymp_ax.legend(loc='upper right')
 asymp_ax.text(0.125, 0.048, 'numerical', fontsize=18)
 asymp_ax.text(0.035, 0.03, 'asymptotic', fontsize=18)
-asymp_ax.set_ylim(0, 0.06)
+asymp_ax.set_ylim(0, 0.06/q)
 asymp_ax.set_xlim(0,0.2)
 asymp_ax.set_xlabel(r'$k_y$')
-asymp_ax.set_ylabel(r'$\gamma = Re(\sigma)$')
+asymp_ax.set_ylabel(r'$\gamma/S$')
 asymp_ax.xaxis.set_major_locator(plt.MultipleLocator(0.05))
-asymp_sub.set_ylim(-0.005, 0.005)
+asymp_sub.set_ylim(-0.005/q**2, 0.005/q**2)
 asymp_sub.set_xlim(0.03,0.09)
 asymp_sub.set_xlabel(r'$k_y$')
-asymp_sub.set_ylabel(r'$\sigma^2$')
+asymp_sub.set_ylabel(r'$\sigma^2/S^2$')
 # spectrum
 
 grid[1].annotate("",
@@ -122,15 +123,15 @@ data = h5py.File(filename, 'r')
 spectrum = data['eigvals'][:]
 
 thresh = 2
-spec_thresh = spectrum[np.abs(spectrum) < thresh]
+spec_thresh = spectrum[np.abs(spectrum) < thresh]/q
 spec_ax.scatter(spec_thresh[(spec_thresh.real < 0) & (np.abs(spec_thresh.imag) < 1e-8)].real,spec_thresh[(spec_thresh.real < 0) & (np.abs(spec_thresh.imag) < 1e-8)].imag,zorder=10)
 spec_ax.scatter(spec_thresh[spec_thresh.real > 0].real, spec_thresh[spec_thresh.real > 0].imag)
 spec_ax.scatter(spec_thresh[spec_thresh.real <= 0].real, spec_thresh[spec_thresh.real <= 0].imag, color='lightgrey',zorder=3)
 
-spec_ax.set_xlim(-0.25,0.1)
-spec_ax.set_ylim(-0.8,0.8)
-spec_ax.set_xlabel(r"$\gamma$")
-spec_ax.set_ylabel(r"$\omega = Im(\sigma)$")
+spec_ax.set_xlim(-0.25/q,0.1/q)
+spec_ax.set_ylim(-0.8/q,0.8/q)
+spec_ax.set_xlabel(r"$\gamma/S$")
+spec_ax.set_ylabel(r"$\omega/S$")
 spec_ax.yaxis.tick_right()
 spec_ax.yaxis.set_label_position("right")
 spec_ax.xaxis.set_major_locator(plt.MultipleLocator(0.1))

@@ -1,13 +1,20 @@
 """
 This script plots both the largest growth rates of the MRI data
-passed to the script. To run, pass it a file as follows:
+passed to the script. 
 
-python3 make_eigenvector_plots.py mri_dataset_845.h5
+Usage:
+    make_eigenvector_plots.py [--vmin=<vmin> --vmax=<vmax> --q=<q> --no-contours] <filename>
+
+Options:
+    --vmin=<vmin>    min for colorbar [default: 0]
+    --vmax=<vmax>    max for colorbar [default: 0.701]
+    --q=<q>          q = S/f [default: 0.75]
+    --no-contours    turn off contours
 
 """
 
 import h5py
-import argparse
+from docopt import docopt
 from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
@@ -15,16 +22,20 @@ import matplotlib.pyplot as plt
 plt.style.use('prl')
 
 # Parses filename passed to script
-parser = argparse.ArgumentParser(description='Passes filename')
-parser.add_argument('filename', metavar='Rc', type=str, help='.h5 file to plot eigenvectors for maximum eigenvalue')
-args = parser.parse_args()
-filename = Path(vars(args)['filename'])
+args = docopt(__doc__)
+
+filename = Path(args['<filename>'])
+vmin = float(args['--vmin'])
+vmax = float(args['--vmax'])
+q = float(args['--q'])
+contours = not args['--no-contours']
 outbase = Path("plots")
 
 # Plot growth rates
 datafile = h5py.File(filename,'r')
 gamma_global = datafile['gamma'][:]
-gamma_r = gamma_global.real
+gamma_r = gamma_global.real/q # scale by S...gamma is already multiplied by f in script
+
 #gamma_r[np.where(gamma_r<0)] = 0.0
 #max_gamma = datafile['gamma'].attrs['max growth rate']
 ky_global    = datafile['ky']
@@ -42,18 +53,16 @@ except KeyError:
 print("max growth rate on grid = {}".format(gamma_r.max()))
 
 contour_levels = np.linspace(0,gamma_r.max(),10)
-vmin = 0.
-vmax = 0.071
-PCM = plt.pcolormesh(kz_global,ky_global,gamma_r, vmin=vmin,vmax=vmax)
-
-plt.contour(kz_global,ky_global,gamma_r,levels=contour_levels,colors='k')
-plt.contour(kz_global,ky_global,gamma_r,levels=[0.],colors='w')
+PCM = plt.imshow(gamma_r, extent=[kz_global[:].min(),kz_global[:].max(),ky_global[:].min(),ky_global[:].max()], vmin=vmin,vmax=vmax, origin='lower')
+if contours:
+    plt.contour(kz_global,ky_global,gamma_r,levels=contour_levels,colors='k')
+plt.contour(kz_global,ky_global,gamma_r,levels=[0.],colors='w',alpha=0.5)
 plt.plot(max_kz, max_ky, 'ro')
-plt.colorbar(PCM, label=r'$\gamma$')
+plt.colorbar(PCM, label=r'$\gamma/S$')
 plt.xlabel(r'$k_z$')
 plt.ylabel(r'$k_y$')
 plt.tight_layout()
 
 #plt.title(r'3D Keplerian MRI growth rates/f  $\left( S/S_{\mathrm{crit.}} = %.2f\right)$' %(R[i]))
-plot_file_name = Path(filename.stem + '_growthrates.png')
-plt.savefig(outbase/plot_file_name, dpi=300)
+plot_file_name = Path(filename.stem + '_growthrates.pdf')
+plt.savefig(outbase/plot_file_name)#, dpi=300)
