@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import AxesGrid
 from calc_asymptotic_approx import calc_asymptotic_growth
-
+from basic_units import radians
 plt.style.use('prl')
 
 # params
@@ -61,15 +61,15 @@ for i,r in enumerate(runs):
         
     datafile.close()
 
-cax = fig.add_axes([xgutter+4*(w+pad), 0.55,0.02,h])
+cax = fig.add_axes([xgutter+4*(w+pad), 0.55,0.015,h])
 cbar = fig.colorbar(c, cax=cax)
 cbar.set_label(r'$\gamma/S$')
 
 # asymptotics
 xloc = grid[0].get_position().x0
-w_lower = 2*w + pad
+w_lower = 1.2*w + pad
 asymp_ax = fig.add_axes([0.1,0.1,w_lower,0.35])
-asymp_sub = asymp_ax.inset_axes([0.6,0.25,0.3,0.3*w_lower/0.35])
+asymp_sub = asymp_ax.inset_axes([0.7,0.25,0.25,0.3*w_lower/0.35])
 
 filename = 'data/run_41_output.h5'
 data = h5py.File(filename, "r")
@@ -96,14 +96,15 @@ asymp_sub.plot(ky,-(gamma_r[:,index]/q + 1j*gamma_i[:,index]/q)**2, label='numer
 asymp_sub.plot(ky_an, omega2/q**2, label='asymptotic')
 
 #asymp_ax.legend(loc='upper right')
-asymp_ax.text(0.125, 0.048/q, 'numerical', fontsize=18)
-asymp_ax.text(0.035, 0.03/q, 'asymptotic', fontsize=18)
+asymp_ax.text(0.11, 0.058, 'numerical', fontsize=18)
+asymp_ax.text(0.03, 0.07, 'asymptotic', fontsize=18)
 asymp_ax.set_ylim(0, 0.06/q)
 asymp_ax.set_xlim(0,0.2)
 asymp_ax.set_xlabel(r'$k_y$')
 asymp_ax.set_ylabel(r'$\gamma/S$')
 asymp_ax.xaxis.set_major_locator(plt.MultipleLocator(0.05))
 asymp_sub.set_ylim(-0.005/q**2, 0.005/q**2)
+asymp_sub.set_xticks([0.045,0.08])
 asymp_sub.set_xlim(0.03,0.09)
 asymp_sub.set_xlabel(r'$k_y$')
 asymp_sub.set_ylabel(r'$\sigma^2/S^2$')
@@ -111,7 +112,7 @@ asymp_sub.set_ylabel(r'$\sigma^2/S^2$')
 
 grid[1].annotate("",
             xy=(0.45, 0.26), xycoords='data',
-            xytext=(0.55, 0.45), textcoords='figure fraction',
+            xytext=(0.45, 0.45), textcoords='figure fraction',
             arrowprops=dict(arrowstyle="-",
                             connectionstyle="arc3",
                             color='k',
@@ -138,6 +139,42 @@ spec_ax.yaxis.tick_right()
 spec_ax.yaxis.set_label_position("right")
 spec_ax.xaxis.set_major_locator(plt.MultipleLocator(0.1))
 
+# phi vs SSC
+from plot_phi import calc_phi
+
+
+phi_ax = fig.add_axes([xgutter+3*(w+pad),0.1,w,0.35])
+
+phi, ssc, dk, growth = calc_phi()
+c = phi_ax.scatter(ssc, phi, marker='o', c=growth, yunits=radians, zorder=2)#,edgecolor='k',linewidth=0.8)
+phi_cax = fig.add_axes([xgutter+4*(w+pad), 0.1, 0.015,0.35])
+phi_cbar = fig.colorbar(c, cax=phi_cax, label='$\gamma/S$')
+
+phi_ax.set_xlabel(r"$S/S_c$")
+phi_ax.set_ylabel(r"$\phi$")
+phi_ax.set_yticklabels([0, "$\pi/8$", "$\pi/4$"])
+phi_ax.set_yticks([0, np.pi/8,np.pi/4])
+ssc_new = np.linspace(ssc[0], ssc[-1], len(ssc)*10)
+a_thresh = 0.01
+#coefs = poly.polyfit(ssc[phi > a_thresh], phi[phi > a_thresh], 1)
+#ffit = poly.polyval(ssc_new, coefs)
+#phi_ax.plot(ssc_new, ffit)
+
+axins = phi_ax.inset_axes([0.7, 0.7, 0.24, 0.24])
+axins.scatter(ssc, phi, marker='o',c=growth, yunits=radians)
+# sub region of the original image
+x1, x2, y1, y2 = 1.4**2, 1.45**2, -0.05, 0.15
+axins.set_xlim(x1, x2)
+axins.set_ylim(y1, y2)
+#axins.set_xticklabels('')
+#axins.set_yticklabels('')
+
+phi_ax.axhline(0,color='k', alpha=0.4,zorder=1)
+phi_ax.axvspan(-1,0.102,color='k', alpha=0.4)
+phi_ax.set_ylim(-0.05,1.0)
+phi_ax.set_xlim(-0.5,4.1)
+
+# save the figure
 fig.savefig('plots/fig_1.pdf')#,bbox_inches='tight')
 
 
