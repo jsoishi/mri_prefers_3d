@@ -16,6 +16,7 @@
 \newcommand{\mnras}{Monthly Notices of the Royal Astronomical Society}
 \newcommand{\apjs}{The Astrophysical Journal Supplement Series}
 \usepackage{graphicx}
+\usepackage{amsmath}
 
 \begin{document}
 
@@ -79,11 +80,11 @@ This corresponds to a Cartesian frame rotating with angular frequency $\Omega$ a
 We cast the Navier-Stokes equation in the form,
 \begin{equation}
   \label{eq:mhd}
-  \frac{D \mathbf{v}}{Dt} + f \hat{z} \times \mathbf{v} + S v_x \hat{z} + \mathbf{\nabla}{p} + \nu \mathbf{\nabla} \times \mathbf{\omega} = B_{0} \partial_{z} \mathbf{b},
+  \frac{D \boldsymbol{v}}{Dt} + f \boldsymbol{\hat{z}} \times \boldsymbol{v} + S v_x\, \boldsymbol{\hat{y}} + \boldsymbol{\nabla}{p} + \nu \boldsymbol{\nabla} \times \boldsymbol{\omega} = B_{0} \partial_{z} \boldsymbol{b},
 \end{equation}
 where
 \begin{equation}
-\omega = \mathbf{\nabla} \times \mathbf{v}, \quad \text{and} \quad \frac{D}{Dt} \ = \ \partial_{t} + S x \partial_{y}
+\boldsymbol{\omega} = \boldsymbol{\nabla} \times \boldsymbol{v}, \quad \text{and} \quad \frac{D}{Dt} \ = \ \partial_{t} + S x \partial_{y}
 \end{equation}
 The main input parameters are the Coriolis parameter, $f = 2 \Omega$; the background shear rate, $S = dV_{y}/dx < 0$;  the vertical magnetic field $B_{0}$ (in Alfv\'{e}n units $\mu_{0} \rho_{0} = 1$); and the horizontal domain width $-d/2 \le x \le d/2$.
 Accretion-disk modelling usually considers the Rossby number $q = -S/f < 1$; $q=1$ corresponds to purely hydrodynamical Rayleigh unstable shear.
@@ -91,17 +92,17 @@ Unless otherwise stated $q = 3/4$ (Keplerian).
 We write the induction equation in terms of the $x$ component of the magnetic field,
 \begin{equation}
   \label{eq:Bx}
-  \frac{D b_x}{Dt} - B_0 \partial_z v_x + \eta (\partial_y j_z - \partial_z j_y) = 0
+  \frac{D b_x}{Dt} + \eta (\partial_y j_z - \partial_z j_y) = B_0 \partial_z v_x
 \end{equation}
 and the $x$ component of the current density ($j_{x} = \partial_{y}b_{z} - \partial_{z} b_{y}$),
 \begin{equation}
   \label{eq:Jx}
-  \frac{D j_x}{Dt} - B_0 \partial_z \omega_x + S \partial_z B_x - \eta \nabla^2 j_x = 0
+  \frac{D j_x}{Dt} + S \partial_z b_x - \eta \nabla^2 j_x = B_0 \partial_z \omega_x
 \end{equation}
 We explicitly enforce divergence-free velocity and magnetic field,
 \begin{equation}
   \label{eq:divu}
-  \mathbf{\nabla} \cdot \mathbf{v} = \mathbf{\nabla} \cdot \mathbf{b} = 0.
+  \boldsymbol{\nabla} \cdot \boldsymbol{v} = \boldsymbol{\nabla} \cdot \boldsymbol{b} = 0.
 \end{equation}
 The spatial domain is a vertically ($z$) and horizontally ($y$) periodic channel of width $d = \pi$. 
 The boundary conditions are impenetrable stress-free and perfectly conducting; $v_{x} = \omega_{y} = \omega_{z} = b_{x} = \partial_{x}j_{x} = 0$. 
