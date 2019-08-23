@@ -108,7 +108,7 @@ In order to ensure our results are converged, we have repeated runs at $n_x=256$
 25 & 1.02   & $10^{-4}$ & $10^{-4}$ & 0.75 & 128 & 200 & 200 & sparse & \\
 26 & 1.02   & $10^{-3}$ & $10^{-3}$ & 0.75 & 128 & 200 & 200 & sparse & \\
 27 & 1.02   & $10^{-2}$ & $10^{-2}$ & 0.75 & 128 & 200 & 200 & sparse & \\
-28 & 1.02   & $10^{-5}$ & $10^{-5}$ & 0.1  & 128 & 200 & 200 & sparse & Solar Rossby\\ 
+28 & 1.02   & $10^{-5}$ & $10^{-5}$ & 0.1  & 128 & 200 & 200 & sparse & Low Rossby\\ 
 29 & 1.02   & $10^{-6}$ & $10^{-2}$ & 0.1  & 128 & 200 & 200 & sparse & Liquid metal case\\ 
 \end{tabular}
 %\label{simulations}
@@ -163,7 +163,7 @@ We can use equations (2)--(7) to find all amplitudes in terms of $\hat{U}(x)$ an
    \hat{B}_{y}(x) &=&\frac{\omega _A \hat{V}(x)}{\omega _S} -\frac{i S \omega _A \hat{U}(x)}{\omega _S^2} \\
    \hat{B}_{z}(x) &=& \frac{\omega _A \hat{W}(x)}{\omega _S}
    \Eeq
-We can then substitute everything into equation (1) to get a second-order equation for $\hat{U}(x)$ of the general form 
+Substitute everything into equation (1) to get a second-order equation for $\hat{U}(x)$ of the general form 
 \Beq
 \alpha(x) \hat{U}''(x) + \beta(x) \hat{U}'(x) + \gamma(x) \hat{U}(x) \ = \ 0
 \Eeq
@@ -183,7 +183,7 @@ We can eliminate the first-order term via
 \hat{U}(x) \ = \ \chi(x) \psi(x) \quad \text{where} \quad \chi'(x) \  = \ -\frac{\beta (x) \chi (x)}{2 \alpha (x)}
 \Eeq
 \Beq
--\psi''(x) + \Phi(x) \psi(x) \ = \ 0
+-\psi''(x) + \Phi(x) \psi(x) \ = \ 0 \label{Schr-eq}
 \Eeq
 \Beq
 \Phi(x)  \ = \ \frac{-2 \beta (x) \alpha '(x)+2 \alpha (x)
@@ -197,14 +197,14 @@ Putting everything together
    _S^2}{\left(\omega _A^2-\omega
    _S^2\right){}^2} + k^{2} + \ell^{2}
 \Eeq
-
-Rescale everything in terms of a bookkeeping parameter, $\eps$.
+We want to solve the Schr\:{o}dinger-type equation~\ref{Schr-eq} with the boundary conditions 
 \Beq
-S  \ \to \  - \frac{\pi ^2 B_{0}^2}{d^2 f} ( 1 + \eps^{2} R) 
-\Eeq 
-\Beq
-\omega \ \to \ \eps^{2} \omega , \quad k \ \to \ \eps k, \quad \ell \ \to \ \eps^{2} \ell 
+\psi(x=\pm d) = 0.
 \Eeq
+We solve perturbatively near the critical values for the 2D  instability. We rescale each parameters in terms of a bookkeeping parameter, $\eps$.
+\Beq
+S  \ \to \  - \frac{\pi ^2 B_{0}^2}{d^2 f} ( 1 + \eps^{2} R), \quad \omega \ \to \ \eps^{2} \omega , \quad k \ \to \ \eps k, \quad \ell \ \to \ \eps^{2} \ell
+\Eeq 
 Also 
 \Beq
 q  \ \equiv  \ \frac{\pi ^2 B_{0}^2}{d^2 f^{2}}
@@ -215,24 +215,21 @@ Expanding to $\mathcal{O}(\eps^{2})$,
    \ell ^2\right)+f^2 (q+1) (\omega -f q x \ell
    )^2\right)}{B_{0}^4 k^2}
 \Eeq
-Going order-by-order
+For leading order 
 \Beq
-\psi_{0}''(x) + \frac{\pi^{2}}{d^{2}}  \psi_{0}(x) \ = \ 0 
+\psi_{0}''(x) + \frac{\pi^{2}}{d^{2}}  \psi_{0}(x) \ = \ 0 , \quad \implies \quad \psi_{0}(x) \ = \ \cos(\pi x / d)
 \Eeq
+The next order is
 \Beq
 \psi_{2}''(x) + \frac{\pi^{2}}{d^{2}}  \psi_{2}(x) + \Phi_{2}(x)\psi_{0}(x)\ = \ 0 
 \Eeq
-Therefore 
-\Beq
-\psi_{0}(x) \ = \ \cos(\pi x / d)
-\Eeq
-This satisfies the equation and boundary condition. The solvability condition for $\psi_{2}(x)$ is 
+The solvability condition for $\psi_{2}(x)$ is 
 \Beq
 \int_{-d/2}^{d/2} \Phi_{2}(x)\psi_{0}(x)^{2} \text{d} x \ = \ 0.
 \Eeq
 This implies 
 \Beq
-\omega^{2} \ = \ \frac{q\,B_{0}^{2}}{(q+1)} \left[ k_z^2 \left(\frac{d^2}{\pi^{2}} k_z^2-R\right) \ - \ \frac{\left(6+\pi ^2\right) q+\pi
+-\omega^{2} \ = \ \frac{q\,B_{0}^{2}}{(q+1)} \left[ k_z^2 \left(R-\frac{d^2}{\pi^{2}} k_z^2\right) \ + \ \frac{\left(6+\pi ^2\right) q+\pi
    ^2-6}{12 } \, k_{y}^{2}  \right] \ + \ ...
 \Eeq
 
