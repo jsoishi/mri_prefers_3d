@@ -93,7 +93,7 @@ We write the induction equation in terms of the $x$-component magnetic field,
 \end{equation}
 and the $x$-component current density ($j_{x}=\partial_{y}b_{z}-\partial_{z}b_{y}$),
 \begin{equation}\label{eq:Jx}
-\frac{Dj_{x}}{Dt}+{S}\partial_{z}b_{x}-\eta\nabla^{2}j_{x}=B_{0}\partial_{z}\omega_{x}
+\frac{Dj_{x}}{Dt}-\eta\nabla^{2}j_{x}=B_{0}\partial_{z}\omega_{x}-S\partial_{z}b_{x}
 \end{equation}
 We explicitly enforce divergence-free velocity and magnetic field,
 \begin{equation}\label{eq:divu}
@@ -118,7 +118,7 @@ We confirmed our results are totally insensitive to small diffusion.
 For each $(k_{y},k_{z})$ pair, we solve using $n_{x}=128$ modes; all our results are identical at double the resolution; see \protect\url{github.com/jsoishi/mri_prefers_3d} for all code used in this paper.
 \begin{figure*}[ht]
   \includegraphics[width=\textwidth]{fig_1.pdf}
-  \caption{Growth rates for three-dimensional MRI modes. a) growth rates $\gamma$ over a grid of $k_{y}$ and $k_{z}$ for four values of supercriticality $\SSC$. The gray contour highlights $\gamma=0$; the red dots indicate the fastest growing mode. At $\SSC=0.640$, there are no two dimensional modes. b) Growth rate vs $k_{y}$ for $k_{z}=0.259$ at $\SSC=1.002$ (highlighted by the blue line in a). The orange line gives the asymptotic result from equation~(\ref{eq:asymp}) and the blue line are the numerical results. The asymptotic form is valid as $\SSC\to1$ and $k_{y}\ll1$.) c) The full discrete spectrum of the MRI for $(k_{y},k_{z})\simeq(0.263,0.447)$. The unstable mode is plotted in orange, its stable complex conjugate is blue, and all other modes are gray. d) The wavenumber angle $\arctan(k_{y}/k_{z})$ as a function of $\SSC$ showing the exact transition to purely two-dimensional fastest modes.}
+  \caption{Growth rates for three-dimensional MRI modes. a) growth rates $\gamma$ over a grid of $k_{y}$ and $k_{z}$ for four values of supercriticality $\SSC$. The gray contour highlights $\gamma=0$; the red dots indicate the fastest growing mode. At $\SSC=0.640$, there are no two dimensional modes. b) Growth rate vs $k_{y}$ for $k_{z}=0.259$ at $\SSC=1.002$ (highlighted by the blue line in a). The orange line gives the asymptotic result from equation~(\ref{eq:asymp}) and the blue line are the numerical results. The asymptotic form is valid as $\SSC\to1$ and $k_{y}\ll1$.) c) The full discrete spectrum of the MRI for $(k_{y},k_{z})\simeq(0.263,0.447)$. The unstable mode is plotted in orange, its stable complex conjugate is blue, and all other modes are gray. d) The phase angle, $\arctan(k_{y}/k_{z})$, as a function of $\SSC$ showing the exact transition to purely two-dimensional fastest modes.}
   \label{fig:growth_rate}
 \end{figure*}
 
@@ -134,7 +134,7 @@ The first panel of figure~\ref{fig:growth_rate}a shows $\SSC=0.640$, which conta
 The overall critical shear for three-dimensional modes is $S_{c,\text{3D}}\simeq0.102S_c$.
 
 The MRI's preference for three-dimensional modes can be predicted analytically.
-We analyze equations~(\ref{eq:mhd}-\ref{eq:divu}) asymptotically close to $S_{c}$, and compute the leading-order correction to the growth rate from three-dimensional effects assuming $\SSC=1+\epsilon^{2}R$, $k_{z}\sim\mathcal{O}(\epsilon)$, $\sigma{\sim}k_{y}\sim\mathcal{O}(\epsilon^{2})$, 
+We analyze equations~(\ref{eq:mhd}-\ref{eq:divu}) asymptotically close to $S_{c}$, and compute the leading-order correction to the growth rate from three-dimensional effects assuming $\SSC=1+\epsilon^{2}R$, $k_{z}\sim\mathcal{O}(\epsilon)$, $\sigma\sim{k_{y}}\sim\mathcal{O}(\epsilon^{2})$, 
 \begin{equation}\label{eq:asymp}
 \sigma^{2}=\frac{q\,B_{0}^{2}}{(q+1)}\left[ k_{z}^{2}\left(R-\frac{d^2}{\pi^{2}}k_{z}^{2}\right)+\Upsilon\,k_{y}^{2}\right]+\ldots,
 \end{equation}
@@ -185,7 +185,7 @@ The eigenfunctions are indistinguishable from those at finite dissipation, lendi
 The tilted structures of $v_{x}$ and $v_{y}$ as well as $b_{x}$ and $b_{y}$, imply non-trivial Reynolds and Maxwell stresses.
 
 We should expect the generation of a mean electromotive force in linear regime, \textit{i.e}
-$\left<\boldsymbol{v}\times\boldsymbol{b}\right>{\sim}\,\alpha\!\left<\boldsymbol{B}_{0}\right>$.
+$\left<\boldsymbol{v}\times\boldsymbol{b}\right>\sim\,\alpha\!\left<\boldsymbol{B}_{0}\right>$.
 This is significant because of the possibility of direct laminar dynamo action in regions of weak shear at large Reynolds number.
 MRI dynamos have been studied in a number of different contexts \citep{2007PhRvL..98y4502R,2011ApJ...740...18O,2015PhRvL.114h5002S}, but all except one focused on turbulent dynamos. 
 The lone exception, \citet{2016MNRAS.462..818B}, numerically found the exponential growth of mean magnetic fields during the linear growth phase of the MRI far from stability.
@@ -225,7 +225,7 @@ We fully expect the general three-dimensional features of the MRI to persist in 
 
 
 \begin{acknowledgments}
-We would like to thank Steve Tobias for helpful conversations on this work.
+We thank Steve Tobias for helpful conversations on this work.
 JSO acknowledges funding from NASA LWS grant No. NNX16AC92G and Research Corporation Scialog Collaborative Award (TDA) ID\#24231. Computations were performed on the \emph{Leavitt} cluster at the Bates College High Performance Computing Center.
 Morgan Baxter acknowledges support from NASA LWS grant No. NNX16AC92G.
 \end{acknowledgments}
