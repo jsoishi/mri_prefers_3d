@@ -71,7 +71,7 @@
 \label{sec:methods}
 
 For both the ideal and non-ideal MHD equations, we solve the eigenvalue problem in the $x$ direction using the EigenValueProblem mode in \emph{Dedalus} for a grid of $N_y \times N_z$ modes in the $y$ and $z$ directions.
-For most of our runs, we use a targeted, sparse eigenvalue solver solving for the 15 modes closest to a guess for the maximum growth rate.
+For most of our runs, we use a targeted, sparse eigenvalue solver to find the 15 modes closest to a guess for the maximum growth rate.
 We use the ideal 2D growth rate as input for the smallest $k_y > 0$ mode at each $k_z$ and then use the output from each previous $k_y$ as an input guess for the next mode.
 Our solver is parallelized over the $k_y, k_z$ modes.
 We have confirmed that dense solvers retrieve identical results.
