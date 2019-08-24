@@ -73,9 +73,9 @@ Despite the extensive literature on accretion disks (strong shear, low dissipati
 
 Here, we investigate the stability of three-dimensional perturbations near the two-dimensional critical shear rate $S_{c}$ for a nearly invisicd, ideal MHD flow.
 We find that the first destabilized modes are three-dimensional, and thus could act as a dynamo even in the absence of secondary instability.
-These results also suggest that the non-normal growth the MRI is always important, even when axisymmetric modes dominate.
+These results also suggest that the non-normal growth of the MRI is always important, even when axisymmetric modes dominate.
 
-We solve the linearized magnetohydrodynamic equations in rotating plane-Couette geometry.
+We numerically solve the linearized magnetohydrodynamic equations in rotating plane-Couette geometry.
 This corresponds to a Cartesian frame rotating with angular frequency $\Omega$ and a linear background shear, $V_{y}=Sx$; \citep[see][]{2015RSPSA.47140699V}.
 We cast the Navier-Stokes equation in the form,
 \begin{equation}\label{eq:mhd}
@@ -110,13 +110,13 @@ We use $\SSC$ as our instability control parameter.
 
 We assume harmonic perturbations in $y$ and $z$, (e.g. pressure) $p=\hat{p}(x)e^{i(k_{y}y+k_{z}z)+\sigma{t}}$. 
 We use a complex-valued growth rate $\sigma=\gamma+i\omega$ with $\gamma,\,\omega$ both real. 
-The system reduces to a $\sigma$-eigenvalue problem of 10 first-order ODEs in $\partial_{x}$ with Dirichlet boundary conditions.
+The system reduces to a $\sigma$-eigenvalue problem of 10 first-order ODEs in $x$ with Dirichlet boundary conditions.
 We pose and solve equations~(\ref{eq:mhd}-\ref{eq:divu}) using the \emph{Dedalus} framework \citep{The Dedalus paper}. 
 
 Our main interest is in ideal ($\eta=0$), inviscid ($\nu=0$) conditions.
-However, we set $\eta=\nu=10^{-5}$ to avoid critical layers in for the \textit{stable} solution branch.
-We confirmed our results are totally insensitive to small diffusion. 
-For each $(k_{y},k_{z})$ pair, we solve using $n_{x}=128$ modes; all our results are identical at double the resolution; see \protect\url{github.com/jsoishi/mri_prefers_3d} for all code used in this paper.
+However, we set $\eta=\nu=10^{-5}$ to avoid critical layers in the \textit{stable} solution branch.
+We confirmed our results for unstable solutions are insensitive to small diffusion. 
+For each $(k_{y},k_{z})$ pair, we solve the eigenvalue problem using $n_{x}=128$ modes; all our results are identical at double the resolution; see \protect\url{github.com/jsoishi/mri_prefers_3d} for all code used in this paper.
 \begin{figure*}[ht]
   \includegraphics[width=\textwidth]{fig_1.pdf}
   \caption{Growth rates for three-dimensional MRI modes. 
@@ -162,7 +162,7 @@ The other stable modes (gray dots) are rotationally modified Alfv\'{e}n waves fo
 \begin{figure}[h!]
   \centering
   \includegraphics[width=\columnwidth]{eigvecs_xy_run_11_ideal_single_mode.pdf}
-  \caption{\textit{Ideal} Eigenvectors of the velocity and magnetic field perturbations for the most unstable mode when $\SSC=1.02$, and $\eta=\nu=0$; calculations at $\eta=\nu=10^{-5}$ are indistinguishable.
+  \caption{\textit{Ideal} eigenvectors of the velocity and magnetic field perturbations for the most unstable mode when $\SSC=1.02$, and $\eta=\nu=0$; calculations at $\eta=\nu=10^{-5}$ are indistinguishable.
   The top row shows $v_{x}$, $v_{y}$, $v_{z}$ (red is negative, blue positive); the bottom row shows $b_{x}$, $b_{y}$, $b_{z}$ (purple is negative, orange positive). 
 The amplitudes are arbitrary because of linearity.}
   \label{fig:eigvec}
@@ -195,7 +195,7 @@ We therefore solve equations~(\ref{eq:mhd}--\ref{eq:divu}) without dissipation a
 The eigenfunctions are indistinguishable from those at finite dissipation, lending additional confidence to our other results.
 The tilted structures of $v_{x}$ and $v_{y}$ as well as $b_{x}$ and $b_{y}$, imply non-trivial Reynolds and Maxwell stresses.
 
-We should expect the generation of a mean electromotive force in linear regime, \textit{i.e}
+We should expect the generation of a mean electromotive force in the linear regime, \textit{i.e}
 $\left<\boldsymbol{v}\times\boldsymbol{b}\right>\sim\,\alpha\!\left<\boldsymbol{B}_{0}\right>$.
 This is significant because of the possibility of direct laminar dynamo action in regions of weak shear at large Reynolds number.
 MRI dynamos have been studied in a number of different contexts \citep{2007PhRvL..98y4502R,2011ApJ...740...18O,2015PhRvL.114h5002S}, but all except one focused on turbulent dynamos. 
