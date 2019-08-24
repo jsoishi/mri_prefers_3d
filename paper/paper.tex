@@ -118,7 +118,15 @@ We confirmed our results are totally insensitive to small diffusion.
 For each $(k_{y},k_{z})$ pair, we solve using $n_{x}=128$ modes; all our results are identical at double the resolution; see \protect\url{github.com/jsoishi/mri_prefers_3d} for all code used in this paper.
 \begin{figure*}[ht]
   \includegraphics[width=\textwidth]{fig_1.pdf}
-  \caption{Growth rates for three-dimensional MRI modes. a) growth rates $\gamma$ over a grid of $k_{y}$ and $k_{z}$ for four values of supercriticality $\SSC$. The gray contour highlights $\gamma=0$; the red dots indicate the fastest growing mode. At $\SSC=0.640$, there are no two dimensional modes. b) Growth rate vs $k_{y}$ for $k_{z}=0.259$ at $\SSC=1.002$ (highlighted by the blue line in a). The orange line gives the asymptotic result from equation~(\ref{eq:asymp}) and the blue line are the numerical results. The asymptotic form is valid as $\SSC\to1$ and $k_{y}\ll1$.) c) The full discrete spectrum of the MRI for $(k_{y},k_{z})\simeq(0.263,0.447)$. The unstable mode is plotted in orange, its stable complex conjugate is blue, and all other modes are gray. d) The phase angle, $\arctan(k_{y}/k_{z})$, as a function of $\SSC$ showing the exact transition to purely two-dimensional fastest modes.}
+  \caption{Growth rates for three-dimensional MRI modes. 
+  a) growth rates $\gamma$ over a grid of $k_{y}$ and $k_{z}$ for four values of supercriticality $\SSC$. 
+  The gray contour highlights $\gamma=0$; the red dots indicate the fastest growing mode. 
+  At $\SSC=0.640$, there are no two dimensional modes. 
+  b) Growth rate vs $k_{y}$ for $k_{z}=0.259$ at $\SSC=1.002$ (highlighted by the blue line in a). 
+  The orange line gives the asymptotic result from equation~(\ref{eq:asymp}) and the blue line are the numerical results. 
+  The asymptotic form is valid as $\SSC\to1$ and $k_{y}\ll1$.) c) The full discrete spectrum of the MRI for $(k_{y},k_{z})\simeq(0.263,0.447)$. 
+  The unstable mode is plotted in orange, its stable complex conjugate is blue, and all other modes are gray. 
+  d) The phase angle, $\arctan(k_{y}/k_{z})$, as a function of $\SSC$ showing the exact transition to purely two-dimensional fastest modes.}
   \label{fig:growth_rate}
 \end{figure*}
 
@@ -153,7 +161,9 @@ The other stable modes (gray dots) are rotationally modified Alfv\'{e}n waves fo
 \begin{figure}[h!]
   \centering
   \includegraphics[width=\columnwidth]{eigvecs_xy_run_11_ideal_single_mode.pdf}
-  \caption{\textit{Ideal} Eigenvectors of the velocity and magnetic field perturbations for the most unstable mode when $\SSC=1.02$, and $\eta=\nu=0$; calculations at $\eta=\nu=10^{-5}$ are indistinguishable.  The top row shows $v_{x}$, $v_{y}$, $v_{z}$ (red is negative, blue positive); the bottom row shows $b_{x}$, $b_{y}$, $b_{z}$ (purple is negative, orange positive). The amplitudes are arbitrary because of linearity.}
+  \caption{\textit{Ideal} Eigenvectors of the velocity and magnetic field perturbations for the most unstable mode when $\SSC=1.02$, and $\eta=\nu=0$; calculations at $\eta=\nu=10^{-5}$ are indistinguishable.
+  The top row shows $v_{x}$, $v_{y}$, $v_{z}$ (red is negative, blue positive); the bottom row shows $b_{x}$, $b_{y}$, $b_{z}$ (purple is negative, orange positive). 
+The amplitudes are arbitrary because of linearity.}
   \label{fig:eigvec}
 \end{figure}
 
@@ -198,7 +208,8 @@ Figure~(\ref{fig:correlation}) shows... %I'm going to hold off on this until we 
   \centering
   \includegraphics[width=\columnwidth]{run_47_output_growthrates.pdf}\\
   \includegraphics[width=\columnwidth]{run_49_output_growthrates.pdf}
-  \caption{(top) Growth rates for $q=1/10$ relevant to the stellar interiors. (bottom) Growth rates for MRI near onset at liquid metal-like diffusivities, $\nu=10^{-6}$, $\eta=0.1$.}
+  \caption{(top) Growth rates for $q=1/10$ relevant to the stellar interiors. 
+  (bottom) Growth rates for MRI near onset at liquid metal-like diffusivities, $\nu=10^{-6}$, $\eta=0.1$.}
   \label{fig:other_params}
 \end{figure}
 Finally, we vary two important parameters:
@@ -215,7 +226,8 @@ It is nevertheless quite interesting that, near onset, the low-$\Prm$ MRI is \em
 Our results show that three-dimensional modes grow faster than two-dimensional modes whenever the MRI is near its critical shear values.
 While we mainly focus on the ideal Keplerian case ($q=3/4$), we also demonstrate robustness for low Rossby ($q=1/10$) and Prandtl numbers ($\Prm=10^{-5}$).
 There are several important future directions this work suggests.
-First, the Sun possesses two internal shear layers with inwardly increasing shear, the high-latitude tachocline, and the near-surface shear layer (NSSL). Past work has already pointed out the possibility of the small-scale MRI in the Sun using local analysis \citep{doi:10.1086/522426,doi:10.1111/j.1745-3933.2010.00987.x,doi:10.1088/0004-637X/787/1/21}
+First, the Sun possesses two internal shear layers with inwardly increasing shear, the high-latitude tachocline, and the near-surface shear layer (NSSL). 
+Past work has already pointed out the possibility of the small-scale MRI in the Sun using local analysis \citep{doi:10.1086/522426,doi:10.1111/j.1745-3933.2010.00987.x,doi:10.1088/0004-637X/787/1/21}.
 The NSSL, in particular, may also host slower MRI-driven dynamics; in spite of containing small-scale convection.
 It is therefore crucial to further elucidate the nonlinear saturation of the 3D MRI, along with its robustness to noisy convection.
 Second, our low-$\Prm$ results suggest that three-dimensional MRI modes may be the easiest to excite in liquid metal experiments.
