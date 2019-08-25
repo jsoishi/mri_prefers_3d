@@ -84,10 +84,7 @@ We cast the Navier-Stokes equation in the form,
 where
 \begin{equation}
 \boldsymbol{\omega}=\boldsymbol{\nabla}\times\boldsymbol{v},\quad\text{and}\quad\frac{D}{Dt}=\partial_{t}+{S}x\,\partial_{y}\end{equation}
-The main input parameters are the Coriolis parameter, $f=2 \Omega$; the background shear rate, $S=dV_{y}/dx<0$;  the vertical magnetic field $B_{0}$ (in Alfv\'{e}n units $\mu_{0}\rho_{0}=1$); and the horizontal domain width $-d/2\le{x}\le d/2$.
-Accretion-disk modelling usually considers the Rossby number $q=-S/f<1$; $q=1$ corresponds to purely hydrodynamical Rayleigh unstable shear.
-\textit{Note}: some sources use $q=-S/\Omega=3/2$ to represent the same quantity. 
-Unless otherwise stated $q=3/4$ (Keplerian).
+
 We write the induction equation in terms of the $x$-component magnetic field,
 \begin{equation}\label{eq:Bx}
 \frac{Db_{x}}{Dt}+\eta(\partial_{y}j_{z}-\partial_{z}j_{y})=B_{0}\partial_{z}v_{x},
@@ -100,8 +97,14 @@ We explicitly enforce divergence-free velocity and magnetic field,
 \begin{equation}\label{eq:divu}
  \boldsymbol{\nabla}\cdot\boldsymbol{v}=\boldsymbol{\nabla}\cdot\boldsymbol{b}=0.
 \end{equation}
-The spatial domain is a doubly periodic channel in $y,\,z$ with width $d=\pi$. 
-The boundary conditions are impenetrable stress-free and perfectly conducting; $v_{x}=\omega_{y}=\omega_{z}=b_{x}=\partial_{x}j_{x}=0$ at $x=\pm{d}$. 
+The spatial domain is a doubly periodic channel in $y,\,z$ with width $-d/2\le{x}\le d/2$.
+The boundary conditions are impenetrable stress-free and perfectly conducting; $v_{x}=\omega_{y}=\omega_{z}=b_{x}=\partial_{x}j_{x}=0$ at $x=\pm{d/2}$. 
+
+The main input parameters are the Coriolis parameter, $f=2 \Omega$; the background shear rate, $S=dV_{y}/dx<0$;  the vertical magnetic field $B_{0}$ (in Alfv\'{e}n units $\mu_{0}\rho_{0}=1$).
+Accretion-disk modelling usually considers the Rossby number $q=-S/f<1$; $q=1$ corresponds to purely hydrodynamical Rayleigh unstable shear.
+\textit{Note}: some sources use $q=-S/\Omega$ to represent same effective quantity. 
+Unless otherwise stated $q=3/4$ (Keplerian).
+
 The MRI is a weak-field instability; in the inviscid, ideal case the critical shear rate for instability in \textit{two dimensions} is
 \begin{equation}\label{eq:Sc}
   S_{c}=-\frac{\pi^{2}B_{0}^2}{fd^2}.
@@ -111,7 +114,7 @@ We use $\SSC$ as our instability control parameter.
 We assume harmonic perturbations in $y$ and $z$, (e.g. pressure) $p=\hat{p}(x)e^{i(k_{y}y+k_{z}z)+\sigma{t}}$. 
 We use a complex-valued growth rate $\sigma=\gamma+i\omega$ with $\gamma,\,\omega$ both real. 
 The system reduces to a $\sigma$-eigenvalue problem of 10 first-order ODEs in $x$ with Dirichlet boundary conditions.
-We pose and solve equations~(\ref{eq:mhd}-\ref{eq:divu}) using the \emph{Dedalus} framework \citep{The Dedalus paper}. 
+We pose and solve equations~(\ref{eq:mhd}-\ref{eq:divu}) using the \emph{Dedalus} framework \citep{The Dedalus paper}.
 
 Our main interest is in ideal ($\eta=0$), inviscid ($\nu=0$) conditions.
 However, we set $\eta=\nu=10^{-5}$ to avoid critical layers in the \textit{stable} solution branch.
@@ -138,7 +141,7 @@ These results are pertinent in two ways.
 First, the MRI contains a substantial ``Goldilocks regime" with possible direct dynamo action, and this regime likely applies to stellar interiors and laboratory experiments. 
 Second, our results accord with well-established results for accretion disks that expect two-dimensional primary modes.
 Figure~\ref{fig:growth_rate}a shows the growth rates for four values of $\SSC$. 
-At $\SSC=1.02$, the maximum growth rate ($\gamma/|S|=0.093$) happens at $(k_{y},k_{z})\simeq(0.263,0.447)$.
+At $\SSC=1.02$, the maximum growth rate ($\gamma_{\max}/|S|=0.093$) happens at $(k_{y},k_{z})\simeq(0.263,0.447)$.
 The first panel of figure~\ref{fig:growth_rate}a shows $\SSC=0.640$, which contains only three-dimensional instability.
 The overall critical shear for three-dimensional modes is $S_{c,\text{3D}}\simeq0.102S_c$.
 
@@ -191,7 +194,7 @@ Therefore significant three dimensionality likely implies important non-normal b
 
 Figure~\ref{fig:eigvec} shows the eigenvectors for the most unstable mode at $\SSC=1.02$ using ideal MHD. 
 No critical layers can form for $\gamma\ne0$.
-We therefore solve equations~(\ref{eq:mhd}--\ref{eq:divu}) without dissipation as a 2nd-order system in $\partial_{x}$ and impose $v_{x}=0$ at $x=\pm{d}$.
+We therefore solve equations~(\ref{eq:mhd}--\ref{eq:divu}) without dissipation as a 2nd-order system in $\partial_{x}$ and impose $v_{x}=0$ at $x=\pm{d/2}$.
 The eigenfunctions are indistinguishable from those at finite dissipation, lending additional confidence to our other results.
 The tilted structures of $v_{x}$ and $v_{y}$ as well as $b_{x}$ and $b_{y}$, imply non-trivial Reynolds and Maxwell stresses.
 
@@ -217,7 +220,7 @@ Finally, we vary two important parameters:
 $q$ and the magnetic Prandtl number $\Prm=\nu/\eta$.
 Figure~\ref{fig:other_params} shows the growth rates for $\SSC=1.02$.
 The upper panel shows $q=1/10$ (addressing a possible range within stellar interiors) holding all other parameters equal to their fiducial values.
-The growth rates show similar behavior to the $q=3/4$ cases, \textit{i.e.}, dominated by three-dimensional modes with $\gamma_{\text{max}}/|S|\simeq0.1$.
+The growth rates show similar behavior to the $q=3/4$ cases, \textit{i.e.}, dominated by three-dimensional modes with $\gamma_{\max}/|S|\simeq0.1$.
 The lower panel shows $\nu=10^{-6}$ and $\eta=0.1$ with all other parameters equal to their fiducial values. 
 This case is relevant to liquid metals e.g., the Princeton MRI experiment \citep{2002JFM...462..365G}
 at $\Prm=10^{-5}$. 
