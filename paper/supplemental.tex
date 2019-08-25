@@ -27,6 +27,8 @@
 \newcommand{\inv}[1]{\frac{1}{#1}}
 \newcommand{\pd}[1]{\partial_{#1}}
 
+\newcommand{\Reyn}{\mathrm{Re}}
+\newcommand{\Reym}{\mathrm{Rm}}
 \newcommand{\Ra}{R}
 \newcommand{\Ve}{\mbox{\textit{Ve}}}
 \newcommand{\eps}{\varepsilon}
@@ -67,15 +69,17 @@
 %Title of paper
 \title{Supplemental Information for: The Magnetorotational Instability Prefers Three Dimensions}
 
-\section{Numerical Methods}
+\maketitle
+\section{Numerical Methods and Resolution Studies}
 \label{sec:methods}
 
-For both the ideal and non-ideal MHD equations, we solve the eigenvalue problem in the $x$ direction using the EigenValueProblem mode in \emph{Dedalus} for a grid of $N_y \times N_z$ modes in the $y$ and $z$ directions.
+For both the ideal and non-ideal MHD equations, we solve the eigenvalue problem in the $x$ direction using the \texttt{EigenValueProblem} solver in \emph{Dedalus} for a grid of $N_y \times N_z$ modes in the $y$ and $z$ directions.
 For most of our runs, we use a targeted, sparse eigenvalue solver to find the 15 modes closest to a guess for the maximum growth rate.
-We use the ideal 2D growth rate as input for the smallest $k_y > 0$ mode at each $k_z$ and then use the output from each previous $k_y$ as an input guess for the next mode.
-Our solver is parallelized over the $k_y, k_z$ modes.
-We have confirmed that dense solvers retrieve identical results.
-For the spectrum in figure 1 of the main text, we used a dense eigenvalue solver.
+In run 3, we have confirmed that dense solvers retrieve identical results.
+For nearly ideal runs, we use the ideal 2D growth rate as input for the smallest $k_y > 0$ mode at each $k_z$ and then use the output from each previous $k_y$ as an input guess for the next mode.
+For those runs that have significant $\eta$, we instead use a dense solve for the $k_y = 0$ modes and then step forward in $k_y$ at each $k_z$ as before.
+Our solver is embarrassingly parallelized over the $k_z$ modes.
+For the spectrum in figure 1 of the main text, we used a dense eigenvalue solver at $(k_y^{max},k_z^{max})$ for $\SSC= 1.02$.
 
 In order to ensure our results are converged, we have repeated runs at $n_x=256$ Chebyshev modes as well as doubling the number of modes in $y$ and $z$.
 
@@ -113,13 +117,24 @@ In order to ensure our results are converged, we have repeated runs at $n_x=256$
 \end{tabular}
 %\label{simulations}
 
+\section{Reynolds Number and Departure from Ideal MHD}
+\label{sec:reyn}
 
-
-\section{Resolution and Reynolds number study}
-\label{sec:resolution}
+In order to ensure that our calculations are probing the ideal MHD regime we are interested in, we have performed as series of runs (24-27) with the $\eta = \nu$ ranging from $10^{-6}$ to $10^{-2}$.
+In our units, this is equivalent to varying the Reynolds and Magnetic Reynolds numbers $\Reyn = \Reym = 10^2 -- 10^6$.
+Figure~\pageref{fig:reynolds} shows the growth rates at $\SSC=1.05$ for five values of $\Reyn = \Reym$.
+For $\Reyn \gtrsim 10^4$, the maximum growth rate is located at the same position and the same growth rate; the unstable region expands, as expected.
+This suggests that our results at $\Reyn = 10^5$ are reasonably close to ideal MHD for the purposes of understanding the MRI's preference for 3D modes near shear onset.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{re_plots.pdf}
+  \caption{Growth rates at $\SSC = 1.02$ for varying diffusivities. Note that the top three panels are essentially identical, suggesting that above $\Reyn \gtrsim 10^4$ we are reasonably close to ideal conditions.}
+  \label{fig:reynolds}
+\end{figure}
 
 \section{Asymptotic Calculation}
 \label{sec:asymp}
+Here, we outline the asymptotic calculation for the leading order correction to the 2D growth rates in when accouting for three dimensional effects via finite $k_y$.
 Define the domain as $ - d/2 < x < d/2$. Being in the rotating frame means the shear has no net
 \Beq
 \int_{-d/2}^{d/2} V_{y}(x) \text{d} x  \ = \ 0, \quad \implies  \quad V_{y}(x) \ = \ S\, x
