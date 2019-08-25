@@ -3,14 +3,14 @@ This script plots both the largest growth rates of the MRI data
 passed to the script. 
 
 Usage:
-    make_eigenvector_plots.py [--vmin=<vmin> --vmax=<vmax> --q=<q> --no-contours] <filename>
+    make_eigenvector_plots.py [--vmin=<vmin> --vmax=<vmax> --q=<q> --no-contours --label=<label>] <filename>
 
 Options:
     --vmin=<vmin>    min for colorbar [default: 0]
     --vmax=<vmax>    max for colorbar [default: 0.701]
     --q=<q>          q = S/f [default: 0.75]
     --no-contours    turn off contours
-
+    --label=<label>  run label
 """
 
 import h5py
@@ -30,6 +30,7 @@ vmax = float(args['--vmax'])
 q = float(args['--q'])
 contours = not args['--no-contours']
 outbase = Path("plots")
+label = args['--label']
 
 # Plot growth rates
 datafile = h5py.File(filename,'r')
@@ -61,6 +62,9 @@ plt.plot(max_kz, max_ky, 'ro')
 plt.colorbar(PCM, label=r'$\gamma/|S|$')
 plt.xlabel(r'$k_z$')
 plt.ylabel(r'$k_y$')
+
+if label:
+    plt.text(0.05,0.9,r'${}$'.format(label), color='w',fontsize=20)
 plt.tight_layout()
 
 #plt.title(r'3D Keplerian MRI growth rates/f  $\left( S/S_{\mathrm{crit.}} = %.2f\right)$' %(R[i]))
