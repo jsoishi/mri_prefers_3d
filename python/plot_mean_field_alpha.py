@@ -23,7 +23,12 @@ alpha_yz = alpha.mean(axis=0).mean(axis=0)/norm
 
 plt.plot(x[0,0,:], alpha_yz)
 plt.xlabel(r"$x$")
-plt.ylabel(r"$\alpha$")
+plt.ylabel(r"$(v_x B_y - v_y B_x)/|u||B|$")
+
+ax =plt.gca()
+ax.set_xlim(-np.pi/2,np.pi/2)
+ax.set_xticks([-np.pi/2, 0, np.pi/2])
+ax.set_xticklabels([r'$-\pi/2$', 0, r'$\pi/2$'])
 plt.tight_layout()
 plt.savefig('plots/mean_field_alpha_{}.pdf'.format(dfname))
 
