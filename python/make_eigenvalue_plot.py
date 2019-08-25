@@ -58,7 +58,7 @@ if contours:
     plt.contour(kz_global,ky_global,gamma_r,levels=contour_levels,colors='k')
 plt.contour(kz_global,ky_global,gamma_r,levels=[0.],colors='w',alpha=0.5)
 plt.plot(max_kz, max_ky, 'ro')
-plt.colorbar(PCM, label=r'$\gamma/S$')
+plt.colorbar(PCM, label=r'$\gamma/|S|$')
 plt.xlabel(r'$k_z$')
 plt.ylabel(r'$k_y$')
 plt.tight_layout()

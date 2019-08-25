@@ -48,7 +48,8 @@ for i,r in enumerate(runs):
 
     ax.contour(kz_global,ky_global,gamma_r,levels=contour_levels,colors='k')
     ax.contour(kz_global,ky_global,gamma_r,levels=[0.],colors='grey')
-    ax.text(0.05,0.9,r'$S/S_c = {:5.3f}$'.format(SSC[i]), color='w',fontsize=18)
+    ax.text(0.05,0.9,r'$S/S_c = {:5.3f}$'.format(SSC[i]), color='w',fontsize=20)
+    ax.text(0.05,0.8,r'$\gamma_{{max}}/|S| = {:5.3f}$'.format(gamma_r.max()), color='w',fontsize=16)
     ax.plot(max_kz, max_ky, 'ro')
     #ax.colorbar(PCM, label=r'$\gamma$')
     ax.set_xlabel(r'$k_z$')
@@ -63,7 +64,7 @@ for i,r in enumerate(runs):
 
 cax = fig.add_axes([xgutter+4*(w+pad), 0.55,0.015,h])
 cbar = fig.colorbar(c, cax=cax)
-cbar.set_label(r'$\gamma/S$')
+cbar.set_label(r'$\gamma/|S|$')
 
 # asymptotics
 xloc = grid[0].get_position().x0
@@ -101,7 +102,7 @@ asymp_ax.text(0.03, 0.07, 'asymptotic', fontsize=18)
 asymp_ax.set_ylim(0, 0.06/q)
 asymp_ax.set_xlim(0,0.2)
 asymp_ax.set_xlabel(r'$k_y$')
-asymp_ax.set_ylabel(r'$\gamma/S$')
+asymp_ax.set_ylabel(r'$\gamma/|S|$')
 asymp_ax.xaxis.set_major_locator(plt.MultipleLocator(0.05))
 asymp_sub.set_ylim(-0.005/q**2, 0.005/q**2)
 asymp_sub.set_xticks([0.045,0.08])
@@ -133,8 +134,8 @@ spec_ax.scatter(spec_thresh[spec_thresh.real <= 0].real, spec_thresh[spec_thresh
 
 spec_ax.set_xlim(-0.25/q,0.1/q)
 spec_ax.set_ylim(-0.8/q,0.8/q)
-spec_ax.set_xlabel(r"$\gamma/S$")
-spec_ax.set_ylabel(r"$\omega/S$")
+spec_ax.set_xlabel(r"$\gamma/|S|$")
+spec_ax.set_ylabel(r"$\omega/|S|$")
 spec_ax.yaxis.tick_right()
 spec_ax.yaxis.set_label_position("right")
 spec_ax.xaxis.set_major_locator(plt.MultipleLocator(0.1))
@@ -148,7 +149,7 @@ phi_ax = fig.add_axes([xgutter+3*(w+pad),0.1,w,0.35])
 phi, ssc, dk, growth = calc_phi()
 c = phi_ax.scatter(ssc, phi, marker='o', c=growth, yunits=radians, zorder=2)#,edgecolor='k',linewidth=0.8)
 phi_cax = fig.add_axes([xgutter+4*(w+pad), 0.1, 0.015,0.35])
-phi_cbar = fig.colorbar(c, cax=phi_cax, label='$\gamma/S$')
+phi_cbar = fig.colorbar(c, cax=phi_cax, label='$\gamma/|S|$')
 
 phi_ax.set_xlabel(r"$S/S_c$")
 phi_ax.set_ylabel(r"$\phi$")
