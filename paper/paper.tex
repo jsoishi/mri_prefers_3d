@@ -126,12 +126,13 @@ For each $(k_{y},k_{z})$ pair, we solve the eigenvalue problem using $n_{x}=128$
   \caption{Growth rates for three-dimensional MRI modes. 
   a) growth rates $\gamma$ over a grid of $k_{y}$ and $k_{z}$ for four values of supercriticality $\SSC$. 
   The gray contour highlights $\gamma=0$; the red dots indicate the fastest growing mode. 
+Two dimensional modes occur at $k_y = 0$ on the bottom of each figure.
   At $\SSC=0.640$, there are no two dimensional modes. 
   b) Growth rate vs $k_{y}$ for $k_{z}=0.259$ at $\SSC=1.002$ (highlighted by the blue line in a). 
   The orange line gives the asymptotic result from equation~(\ref{eq:asymp}) and the blue line are the numerical results. 
   The asymptotic form is valid as $\SSC\to1$ and $k_{y}\ll1$.) c) The full discrete spectrum of the MRI for $(k_{y},k_{z})\simeq(0.263,0.447)$. 
   The unstable mode is plotted in orange, its stable complex conjugate is blue, and all other modes are gray. 
-  d) The phase angle, $\arctan(k_{y}/k_{z})$, as a function of $\SSC$ showing the exact transition to purely two-dimensional fastest modes.}
+  d) The phase angle, $\arctan(k_{y}/k_{z})$, as a function of $\SSC$ showing the exact transition to purely two-dimensional fastest modes at $\phi = 0$. }
   \label{fig:growth_rate}
 \end{figure*}
 
@@ -143,8 +144,9 @@ First, the MRI contains a substantial ``Goldilocks regime" with possible direct 
 Second, our results accord with well-established results for accretion disks that expect two-dimensional primary modes.
 Figure~\ref{fig:growth_rate}a shows the growth rates for four values of $\SSC$. 
 At $\SSC=1.02$, the maximum growth rate ($\gamma_{\max}/|S|=0.093$) happens at $(k_{y},k_{z})\simeq(0.263,0.447)$.
-The first panel of figure~\ref{fig:growth_rate}a shows $\SSC=0.640$, which contains only three-dimensional instability.
-The overall critical shear for three-dimensional modes is $S_{c,\text{3D}}\simeq0.102S_c$.
+Two-dimensional instability occurs for modes with finite growth rates at $k_y = 0$ along the bottom of the figure.
+In all cases in figure~\ref{fig:growth_rate}a, the maximum growth rate does not occur along this line, indicating the dominance of three-dimensional modes.
+The first panel of figure~\ref{fig:growth_rate}a shows $\SSC=0.640$, which contains only three-dimensional instability: the zero growth rate contour (highlighted in grey) does not intercept the x-axis.
 
 The MRI's preference for three-dimensional modes can be predicted analytically.
 We analyze equations~(\ref{eq:mhd}-\ref{eq:divu}) asymptotically close to $S_{c}$, and compute the leading-order correction to the growth rate from three-dimensional effects assuming $\SSC=1+\epsilon^{2}R$, $k_{z}\sim\mathcal{O}(\epsilon)$, $\sigma\sim{k_{y}}\sim\mathcal{O}(\epsilon^{2})$, 
@@ -178,9 +180,10 @@ Impenetrable and stress-free boundary conditions are more applicable to stellar 
 But even in disks, any kind of finite radial extent will cutoff the unbounded growth of channel modes. 
 We reconcile our results with earlier simulations by showing that the MRI indeed prefers two dimensions for the larger values of criticality found in disk simulations. 
 Figure~\ref{fig:growth_rate}d shows the phase angle $\phi=\arctan(k_{y}/k_{z})$ of the fastest growing mode as function of $\SSC$.
+The overall critical shear for three-dimensional modes is $S_{c,\text{3D}}\simeq0.102S_c$.
 Above $\SSC\gtrsim2.05$ $\phi=0$, indicating that axisymmetric modes have the fastest growth rates.
 For the fiducial run in \citet{1996ApJ...464..690H}, $\SSC\simeq4.84$ (most works use similar values).
-Thus, we predict axisymmetric modes should dominate the linear dynamics for parameters studied in prior numerical simulations.
+Thus, our theory predicts axisymmetric modes should dominate the linear dynamics for parameters studied in prior numerical simulations.
 
 \begin{figure}[h!]
   \includegraphics[width=\columnwidth]{{mean_field_alpha_run_11_output.h5}.pdf}
@@ -221,7 +224,8 @@ non-axisymmetric MRI unstable modes drive the dynamo growth of magnetic fields.
   \includegraphics[width=\columnwidth]{run_47_output_growthrates.pdf}\\
   \includegraphics[width=\columnwidth]{run_49_output_growthrates.pdf}
   \caption{(top) Growth rates for $q=1/10$ relevant to the stellar interiors. 
-  (bottom) Growth rates for MRI near onset at liquid metal-like diffusivities, $\nu=10^{-6}$, $\eta=0.1$.}
+  (bottom) Growth rates for MRI near onset at liquid metal-like diffusivities, $\nu=10^{-6}$, $\eta=0.1$.
+The lack of two dimensional instability is evident by the fact that the zero contour does not intercept the x-axis.}
   \label{fig:other_params}
 \end{figure}
 Finally, we vary two important parameters:
@@ -250,8 +254,10 @@ We fully expect the general three-dimensional features of the MRI to persist in 
 
 \begin{acknowledgments}
 We thank Steve Tobias for helpful conversations on this work.
-JSO acknowledges funding from NASA LWS grant No. NNX16AC92G and Research Corporation Scialog Collaborative Award (TDA) ID\#24231. Computations were performed on the \emph{Leavitt} cluster at the Bates College High Performance Computing Center.
-Morgan Baxter acknowledges support from NASA LWS grant No. NNX16AC92G.
+Oishi, Baxter, and Brown acknowledge support from NASA LWS grant No. NNX16AC92G.
+Oishi also acknowledges support from Research Corporation Scialog Collaborative Award (TDA) ID\#24231. 
+Computations were performed on the \emph{Leavitt} cluster at the Bates College High Performance Computing Center.
+
 \end{acknowledgments}
 
 \bibliography{mri}
