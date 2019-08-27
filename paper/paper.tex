@@ -132,7 +132,7 @@ Two dimensional modes occur at $k_y = 0$ on the bottom of each figure.
   The orange line gives the asymptotic result from equation~(\ref{eq:asymp}) and the blue line are the numerical results. 
   The asymptotic form is valid as $\SSC\to1$ and $k_{y}\ll1$.) c) The full discrete spectrum of the MRI for $(k_{y},k_{z})\simeq(0.263,0.447)$. 
   The unstable mode is plotted in orange, its stable complex conjugate is blue, and all other modes are gray. 
-  d) The phase angle, $\arctan(k_{y}/k_{z})$, as a function of $\SSC$ showing the exact transition to purely two-dimensional fastest modes at $\phi = 0$. }
+  d) The phase angle, $\arctan(k_{y}/k_{z})$, as a function of $\SSC$ showing the exact transition to purely two-dimensional fastest modes ($\phi = 0$) at $\SSC = \gtrsim2.05$. }
   \label{fig:growth_rate}
 \end{figure*}
 
@@ -164,6 +164,7 @@ Figure~\ref{fig:growth_rate}b compares the numerical growth rates for $\SSC=1.00
 Figure~\ref{fig:growth_rate}c shows the full spectrum for $\SSC=1.02$.
 The plot shows a purely growing/decaying complex-conjugate pair (orange/blue dots on the real axis) consistent with equation~(\ref{eq:asymp}).
 The other stable modes (gray dots) are rotationally modified Alfv\'{e}n waves found in left- and right-going pairs, consistent with the analytic predictions for two-dimensional stability calculations.
+We reject spurious eigenvalues by using \texttt{eigentools} \footnote{\protect\url{https://bitbucket.org/jsoishi/eigentools}} to solve equations~(\ref{eq:mhd}-\ref{eq:divu}) at two resolutions and retain only pairs equal to within one part in $10^{-6}$.
 
 \begin{figure}[h!]
   \centering
@@ -181,7 +182,7 @@ But even in disks, any kind of finite radial extent will cutoff the unbounded gr
 We reconcile our results with earlier simulations by showing that the MRI indeed prefers two dimensions for the larger values of criticality found in disk simulations. 
 Figure~\ref{fig:growth_rate}d shows the phase angle $\phi=\arctan(k_{y}/k_{z})$ of the fastest growing mode as function of $\SSC$.
 The overall critical shear for three-dimensional modes is $S_{c,\text{3D}}\simeq0.102S_c$.
-Above $\SSC\gtrsim2.05$ $\phi=0$, indicating that axisymmetric modes have the fastest growth rates.
+Above $\SSC\gtrsim2.05$, $\phi$ becomes zero, indicating that axisymmetric modes have the fastest growth rates.
 For the fiducial run in \citet{1996ApJ...464..690H}, $\SSC\simeq4.84$ (most works use similar values).
 Thus, our theory predicts axisymmetric modes should dominate the linear dynamics for parameters studied in prior numerical simulations.
 
@@ -221,10 +222,9 @@ non-axisymmetric MRI unstable modes drive the dynamo growth of magnetic fields.
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=\columnwidth]{run_47_output_growthrates.pdf}\\
-  \includegraphics[width=\columnwidth]{run_49_output_growthrates.pdf}
-  \caption{(top) Growth rates for $q=1/10$ relevant to the stellar interiors. 
-  (bottom) Growth rates for MRI near onset at liquid metal-like diffusivities, $\nu=10^{-6}$, $\eta=0.1$.
+  \includegraphics[width=\columnwidth]{low_rossby_liquid_metal_growth_rates.pdf}
+  \caption{(a) Growth rates for $q=1/10$ relevant to the stellar interiors. 
+  (b) Growth rates for MRI near onset at liquid metal-like diffusivities, $\nu=10^{-6}$, $\eta=0.1$.
 The lack of two dimensional instability is evident by the fact that the zero contour does not intercept the x-axis.}
   \label{fig:other_params}
 \end{figure}
