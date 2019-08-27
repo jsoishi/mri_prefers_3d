@@ -117,6 +117,58 @@ In order to ensure our results are converged, we have repeated runs at $n_x=256$
 \end{tabular}
 %\label{simulations}
 
+\section{1st-order formulation of the dissipative equations}
+\label{sec:formulation}
+
+We formulate the system in terms of the 10 problem \texttt{variables} 
+\Beq
+X \ = \ \left[\,p,v_{x},v_{y},v_{z},\omega_{y},\omega_{z},b_{x},b_{y},b_{z},j_{xx}\,\right] \nonumber
+\Eeq
+As sting-based \texttt{substitutions} 
+\Beq
+``\omega_{x}" &=& ``\pd{y} v_{z} - \pd{z} v_{y}" \nonumber \\
+``j_{x}" &=& ``\pd{y} b_{z} - \pd{z} b_{y}" \nonumber \\
+``j_{y}" &=& ``\pd{z} b_{x} - \pd{x} b_{z}" \nonumber \\
+``j_{z}" &=& ``\pd{x} b_{y} - \pd{y} b_{x}" \nonumber 
+\Eeq
+The expression for $\omega_{x},\,j_{x},\,j_{y},\,j_{z}$ are not legitimate variables that \textit{Dedalus} solves for. They are only short-hand aliases that mean literally the same thing as the expression on the right-hand side of the definition, which are defined strictly in terms of legitimate problem variables. 
+
+We also define the following operator substitutions 
+\Beq
+``\pd{t} q" &=& ``\sigma q" \nonumber \\
+``\pd{y} q" &=& ``i k_{y} q" \nonumber \\
+``\pd{z} q" &=& ``i k_{z} q" \nonumber 
+\Eeq
+where $\sigma$ is the problem \texttt{eigenvalue}, and $k_{y},\,k_{z}$ are problem \texttt{parameters}, along with $f,\,S,\,B_{0},\, \nu,\, \eta$.
+
+The system of \texttt{equations} is:
+\Beq\label{u-eq}
+\pd{x} v_{x} + \pd{y} v_{y} + \pd{z} v_{z}  &=& 0\\
+\pd{t} v_{x} + S x \pd{y} v_{x} - f v_{y} + \pd{x} p - B_{0} \pd{z} b_{x}  + \nu ( \pd{y} \omega_{z} - \pd{z} \omega_{y}) &=& 0\\
+\pd{t} v_{y} + S x \pd{y} v_{y} + (f+S) v_{x} + \pd{y} p - B_{0} \pd{z} b_{y} + \nu ( \pd{z} \omega_{x} - \pd{x} \omega_{z})&=& 0\label{v-eq} \\
+\pd{t} v_{z} + S x \pd{y} v_{z} + \pd{z} p - B_{0} \pd{z} b_{z} + \nu ( \pd{x} \omega_{y} - \pd{y} \omega_{x})&=& 0 \\
+\omega_{y} - \pd{z} v_{x} + \pd{x} v_{z} &=& 0 \\
+\omega_{z} - \pd{x} v_{y} + \pd{y} v_{x} &=& 0 \\
+\pd{x} b_{x} + \pd{y} b_{y} + \pd{z} b_{z}   &=& 0\\
+\pd{t} b_{x} + S x \pd{y} b_{x} - B_{0} \pd{z} v_{x} + \eta ( \pd{y} j_{z} - \pd{z} j_{y})&=& 0\\
+\pd{t} j_{x}  + S x \pd{y} j_{x}- \eta( \pd{x}j_{xx} + \pd{y}^{2} j_{x} + \pd{z}^{2} j_{x} )  - B_{0} \pd{z} \omega_{x} + S \pd{z} b_{x} &=& 0\\
+j_{xx} - \pd{x} j_{x} &=& 0
+\Eeq
+We can see there are the same number of equations as variables, each equations has only 1st-order derivatives in $x$, and every variable has at least one $\pd{x}$. It appears (for example) that there are no $\pd{x}$ terms in the $b_{x}$ equation, but this due to the substitutions, 
+\Beq
+\pd{y} j_{z} - \pd{z} j_{y} =  \pd{y}(\pd{x} b_{y} - \pd{y} b_{x}) - \pd{z}(\pd{z} b_{x} - \pd{x} b_{z})  =  \pd{x}( \pd{y}b_{y} + \pd{z}b_{z}) - (\pd{y}^{2} + \pd{z}^{2})b_{x}.
+\Eeq
+
+The entire system is formulated and solved as a generalized eigenvalue problem with non-constant coefficients 
+\Beq
+\sigma \, M \cdot X + L_{0}(x) \cdot X + L_{1}\cdot \pd{x} X \ = \ 0
+\Eeq
+The system is 10th order because $L_{1}$ has full rank. We therefore impose the 10 \texttt{boundary conditions} 
+\Beq
+v_{x} \ = \ \omega_{y} \ = \ \omega_{z} \ = \ b_{x} \ = \ j_{xx} \ = \ 0 \quad \text{at} \quad x \ = \ \pm d/2
+\Eeq
+We could choose any other set of boundary conditions constructed out of a linearly independent combinations of the legitimate problem variables. We choose impenetrable stress-free and perfectly conducting because it agrees with the purely impenetrable conditions for an ideal calculation.
+
 \section{Reynolds Number and Departure from Ideal MHD}
 \label{sec:reyn}
 
