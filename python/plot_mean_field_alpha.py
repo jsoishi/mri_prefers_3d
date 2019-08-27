@@ -23,7 +23,7 @@ alpha_yz = alpha.mean(axis=0).mean(axis=0)/norm
 
 plt.plot(x[0,0,:], alpha_yz)
 plt.xlabel(r"$x$")
-plt.ylabel(r"$(v_x B_y - v_y B_x)/|u||B|$")
+plt.ylabel(r"$\langle v_x b_y - v_y b_x \rangle/|v||b|$")
 
 ax =plt.gca()
 ax.set_xlim(-np.pi/2,np.pi/2)

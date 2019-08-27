@@ -187,7 +187,7 @@ Thus, our theory predicts axisymmetric modes should dominate the linear dynamics
 
 \begin{figure}[h!]
   \includegraphics[width=\columnwidth]{{mean_field_alpha_run_11_output.h5}.pdf}
-  \caption{Velocity-magnetic field correlations relevant to the mean electromotive force, $(v_x B_y - v_y B_x)/|u| |B|$ for the eigenvectors of the fastest growing mode at $\SSC = 1.02$.}
+  \caption{Velocity-magnetic field correlations relevant to the mean electromotive force for the eigenvectors of the fastest growing mode at $\SSC = 1.02$.}
   \label{fig:correlation}
 \end{figure}
 
@@ -202,11 +202,16 @@ We therefore solve equations~(\ref{eq:mhd}--\ref{eq:divu}) without dissipation a
 The eigenfunctions are indistinguishable from those at finite dissipation, lending additional confidence to our other results.
 The tilted structures of $v_{x}$ and $v_{y}$ as well as $b_{x}$ and $b_{y}$, imply non-trivial Reynolds and Maxwell stresses.
 
-We should expect the generation of a mean electromotive force in the linear regime, \textit{i.e}
+We should expect the generation of a mean electromotive force (EMF) in the linear regime, \textit{i.e}
 $\left<\boldsymbol{v}\times\boldsymbol{b}\right>\sim\,\alpha\!\left<\boldsymbol{B}_{0}\right>$.
 This is significant because of the possibility of direct laminar dynamo action in regions of weak shear at large Reynolds number.
-Figure~\ref{fig:correlation} shows the correlation between $u$ and $b$ as a function of $x$ over the domain for $\SSC = 1.02$, proportional to the mean electromotive force.
-The correlation is non-zero, demonstrating the tendency of the 3D MRI eigenmodes to act as a mean-field dynamo.
+Figure~\ref{fig:correlation} shows the correlation (averaged over $y,\,z$) as a function of $x$ over the domain for $\SSC = 1.02$,
+\begin{equation}
+\text{EMF}\propto\frac{\left<\boldsymbol{\hat{z}}\cdot(\boldsymbol{v}\times\boldsymbol{b})\right>_{y,z}}{\boldsymbol{v}_{\text{rms}}\boldsymbol{b}_{\text{rms}}},
+\end{equation}
+where ``rms'' is denotes the average over the whole domain. 
+The correlation is independent of the arbitrary normalisation of the linear eigenvectors.
+The non-zero correlation shows the tendency for back reaction on the mean magnetic field.
 
 MRI dynamos have been studied in a number of different contexts \citep{2007PhRvL..98y4502R,2011ApJ...740...18O,2015PhRvL.114h5002S}, but all except one focused on turbulent dynamos. 
 The lone exception, \citet{2016MNRAS.462..818B}, numerically found the exponential growth of mean magnetic fields during the linear growth phase of the MRI far from stability.
