@@ -10,7 +10,7 @@ plt.style.use('prl')
 # params
 filebase = 'data/run_{:d}_output.h5'
 runs = [15, 39, 12, 13]
-SSC = [0.64, 1.002001, 1.0201, 2.]
+SSC = [0.64, 1.002001, 1.2, 2.]
 q = 0.75
 index = 0
 
@@ -48,8 +48,10 @@ for i,r in enumerate(runs):
 
     ax.contour(kz_global,ky_global,gamma_r,levels=contour_levels,colors='k')
     ax.contour(kz_global,ky_global,gamma_r,levels=[0.],colors='grey')
-    ax.text(0.05,0.9,r'$S/S_c = {:5.3f}$'.format(SSC[i]), color='w',fontsize=20)
-    ax.text(0.05,0.8,r'$\gamma_{{max}}/|S| = {:5.3f}$'.format(gamma_r.max()), color='w',fontsize=16)
+    if i == 0:
+        ax.text(0.05,0.9,r'a)'.format(SSC[i]), color='w',fontsize=20)
+    ax.text(0.05,0.8,r'$S/S_c = {:5.3f}$'.format(SSC[i]), color='w',fontsize=20)
+    ax.text(0.05,0.73,r'$\gamma_{{max}}/|S| = {:5.3f}$'.format(gamma_r.max()), color='w',fontsize=16)
     ax.plot(max_kz, max_ky, 'ro')
     #ax.colorbar(PCM, label=r'$\gamma$')
     ax.set_xlabel(r'$k_z$')
@@ -95,7 +97,7 @@ asymp_ax.plot(ky,gamma_r[:,index]/q, label='numerical')
 asymp_ax.plot(ky_an, omega/q, label='asymptotic')
 asymp_sub.plot(ky,-(gamma_r[:,index]/q + 1j*gamma_i[:,index]/q)**2, label='numerical')
 asymp_sub.plot(ky_an, omega2/q**2, label='asymptotic')
-
+asymp_ax.text(0.005,0.07, 'b)',fontsize=20)
 #asymp_ax.legend(loc='upper right')
 asymp_ax.text(0.11, 0.058, 'numerical', fontsize=18)
 asymp_ax.text(0.03, 0.07, 'asymptotic', fontsize=18)
@@ -131,14 +133,16 @@ spec_thresh = spectrum[np.abs(spectrum) < thresh]/q
 spec_ax.scatter(spec_thresh[(spec_thresh.real < 0) & (np.abs(spec_thresh.imag) < 1e-8)].real,spec_thresh[(spec_thresh.real < 0) & (np.abs(spec_thresh.imag) < 1e-8)].imag,zorder=10)
 spec_ax.scatter(spec_thresh[spec_thresh.real > 0].real, spec_thresh[spec_thresh.real > 0].imag)
 spec_ax.scatter(spec_thresh[spec_thresh.real <= 0].real, spec_thresh[spec_thresh.real <= 0].imag, color='lightgrey',zorder=3)
-
-spec_ax.set_xlim(-0.25/q,0.1/q)
-spec_ax.set_ylim(-0.8/q,0.8/q)
+spec_ax.text(-0.09,0.8,'c)',fontsize=20)
+spec_ax.set_xlim(-0.1,0.1)
+spec_ax.set_ylim(-1,1)
+spec_ax.set_xticks([-0.08,0,0.08])
 spec_ax.set_xlabel(r"$\gamma/|S|$")
 spec_ax.set_ylabel(r"$\omega/|S|$")
+
 spec_ax.yaxis.tick_right()
 spec_ax.yaxis.set_label_position("right")
-spec_ax.xaxis.set_major_locator(plt.MultipleLocator(0.1))
+
 
 # phi vs SSC
 from plot_phi import calc_phi
@@ -169,7 +173,7 @@ axins.set_xlim(x1, x2)
 axins.set_ylim(y1, y2)
 #axins.set_xticklabels('')
 #axins.set_yticklabels('')
-
+phi_ax.text(-0.3,np.pi/4+0.1,'d)',fontsize=20)
 phi_ax.axhline(0,color='k', alpha=0.4,zorder=1)
 phi_ax.axvspan(-1,0.102,color='k', alpha=0.4)
 phi_ax.set_ylim(-0.05,1.0)
