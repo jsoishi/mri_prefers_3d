@@ -17,6 +17,7 @@ from pathlib import Path
 import numpy as np
 import os
 import h5py
+from eigentools import Eigenproblem
 import dedalus.public as de
 from mpi4py import MPI
 CW = MPI.COMM_WORLD
@@ -156,35 +157,22 @@ if not ideal:
     problem.add_bc("right(jxx) = 0")
 
 # GO
-
-solver = problem.build_solver()
-def ideal_2D(kz):
-    kk, BB = kz*kz, B*B
-    a = kx*kx + kk
-    b = kk*(2*BB*a + f*(f+S))
-    c = (BB*kk**2)*(BB*a + f*S)
-    return np.sqrt( ( - b + np.sqrt(b*b - 4*a*c + 0j) ) / (2*a) )
-
+EP = Eigenproblem(problem,sparse=False)
 t1 = time.time()
-solver.solve_dense(solver.pencils[0], rebuild_coeffs=True)
+gr, idx, freq = EP.growth_rate({})
 t2 = time.time()
-
 logger.info("Solve time: {}".format(t2-t1))
 
-gamma = solver.eigenvalues
-dense_threshold=1
-
-thresh = (np.abs(gamma) < dense_threshold)
-gamma = gamma[thresh]
-solver.eigenvectors = solver.eigenvectors[:,thresh]
+gamma = EP.evalues_good
+eigenvectors = EP.solver.eigenvectors[:,EP.evalues_good_index]
 index = np.argsort(-gamma.real)
 
 logger.info("saving eigenvector with gamma = {}".format(gamma[index[0]]))
 nvars = len(problem_variables)
 eigvec = np.zeros((nvars,Nx),dtype=np.complex128)
-solver.set_state(index[0])
+EP.solver.set_state(index[0])
 for k in range(nvars):
-    eigvec[k,:] = solver.state[problem_variables[k]]['g']
+    eigvec[k,:] = EP.solver.state[problem_variables[k]]['g']
 
 # Save either or both eigenvalues and eigenvectors to a single .h5 file
 # Output file will be the .cfg file name with _output.h5
@@ -194,7 +182,7 @@ if CW.rank == 0:
         tail = '_ideal' + tail
     output_file_name = Path(filename.stem + tail)
     output_file = h5py.File(outbase/output_file_name, 'w')
-    dset_eval = output_file.create_dataset('eigvals',data=solver.eigenvalues)
+    dset_eval = output_file.create_dataset('eigvals',data=gamma)
     dset_eval.attrs.create("ky", ky)
     dset_eval.attrs.create("kz", kz)
     dset_eval.attrs.create("R", R)
