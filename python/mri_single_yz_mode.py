@@ -8,6 +8,7 @@ Usage:
 
 Options:
     --ideal    Use Ideal MHD
+    --hardwall Use experimental boundary conditions
 """
 
 from docopt import docopt
@@ -28,6 +29,7 @@ args = docopt(__doc__)
 ky = float(args['<ky>'])
 kz = float(args['<kz>'])
 ideal = args['--ideal']
+hardwall = args['--hardwall']
 filename = Path(args['<config_file>'])
 outbase = Path("data")
 
@@ -146,15 +148,30 @@ else:
 problem.add_bc("left(vx)   = 0")
 problem.add_bc("right(vx)  = 0")
 if not ideal:
-    problem.add_bc("left(bx)   = 0")
-    problem.add_bc("left(ωy)   = 0")
-    problem.add_bc("left(ωz)   = 0")
-    problem.add_bc("left(jxx)  = 0")
+    if hardwall:
+        problem.add_bc("left(vy)   = 0")
+        problem.add_bc("left(vz)   = 0")
+        problem.add_bc("left(jx)   = 0")
+        problem.add_bc("left(jx)   = 0")
+        problem.add_bc("left(dy(by)+dz(bz) + sqrt(ky**2 + kz**2)*bx) = 0")
+        
+        problem.add_bc("right(vy)   = 0")
+        problem.add_bc("right(vz)   = 0")
+        problem.add_bc("right(jx)   = 0")
+        problem.add_bc("right(dy(by)+dz(bz) - sqrt(ky**2 + kz**2)*bx) = 0")
+    
+    else:
+        problem.add_bc("left(ωy)   = 0")
+        problem.add_bc("left(ωz)   = 0")
+        problem.add_bc("left(bx)   = 0")
+        problem.add_bc("left(jxx)  = 0")
 
-    problem.add_bc("right(bx)  = 0")
-    problem.add_bc("right(ωy)  = 0")
-    problem.add_bc("right(ωz)  = 0")
-    problem.add_bc("right(jxx) = 0")
+        problem.add_bc("right(ωy)  = 0")
+        problem.add_bc("right(ωz)  = 0")
+        problem.add_bc("right(bx)  = 0")
+        problem.add_bc("right(jxx) = 0")
+
+
 
 # GO
 EP = Eigenproblem(problem,sparse=False)
