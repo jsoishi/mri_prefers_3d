@@ -167,11 +167,74 @@ The entire system is formulated and solved as a generalized eigenvalue problem w
 \Beq
 \sigma \, M \cdot X + L_{0}(x) \cdot X + L_{1}\cdot \pd{x} X \ = \ 0.
 \Eeq
-The problem is ``generalized" because $M$ is not full rank. The system is 10th order because $L_{1}$ is full rank. We therefore impose the 10 \texttt{boundary conditions} 
+The problem is ``generalized" because $M$ is not full rank. The system is 10th order because $L_{1}$ is full rank,
+\Beq
+\text{det}(L_{1}) \ = \ -\eta ^2 \nu ^2 \left(k_y^2+k_z^2\right).
+\Eeq
+We therefore impose the 10 \texttt{boundary conditions} 
 \Beq
 v_{x} \ = \ \omega_{y} \ = \ \omega_{z} \ = \ b_{x} \ = \ j_{xx} \ = \ 0 \quad \text{at} \quad x \ = \ \pm d/2
 \Eeq
 We could choose any other set of boundary conditions constructed out of a linearly independent combinations of the legitimate problem variables. We choose impenetrable stress-free and perfectly conducting because it conforms with the purely impenetrable conditions for an ideal calculation, thus minimizing the arbitrary influence of boundary layers.
+
+%\Beq
+%M = \left[
+%\begin{array}{cccccccccc}
+% 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+% 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+% 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+% 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+% 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+% 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+% 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+% 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+% 0 & 0 & 0 & 0 & 0 & 0 & 0 & -i k_z & i k_y & 0 \\
+% 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+%\end{array}
+%\right]
+%\Eeq
+%\Beq
+%L_{0}(x) = \left[
+%\begin{array}{cccccccccc}
+% 0 & 0 & i k_y & i k_z & 0 & 0 & 0 & 0 & 0 & 0 \\
+% 0 & i S x k_y & -f & 0 & -i \nu  k_z & i \nu  k_y
+%   & -i B k_z & 0 & 0 & 0 \\
+% i k_y & f+S & \nu  k_z^2+i S x k_y & -\nu  k_y
+%   k_z & 0 & 0 & 0 & -i B k_z & 0 & 0 \\
+% i k_z & 0 & -\nu  k_y k_z & k_y \left(\nu  k_y+i
+%   S x\right) & 0 & 0 & 0 & 0 & -i B k_z & 0 \\
+% 0 & -i k_z & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+% 0 & i k_y & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+% 0 & 0 & 0 & 0 & 0 & 0 & 0 & i k_y & i k_z & 0 \\
+% 0 & -i B k_z & 0 & 0 & 0 & 0 & \eta 
+%   \left(k_y^2+k_z^2\right)+i S x k_y & 0 & 0 & 0
+%   \\
+% 0 & 0 & -B k_z^2 & B k_y k_z & 0 & 0 & i S k_z &
+%   k_y k_z \left(S x-i \eta  k_y\right)-i \eta 
+%   k_z^3 & i k_y \left(i S x k_y+\eta  k_y^2+\eta 
+%   k_z^2\right) & 0 \\
+% 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+%\end{array}
+%\right]
+%\Eeq
+%
+%\Beq
+%L_{1} = \left[
+%\begin{array}{cccccccccc}
+% 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+% 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+% 0 & 0 & 0 & 0 & 0 & -\nu  & 0 & 0 & 0 & 0 \\
+% 0 & 0 & 0 & 0 & \nu  & 0 & 0 & 0 & 0 & 0 \\
+% 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+% 0 & 0 & -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+% 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+% 0 & 0 & 0 & 0 & 0 & 0 & 0 & i \eta  k_y & i \eta 
+%   k_z & 0 \\
+% 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -\eta  \\
+% 0 & 0 & 0 & 0 & 0 & 0 & 0 & i k_z & -i k_y & 0 \\
+%\end{array}
+%\right]
+%\Eeq
 
 \section{Reynolds Number and Departure from Ideal MHD}
 \label{sec:reyn}
