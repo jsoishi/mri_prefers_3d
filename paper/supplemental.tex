@@ -197,45 +197,47 @@ Define the domain as $ - d/2 < x < d/2$. Being in the rotating frame means the s
 \Eeq
 The full linear ideal equations are:
 \Beq\label{u-eq}
-\pd{t} u + S x \pd{y} u - f v + \pd{x} p - B_{0} \pd{z} b_{x} &=& 0\\
-\pd{t} v + S x \pd{y} v + (f+S) u + \pd{y} p - B_{0} \pd{z} b_{y} &=& 0\label{v-eq} \\
-\pd{t} w + S x \pd{y} w + \pd{z} p - B_{0} \pd{z} b_{z} &=& 0 \\
-\pd{x} u + \pd{y} v + \pd{z} w  &=& 0\\
-\pd{t} b_{x} + S x \pd{y} b_{x} - B_{0} \pd{z} u &=& 0\\
-\pd{t} b_{y} + S x \pd{y} b_{y} - B_{0} \pd{z} v - S b_{x}  &=& 0\\
-\pd{t} b_{z} + S x \pd{y} b_{z} - B_{0} \pd{z} w &=& 0 \label{bz-eq}
+\pd{t} v_{x} + S x \pd{y} v_{x} - f v_{y} + \pd{x} p - B_{0} \pd{z} b_{x} &=& 0\\
+\pd{t} v_{y} + S x \pd{y} v_{y} + (f+S) v_{x} + \pd{y} p - B_{0} \pd{z} b_{y} &=& 0\label{v-eq} \\
+\pd{t} v_{z} + S x \pd{y} v_{z} + \pd{z} p - B_{0} \pd{z} b_{z} &=& 0 \\
+\pd{x} v_{x} + \pd{y} v_{y} + \pd{z} v_{z}  &=& 0\\
+\pd{t} b_{x} + S x \pd{y} b_{x} - B_{0} \pd{z} v_{x} &=& 0\\
+\pd{t} b_{y} + S x \pd{y} b_{y} - B_{0} \pd{z} v_{y} - S b_{x}  &=& 0\\
+\pd{t} b_{z} + S x \pd{y} b_{z} - B_{0} \pd{z} v_{z} &=& 0 \label{bz-eq}
 \Eeq
+The divergence-free condition for the velocity implies the same for the magnetic field.
+The system is 2nd order because $\pd{x}$ only appears in two places.
 All variables take the form
 \Beq
-g = \hat{G}(x) e^{ i ( \omega t + k z + \ell y ) } 
+p = \hat{P}(x) e^{ i ( \omega t + k z + \ell y ) } 
 \Eeq
 We solve the ideal eigenvalue problem in \textit{Dedalus} in the above formulation. To make analytical progress, define the frequency ``parameters'' 
 \Beq
 \omega_{S}(x) \ \equiv \ \omega + S x \ell, \quad \omega_{A}  \ \equiv \ B_{0} k.
 \Eeq
-We can use equations (\ref{v-eq}--\ref{bz-eq}) to find all amplitudes in terms of $\hat{U}(x)$ and $\hat{U}'(x)$. 
+We can use equations (\ref{v-eq}--\ref{bz-eq}) to find all amplitudes in terms of $\hat{V}_{x}(x)$ and $\hat{V}_{x}'(x)$. 
 \Beq
-\hat{V}(x) &=& \frac{i \left(\ell 
-   \hat{U}'(x) + k^{2} \frac{ \left((f+S) \omega
+\hat{V}_{y}(x) &=& \frac{i \left(\ell 
+   \hat{V}_{x}'(x) + k^{2} \frac{ \left((f+S) \omega
    _S^2-S \omega _A^2\right)}{\omega _S
-   \left(\omega _S^2-\omega _A^2\right)} \hat{U}(x)\right)}{k^2+\ell ^2} \\
-\hat{W}(x) &=& \frac{i k \left(\hat{U}'(x)- \frac{ \left((f+S) \omega
+   \left(\omega _S^2-\omega _A^2\right)} \hat{V}_{x}(x)\right)}{k^2+\ell ^2} \\
+\hat{V}_{z}(x) &=& \frac{i k \left(\hat{V}_{x}'(x)- \frac{ \left((f+S) \omega
    _S^2-S \omega _A^2\right)}{\omega _S
    \left(\omega _S^2-\omega _A^2\right)}  \ell 
-   \hat{U}(x)\right)}{k^2+\ell ^2} \\
+   \hat{V}_{x}(x)\right)}{k^2+\ell ^2} \\
    \hat{P}(x) &=& \frac{i \left(\omega _A^2-\omega _S^2\right)
-   \left(\hat{U}'(x) -  \ell \frac{ \left((f+S) \omega
+   \left(\hat{V}_{x}'(x) -  \ell \frac{ \left((f+S) \omega
    _S^2-S \omega _A^2\right)}{\omega _S
    \left(\omega _S^2-\omega _A^2\right)}
-   \hat{U}(x)\right)}{\left(k^2+\ell ^2\right)
+   \hat{V}_{x}(x)\right)}{\left(k^2+\ell ^2\right)
    \omega _S} \\
-   \hat{B}_{x}(x) &=& \frac{\omega _A \hat{U}(x)}{\omega _S} \\
-   \hat{B}_{y}(x) &=&\frac{\omega _A \hat{V}(x)}{\omega _S} -\frac{i S \omega _A \hat{U}(x)}{\omega _S^2} \\
-   \hat{B}_{z}(x) &=& \frac{\omega _A \hat{W}(x)}{\omega _S}
+   \hat{B}_{x}(x) &=& \frac{\omega _A \hat{V}_{x}(x)}{\omega _S} \\
+   \hat{B}_{y}(x) &=&\frac{\omega _A \hat{V}_{y}(x)}{\omega _S} -\frac{i S \omega _A \hat{V}_{x}(x)}{\omega _S^2} \\
+   \hat{B}_{z}(x) &=& \frac{\omega _A \hat{V}_{z}(x)}{\omega _S}
    \Eeq
-Substitute everything into equation (\ref{u-eq}) to get a second-order equation for $\hat{U}(x)$ of the general form 
+Substitute everything into equation (\ref{u-eq}) to get a second-order equation for $\hat{V}_{x}(x)$ of the general form 
 \Beq
-\alpha(x) \hat{U}''(x) + \beta(x) \hat{U}'(x) + \gamma(x) \hat{U}(x) \ = \ 0
+\alpha(x) \hat{V}_{x}''(x) + \beta(x) \hat{V}_{x}'(x) + \gamma(x) \hat{V}_{x}(x) \ = \ 0
 \Eeq
 where
 \Beq
@@ -250,7 +252,7 @@ where
 
 We can eliminate the first-order term via
 \Beq
-\hat{U}(x) \ = \ \chi(x) \psi(x) \quad \text{where} \quad \chi'(x) \  = \ -\frac{\beta (x) \chi (x)}{2 \alpha (x)}
+\hat{V}_{x}(x) \ = \ \chi(x) \psi(x) \quad \text{where} \quad \chi'(x) \  = \ -\frac{\beta (x) \chi (x)}{2 \alpha (x)}
 \Eeq
 \Beq
 -\psi''(x) + \Phi(x) \psi(x) \ = \ 0 \label{Schr-eq}
