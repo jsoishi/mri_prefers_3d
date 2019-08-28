@@ -152,7 +152,6 @@ if not ideal:
         problem.add_bc("left(vy)   = 0")
         problem.add_bc("left(vz)   = 0")
         problem.add_bc("left(jx)   = 0")
-        problem.add_bc("left(jx)   = 0")
         problem.add_bc("left(dy(by)+dz(bz) + sqrt(ky**2 + kz**2)*bx) = 0")
         
         problem.add_bc("right(vy)   = 0")
