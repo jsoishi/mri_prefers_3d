@@ -124,15 +124,15 @@ We formulate the system in terms of the 10 problem \texttt{variables}
 \Beq
 X \ = \ \left[\,p,v_{x},v_{y},v_{z},\omega_{y},\omega_{z},b_{x},b_{y},b_{z},j_{xx}\,\right]^{\top} \nonumber
 \Eeq
-We use sting-based \texttt{substitutions} to expedite the input of the full the system of equations: 
+We use string-based \texttt{substitutions} to expedite the input of the full the system of equations: 
 \Beq
 ``\omega_{x}" &=& ``\pd{y} v_{z} - \pd{z} v_{y}" \nonumber \\
 ``j_{x}" &=& ``\pd{y} b_{z} - \pd{z} b_{y}" \nonumber \\
 ``j_{y}" &=& ``\pd{z} b_{x} - \pd{x} b_{z}" \nonumber \\
 ``j_{z}" &=& ``\pd{x} b_{y} - \pd{y} b_{x}" \nonumber 
 \Eeq
-The expression for $\omega_{x},\,j_{x},\,j_{y},\,j_{z}$ are not legitimate variables that \textit{Dedalus} solves for. 
-They are only short-hand aliases that mean literally the same thing as the expression on the right-hand side of the definition, which are defined strictly in terms of legitimate problem variables. 
+The expression for $\omega_{x},\,j_{x},\,j_{y},\,j_{z}$ are not variables that \textit{Dedalus} solves for. 
+They are short-hand aliases that are directly replaced by the expressions on the right-hand side of the definition, which are themselves defined strictly in terms of problem variables. 
 
 We also define the following operator substitutions (with general argument $A$)
 \Beq
@@ -177,7 +177,7 @@ We therefore impose the 10 \texttt{boundary conditions}
 \Beq
 v_{x} \ = \ \omega_{y} \ = \ \omega_{z} \ = \ b_{x} \ = \ j_{xx} \ = \ 0 \quad \text{at} \quad x \ = \ \pm d/2
 \Eeq
-We could choose any other set of boundary conditions constructed out of a linearly independent combinations of the legitimate problem variables. 
+We could choose any other set of boundary conditions constructed out of a linearly independent combinations of the problem variables. 
 We choose impenetrable stress-free and perfectly conducting because it conforms with the purely impenetrable conditions for an ideal calculation, thus minimizing the arbitrary influence of boundary layers.
 
 Respectively $M,\,L_{0}(x),\,L_{1}$:
@@ -256,7 +256,7 @@ This suggests that our results at $\Reyn = 10^5$ are reasonably close to ideal M
 
 \section{Asymptotic Calculation}
 \label{sec:asymp}
-Here, we outline the asymptotic calculation for the leading order correction to the 2D growth rates in when accouting for three dimensional effects via finite $k_y$.
+Here, we outline the asymptotic calculation for the leading order correction to the 2D growth rates in when accounting for three dimensional effects via finite $k_y$.
 Define the domain as $ - d/2 < x < d/2$. Being in the rotating frame means the shear has no net
 \Beq
 \int_{-d/2}^{d/2} V_{0,y}(x) \text{d} x  \ = \ 0 \quad \implies  \quad V_{0,y}(x) \ = \ S\, x
@@ -374,3 +374,8 @@ This implies
 
 
 \end{document}
+
+%  LocalWords:  Magnetorotational MHD EigenValueProblem Dedalus th nd
+%  LocalWords:  parallelized Chebyshev cccccccccccccc Rossby det Sx
+%  LocalWords:  cccccccccc diffusivities analytical Schr dinger
+%  LocalWords:  perturbatively rescale solvability
