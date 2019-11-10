@@ -50,7 +50,7 @@
 \newcommand{\ave}[1]{\big<#1\big>}
 
 \renewcommand{\l}{\ell}
-\renewcommand{\ell}{\ensuremath{k_y}}
+\renewcommand{\ell}{\ensuremath{k_{y}}}
 \newcommand{\txt}[1]{\quad \text{#1} \quad }
 
 
@@ -141,8 +141,7 @@ The spatial domain is a doubly periodic channel in $y,\,z$ with width $-d/2\le{x
 The boundary conditions are impenetrable stress-free and perfectly conducting; $v_{x}=\omega_{y}=\omega_{z}=b_{x}=\partial_{x}j_{x}=0$ at $x=\pm{d/2}$. 
 
 The main input parameters are the Coriolis parameter, $f=2 \Omega$; the background shear rate, $S=dV_{y}/dx<0$; and the vertical magnetic field $B_{0}$ (in Alfv\'{e}n units $\mu_{0}\rho_{0}=1$).
-Accretion-disk modelling usually considers the Rossby number $\Ro=-S/f<1$; $\Ro\ge1$ corresponds to purely hydrodynamical Rayleigh unstable shear
-\footnote{The astrophysical disk community often uses $q = 2\Ro$ to represent the same effective quantity; Keplerian profiles have $q = 3/2$ in this case.}.
+Accretion-disk modelling usually considers the Rossby number $\Ro=-S/f<1$; The regime $\Ro\ge1$ corresponds to purely hydrodynamical Rayleigh unstable shear.
 Unless otherwise stated $\Ro=3/4$ (Keplerian).
 The solution also depends on the viscosity $\nu$ and resistivity $\eta$; in our non-dimensionalization, these are equivalent to the inverse Reynolds and Magnetic Reynolds numbers, respectively.
 That is, $\Reyn = 1/\nu$ and $\Reym = 1/\eta$.
@@ -169,15 +168,15 @@ For each $(k_{y},k_{z})$ pair, we solve the eigenvalue problem using $n_{x}=128$
 For both the ideal and non-ideal MHD equations, we solve the eigenvalue problem in the $x$ direction using the \texttt{EigenValueProblem} solver in \emph{Dedalus} for a grid of $N_y \times N_z$ modes in the $y$ and $z$ directions.
 For most of our runs, we use a targeted, sparse eigenvalue solver to find the 15 modes closest to a guess for the maximum growth rate.
 In run 3, we have confirmed that dense solvers retrieve identical results.
-For nearly ideal runs, we use the ideal 2D growth rate as input for the smallest $k_y > 0$ mode at each $k_z$ and then use the output from each previous $k_y$ as an input guess for the next mode.
-For those runs that have significant $\eta$, we instead use a dense solve for the $k_y = 0$ modes and then step forward in $k_y$ at each $k_z$ as before.
-Our solver is embarrassingly parallelised over the $k_z$ modes.
-For the spectrum in figure 1 of the main text, we used a dense eigenvalue solver at $(k_y^{max},k_z^{max})$ for $\SSC= 1.002$.
+For nearly ideal runs, we use the ideal 2D growth rate as input for the smallest $k_{y} > 0$ mode at each $k_{z}$ and then use the output from each previous $k_{y}$ as an input guess for the next mode.
+For those runs that have significant $\eta$, we instead use a dense solve for the $k_{y} = 0$ modes and then step forward in $k_{y}$ at each $k_{z}$ as before.
+Our solver is embarrassingly parallelised over the $k_{z}$ modes.
+For the spectrum in figure 1 of the main text, we used a dense eigenvalue solver at $(k_{y}^{max},k_{z}^{max})$ for $\SSC= 1.002$.
 
 In order to ensure our results are converged, we have repeated runs at $n_x=256$ Chebyshev modes as well as doubling the number of modes in $y$ and $z$.
 
 \begin{tabular}{cccccccccccccc}
-\textbf{Run} & \textbf{$\SSC$} & \textbf{$\nu$} & \textbf{$\eta$} & \textbf{$\Ro$} & \textbf{$N_x$} & \textbf{$N_{k_y}$} & \textbf{$N_{k_z}$} & \textbf{Sparse/Dense}& \\
+\textbf{Run} & \textbf{$\SSC$} & \textbf{$\nu$} & \textbf{$\eta$} & \textbf{$\Ro$} & \textbf{$N_x$} & \textbf{$N_{k_{y}}$} & \textbf{$N_{k_{z}}$} & \textbf{Sparse/Dense}& \\
 1  &   1.02 & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & sparse & resolution study\\
 2  &   1.02 & $10^{-5}$ & $10^{-5}$ & 0.75 & 256 & 200 & 200 & sparse & \\
 3  &   1.02 & $10^{-5}$ & $10^{-5}$ & 0.75 & 128 & 200 & 200 & dense  & \\
@@ -217,7 +216,7 @@ In order to ensure our results are converged, we have repeated runs at $n_x=256$
   a) growth rates $\gamma$ over a grid of $k_{y}$ and $k_{z}$ for four values of supercriticality $\SSC$. 
   The black contours are equally spaced between zero and the maximum growth rate.
   The grey contour highlights $\gamma=0$; the red dots indicate the fastest growing mode. 
-Two dimensional modes occur at $k_y = 0$ on the bottom of each figure.
+Two dimensional modes occur at $k_{y} = 0$ on the bottom of each figure.
   At $\SSC=0.640$, there are no two dimensional modes. 
   b) Growth rate vs $k_{y}$ for $k_{z}=0.259$ at $\SSC=1.002$ (highlighted by the blue line in a). 
   The orange line gives the asymptotic result from equation~(\ref{eq:asymp}) and the blue line are the numerical results. 
@@ -241,15 +240,15 @@ First, the MRI contains a substantial ``Goldilocks regime'' with possible direct
 Second, our results accord with well-established results for accretion disks that expect two-dimensional primary modes.
 Figure~\ref{fig:growth_rate}a shows the growth rates for four values of $\SSC$. 
 At $\SSC=1.002$, the maximum growth rate ($\gamma_{\max}/|S|=0.093$) happens at $(k_{y},k_{z})\simeq(0.263,0.447)$.
-Two-dimensional instability occurs for modes with finite growth rates at $k_y = 0$ along the bottom of the figure.
+Two-dimensional instability occurs for modes with finite growth rates at $k_{y} = 0$ along the bottom of the figure.
 In all cases in figure~\ref{fig:growth_rate}a, the maximum growth rate does not occur along this line, indicating the dominance of three-dimensional modes.
-The first panel of figure~\ref{fig:growth_rate}a shows $\SSC=0.640$, which contains only three-dimensional instability: the zero growth rate contour (highlighted in grey) does not intercept the $k_z$-axis.
+The first panel of figure~\ref{fig:growth_rate}a shows $\SSC=0.640$, which contains only three-dimensional instability: the zero growth rate contour (highlighted in grey) does not intercept the $k_{z}$-axis.
 
 \subsection{Asymptotic Calculation}
 \label{sec:asymp}
 The MRI's preference for three-dimensional modes can be predicted analytically.
 We analyse equations~(\ref{eq:mhd}-\ref{eq:divu}) asymptotically close to $S_{c}$, and compute the leading-order correction to the growth rate from three-dimensional effects assuming $\SSC=1+\epsilon^{2}R$, $k_{z}\sim\mathcal{O}(\epsilon)$, $\sigma\sim{k_{y}}\sim\mathcal{O}(\epsilon^{2})$. 
-Here, we outline the asymptotic calculation for the leading order correction to the 2D growth rates when accounting for three dimensional effects via finite $k_y$.
+Here, we outline the asymptotic calculation for the leading order correction to the 2D growth rates when accounting for three dimensional effects via finite $k_{y}$.
 Being in the rotating frame means the shear has no net
 \Beq
 \int_{-d/2}^{d/2} V_{0,y}(x) \text{d} x  \ = \ 0 \quad \implies  \quad V_{0,y}(x) \ = \ S\, x
@@ -268,7 +267,7 @@ The divergence-free condition for the velocity implies the same for the magnetic
 The system is 2nd order in $x$ because $\pd{x}$ only appears in two places.
 All variables take the form
 \Beq
-p = \hat{P}(x) e^{ i ( \omega t + k_z z + \ell y ) },
+p = \hat{P}(x) e^{ i ( \omega t + k_{z} z + \ell y ) },
 \Eeq
 where we note that for this section, we use the complex frequency $\omega = -i \sigma$ for the time dependence.
 
@@ -279,55 +278,51 @@ To make analytical progress, define the frequency ``parameters''
 We can use equations (\ref{v-eq}--\ref{bz-eq}) to find all amplitudes in terms of $\hat{V}_{x}(x)$ and $\hat{V}_{x}'(x)$. 
 \Beq
 \hat{V}_{y}(x) &=& \frac{i \left(\ell 
-   \hat{V}_{x}'(x) + k_z^2 \frac{ \left((f+S) \omega
-   _S^2-S \omega _A^2\right)}{\omega _S
-   \left(\omega _S^2-\omega _A^2\right)} \hat{V}_{x}(x)\right)}{k_z^2+\ell ^2} \\
-\hat{V}_{z}(x) &=& \frac{i k_z \left(\hat{V}_{x}'(x)- \frac{ \left((f+S) \omega
-   _S^2-S \omega _A^2\right)}{\omega _S
-   \left(\omega _S^2-\omega _A^2\right)}  \ell 
-   \hat{V}_{x}(x)\right)}{k_z^2+\ell ^2} \\
-   \hat{P}(x) &=& \frac{i \left(\omega _A^2-\omega _S^2\right)
+   \hat{V}_{x}'(x) + k_{z}^2 \frac{ \left((f+S) \omega
+   _S^2-S \omega _A^2\right)}{\omega_{S}
+   \left(\omega_{S}^2-\omega _A^2\right)} \hat{V}_{x}(x)\right)}{k_{z}^2+\ell ^2} \\
+\hat{V}_{z}(x) &=& \frac{i k_{z} \left(\hat{V}_{x}'(x)- \frac{ \left((f+S) \omega
+   _S^2-S \omega _A^2\right)}{\omega_{S}
+   \left(\omega_{S}^2-\omega _A^2\right)}  \ell 
+   \hat{V}_{x}(x)\right)}{k_{z}^2+\ell ^2} \\
+   \hat{P}(x) &=& \frac{i \left(\omega _A^2-\omega_{S}^2\right)
    \left(\hat{V}_{x}'(x) -  \ell \frac{ \left((f+S) \omega
-   _S^2-S \omega _A^2\right)}{\omega _S
-   \left(\omega _S^2-\omega _A^2\right)}
-   \hat{V}_{x}(x)\right)}{\left(k_z^2+\ell ^2\right)
-   \omega _S} \\
-   \hat{B}_{x}(x) &=& \frac{\omega _A \hat{V}_{x}(x)}{\omega _S} \\
-   \hat{B}_{y}(x) &=&\frac{\omega _A \hat{V}_{y}(x)}{\omega _S} -\frac{i S \omega _A \hat{V}_{x}(x)}{\omega _S^2} \\
-   \hat{B}_{z}(x) &=& \frac{\omega _A \hat{V}_{z}(x)}{\omega _S}
+   _S^2-S \omega _A^2\right)}{\omega_{S}
+   \left(\omega_{S}^2-\omega _A^2\right)}
+   \hat{V}_{x}(x)\right)}{\left(k_{z}^2+\ell ^2\right)
+   \omega_{S}} \\
+   \hat{B}_{x}(x) &=& \frac{\omega _A \hat{V}_{x}(x)}{\omega_{S}} \\
+   \hat{B}_{y}(x) &=&\frac{\omega _A \hat{V}_{y}(x)}{\omega_{S}} -\frac{i S \omega _A \hat{V}_{x}(x)}{\omega_{S}^2} \\
+   \hat{B}_{z}(x) &=& \frac{\omega _A \hat{V}_{z}(x)}{\omega_{S}}
    \Eeq
 One can substitute everything into equation (\ref{u-eq}) to get a second-order equation for $\hat{V}_{x}(x)$ of the general form 
 \Beq
-\alpha(x) \hat{V}_{x}''(x) + \beta(x) \hat{V}_{x}'(x) + \gamma(x) \hat{V}_{x}(x) \ = \ 0,
+\alpha(x) \hat{V}_{x}''(x) + 2\beta(x) \hat{V}_{x}'(x) + \gamma(x) \hat{V}_{x}(x) \ = \ 0,
 \Eeq
 where
 \Beq
-\alpha(x) &=& \omega _S^2-\omega _A^2 \\ 
-   \beta(x) &=& \frac{2 S \ell  \omega _A^2}{\omega _S} \\
-   \gamma(x) &=& \omega _A^2 \left(\frac{f^2 k_z^2}{\omega
-   _S^2-\omega _A^2}-\frac{2 S^2 \ell
-   ^2}{\omega _S^2}+k_z^2+\ell ^2\right)+f k_z^2
-   (f+S)-\left(k_z^2+\ell ^2\right) \omega _S^2.
+\alpha(x) &=& \omega_{S}^2-\omega _A^2 \\ 
+   \beta(x) &=& \frac{ S \ell  \omega _A^2}{\omega_{S}} \\
+   \gamma(x) &=& f k_{z}^2 \left(\frac{f \omega_{S}^{2}}{\omega_{S}^{2}-\omega
+   _A^2}+S\right)-\frac{2 S^2 \omega _A^2 k_{y}^2}{\omega_{S}^{2}}-\left(k_{z}^2+\ell^2 \right) (\omega_{S}^2 - \omega_{A}^{2}).
 \Eeq
 
 We can eliminate the first-order term via
 \Beq
-\hat{V}_{x}(x) \ = \ \chi(x) \psi(x) \quad \text{where} \quad \chi'(x) \  = \ -\frac{\beta (x) \chi (x)}{2 \alpha (x)}
+\hat{V}_{x}(x) \ = \ \chi(x)\, \psi(x) \quad \text{where} \quad \frac{\chi'(x)}{\chi(x)} \  = \ -\frac{\beta (x)}{\alpha (x)}
 \Eeq
 \Beq
 -\psi''(x) + \Phi(x) \psi(x) \ = \ 0 \label{Schr-eq}
 \Eeq
 \Beq
-\Phi(x)  \ = \ \frac{-2 \beta (x) \alpha '(x)+2 \alpha (x)
-   \left(\beta '(x)-2 \gamma (x)\right)+\beta
-   (x)^2}{4 \alpha (x)^2}.
+\Phi(x)  \ = \ \frac{d}{dx}\! \left( \! \frac{\beta(x)}{\alpha(x)} \! \right) + \left( \! \frac{\beta(x)}{\alpha(x)} \! \right)^{\!2} - \frac{\gamma(x)}{\alpha(x)} .
 \Eeq
 Finally, by putting everything together 
 \Beq
-\Phi(x) \ = \ \frac{S  \left(f k_z^2-S \ell
-   ^2\right) \omega _A^2 -f k_z^2 (f+S) \omega
+\Phi(x) \ = \ \frac{S  \left(f k_{z}^2-S \ell
+   ^2\right) \omega _A^2 -f k_{z}^2 (f+S) \omega
    _S^2}{\left(\omega _A^2-\omega
-   _S^2\right){}^2} + k_z^2 + \ell^{2}.
+   _S^2\right){}^2} + k_{z}^2 + \ell^{2}.
 \Eeq
 If $\omega_{S}=-i \gamma+Sx\ell$, with $Re(\gamma)\neq0$, the denominator of $\Phi(x)$ cannot vanish. 
 We want to solve the Schr\"{o}dinger-type equation~(\ref{Schr-eq}) with the boundary conditions 
@@ -336,7 +331,7 @@ We want to solve the Schr\"{o}dinger-type equation~(\ref{Schr-eq}) with the boun
 \Eeq
 To do so, we solve perturbatively near the critical values for the 2D instability. We rescale each parameter in terms of a bookkeeping parameter, $\eps$.
 \Beq
-S  \ \to \  - \frac{\pi ^2 B_{0}^2}{d^2 f} ( 1 + \eps^{2} R), \quad \omega \ \to \ \eps^{2} \omega , \quad k_z \ \to \ \eps k_z, \quad \ell \ \to \ \eps^{2} \ell,
+S  \ \to \  - \frac{\pi ^2 B_{0}^2}{d^2 f} ( 1 + \eps^{2} R), \quad \omega \ \to \ \eps^{2} \omega , \quad k_{z} \ \to \ \eps k_{z}, \quad \ell \ \to \ \eps^{2} \ell,
 \Eeq 
 keeping in mind
 \Beq
@@ -344,9 +339,9 @@ keeping in mind
 \Eeq
 Expanding equation~(\ref{Schr-eq}) to $\mathcal{O}(\eps^{2})$, we arrive at
 \Beq
-\Phi(x) \ = \ \frac{\pi^{2}}{d^{2}} + \eps^{2} \frac{B_{0}^2 f^2 \Ro \left(k_z^2 R+\Ro
-   \ell ^2\right) - B_{0}^4 k^4 +f^2 (\Ro+1) (\omega -f \Ro x \ell
-   )^2  }{B_{0}^4 k_z^2}.
+\Phi(x) \ = \ \frac{\pi^{2}}{d^{2}} + \eps^{2} \frac{B_{0}^2 f^2 \Ro\, \left(k_{z}^2 R+\Ro
+   \ell ^2\right) - B_{0}^4 k^4 +f^2 (\Ro+1) (\omega -f \Ro\, x \ell
+   )^2  }{B_{0}^4 k_{z}^2}.
 \Eeq
 The leading order balance is
 \Beq
@@ -366,7 +361,7 @@ This yields our final result
 \end{equation}
 where
 \begin{equation}
-\Upsilon=\frac{\left(\pi^{2}+6\right) \Ro+\pi^{2}-6}{12}\approx1.31\quad\text{for}\quad{\Ro}=\frac{3}{4},
+\Upsilon \ = \  \frac{\left(\pi^{2}+6\right) \Ro+\pi^{2}-6}{12} \ \approx \ 1.31\quad\text{for}\quad{\Ro} \ = \ 0.75,
 \end{equation}
 and we have switched back to $\sigma$ for time dependence.
 The first term in equation~(\ref{eq:asymp}) results from the two-dimensional calculation.
@@ -485,6 +480,7 @@ There are several important future directions this work suggests.
 First, the Sun possesses two internal shear layers with inwardly increasing shear, the high-latitude tachocline, and the near-surface shear layer (NSSL). 
 Past work has already pointed out the possibility of the small-scale MRI in the Sun using local analysis \cite{2007ApJ...667L.207P,2011MNRAS.411L..26M,2014ApJ...787...21K}.
 The NSSL, in particular, may also host slower MRI-driven dynamics, despite containing small-scale convection.
+The NSSL contains the strongest shear anywhere within the solar interior;  $\Omega(r) \ \propto \ 1/r$, impliying $\Ro = 1/2$.
 It is therefore crucial to further elucidate the nonlinear saturation of the 3D MRI, along with its robustness to convection.
 An important uncertainty with regard to stellar applications is the fact that $\SSC$ depends on the square of the magnetic field strength, a quantity that is rather uncertain.
 Second, our low-$\Prm$ results suggest that three-dimensional MRI modes may be the easiest to excite in liquid metal experiments.
