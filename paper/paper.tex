@@ -141,7 +141,8 @@ The spatial domain is a doubly periodic channel in $y,\,z$ with width $-d/2\le{x
 The boundary conditions are impenetrable stress-free and perfectly conducting; $v_{x}=\omega_{y}=\omega_{z}=b_{x}=\partial_{x}j_{x}=0$ at $x=\pm{d/2}$. 
 
 The main input parameters are the Coriolis parameter, $f=2 \Omega$; the background shear rate, $S=dV_{y}/dx<0$; and the vertical magnetic field $B_{0}$ (in Alfv\'{e}n units $\mu_{0}\rho_{0}=1$).
-Accretion-disk modelling usually considers the Rossby number $\Ro=-S/f<1$; The regime $\Ro\ge1$ corresponds to purely hydrodynamical Rayleigh unstable shear.
+Accretion-disk modelling usually considers the Rossby number $\Ro=-S/f<1$. 
+The regime $\Ro\ge1$ corresponds to purely hydrodynamical Rayleigh unstable shear.
 Unless otherwise stated $\Ro=3/4$ (Keplerian).
 The solution also depends on the viscosity $\nu$ and resistivity $\eta$; in our non-dimensionalization, these are equivalent to the inverse Reynolds and Magnetic Reynolds numbers, respectively.
 That is, $\Reyn = 1/\nu$ and $\Reym = 1/\eta$.
@@ -297,39 +298,42 @@ We can use equations (\ref{v-eq}--\ref{bz-eq}) to find all amplitudes in terms o
    \Eeq
 One can substitute everything into equation (\ref{u-eq}) to get a second-order equation for $\hat{V}_{x}(x)$ of the general form 
 \Beq
-\alpha(x) \hat{V}_{x}''(x) + 2\beta(x) \hat{V}_{x}'(x) + \gamma(x) \hat{V}_{x}(x) \ = \ 0,
+ \hat{V}_{x}''(x) + 2 C_{1}(x) \hat{V}_{x}'(x) + C_{0}(x) \hat{V}_{x}(x) \ = \ 0,
 \Eeq
 where
 \Beq
-\alpha(x) &=& \omega_{S}^2-\omega _A^2 \\ 
-   \beta(x) &=& \frac{ S \ell  \omega _A^2}{\omega_{S}} \\
-   \gamma(x) &=& f k_{z}^2 \left(\frac{f \omega_{S}^{2}}{\omega_{S}^{2}-\omega
-   _A^2}+S\right)-\frac{2 S^2 \omega _A^2 k_{y}^2}{\omega_{S}^{2}}-\left(k_{z}^2+\ell^2 \right) (\omega_{S}^2 - \omega_{A}^{2}).
+   C_{1}(x) &=& \frac{ S \ell  \omega _A^2}{\omega_{S} ( \omega_{S}^2-\omega _A^2 )} \\
+   C_{0}(x) &=&  \frac{\frac{f^{2} k_{z}^2 \omega_{S}^{2}}{\omega_{S}^{2}-\omega
+   _A^2}+f  S  k_{z}^2 -\frac{2 S^2  k_{y}^2 \omega _A^2}{\omega_{S}^{2}}}{\omega_{S}^2-\omega _A^2}  -\left(k_{z}^2+\ell^2 \right) .
 \Eeq
 
 We can eliminate the first-order term via
 \Beq
-\hat{V}_{x}(x) \ = \ \chi(x)\, \psi(x) \quad \text{where} \quad \frac{\chi'(x)}{\chi(x)} \  = \ -\frac{\beta (x)}{\alpha (x)}
+\hat{V}_{x}(x) \ = \ \chi(x)\, \psi(x) \quad \text{where} \quad \frac{\chi'(x)}{\chi(x)} \  = \ - C_{1} (x)
 \Eeq
 \Beq
 -\psi''(x) + \Phi(x) \psi(x) \ = \ 0 \label{Schr-eq}
 \Eeq
 \Beq
-\Phi(x)  \ = \ \frac{d}{dx}\! \left( \! \frac{\beta(x)}{\alpha(x)} \! \right) + \left( \! \frac{\beta(x)}{\alpha(x)} \! \right)^{\!2} - \frac{\gamma(x)}{\alpha(x)} .
+\Phi(x)  \ = \ C_{1}'(x) + C_{1} (x)^{2} - C_{0}(x).
 \Eeq
 Finally, by putting everything together 
 \Beq
 \Phi(x) \ = \ \frac{S  \left(f k_{z}^2-S \ell
    ^2\right) \omega _A^2 -f k_{z}^2 (f+S) \omega
    _S^2}{\left(\omega _A^2-\omega
-   _S^2\right){}^2} + k_{z}^2 + \ell^{2}.
+   _S^2\right)^2} + k_{z}^2 + \ell^{2}.
 \Eeq
-If $\omega_{S}=-i \gamma+Sx\ell$, with $Re(\gamma)\neq0$, the denominator of $\Phi(x)$ cannot vanish. 
+The denominator of $\Phi(x)$ cannot vanish if $\omega_{S}=-i \gamma+Sx\ell$, with $Re(\gamma)\neq0$. 
 We want to solve the Schr\"{o}dinger-type equation~(\ref{Schr-eq}) with the boundary conditions 
 \Beq
 \psi(x=\pm d/2) = 0.
 \Eeq
-To do so, we solve perturbatively near the critical values for the 2D instability. We rescale each parameter in terms of a bookkeeping parameter, $\eps$.
+The boundary conditions for $\psi(x)$ are the same as $V_{x}(x)$ because 
+\Beq
+\chi(x) \ \propto \ \frac{\omega_{S}(x)}{\sqrt{\omega_{S}(x)^2-\omega _A^2}} \  \ne \ 0 \quad \text{for} \quad \gamma \ \ne \ 0.
+\Eeq
+We solve perturbatively near the critical values for the 2D instability. We rescale each parameter in terms of a bookkeeping parameter, $\eps$.
 \Beq
 S  \ \to \  - \frac{\pi ^2 B_{0}^2}{d^2 f} ( 1 + \eps^{2} R), \quad \omega \ \to \ \eps^{2} \omega , \quad k_{z} \ \to \ \eps k_{z}, \quad \ell \ \to \ \eps^{2} \ell,
 \Eeq 
@@ -339,8 +343,7 @@ keeping in mind
 \Eeq
 Expanding equation~(\ref{Schr-eq}) to $\mathcal{O}(\eps^{2})$, we arrive at
 \Beq
-\Phi(x) \ = \ \frac{\pi^{2}}{d^{2}} + \eps^{2} \frac{B_{0}^2 f^2 \Ro\, \left(k_{z}^2 R+\Ro
-   \ell ^2\right) - B_{0}^4 k^4 +f^2 (\Ro+1) (\omega -f \Ro\, x \ell
+\Phi(x) \ = \ \frac{\pi^{2}}{d^{2}} + \eps^{2} \frac{B_{0}^2 f^2 \Ro\, \left(k_{z}^2 R+\Ro\, \ell ^2\right) - B_{0}^4 k^4 +f^2 (\Ro+1) (\omega -f\, \Ro\, x\, \ell
    )^2  }{B_{0}^4 k_{z}^2}.
 \Eeq
 The leading order balance is
