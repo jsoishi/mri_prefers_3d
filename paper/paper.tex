@@ -49,8 +49,6 @@
 
 \newcommand{\ave}[1]{\big<#1\big>}
 
-\renewcommand{\l}{\ell}
-\renewcommand{\ell}{\ensuremath{k_{y}}}
 \newcommand{\txt}[1]{\quad \text{#1} \quad }
 
 
@@ -268,29 +266,29 @@ The divergence-free condition for the velocity implies the same for the magnetic
 The system is 2nd order in $x$ because $\pd{x}$ only appears in two places.
 All variables take the form
 \Beq
-p = \hat{P}(x) e^{ i ( \omega t + k_{z} z + \ell y ) },
+p = \hat{P}(x) e^{ i ( \omega t + k_{z} z + k_{y} y ) },
 \Eeq
 where we note that for this section, we use the complex frequency $\omega = -i \sigma$ for the time dependence.
 
 To make analytical progress, define the frequency ``parameters'' 
 \Beq
-\omega_{S}(x) \ \equiv \ \omega + S x \ell, \quad \omega_{A}  \ \equiv \ B_{0} k.
+\omega_{S}(x) \ \equiv \ \omega + S x k_{y}, \quad \omega_{A}  \ \equiv \ B_{0} k.
 \Eeq
 We can use equations (\ref{v-eq}--\ref{bz-eq}) to find all amplitudes in terms of $\hat{V}_{x}(x)$ and $\hat{V}_{x}'(x)$. 
 \Beq
-\hat{V}_{y}(x) &=& \frac{i \left(\ell 
+\hat{V}_{y}(x) &=& \frac{i \left(k_{y} 
    \hat{V}_{x}'(x) + k_{z}^2 \frac{ \left((f+S) \omega
    _S^2-S \omega _A^2\right)}{\omega_{S}
-   \left(\omega_{S}^2-\omega _A^2\right)} \hat{V}_{x}(x)\right)}{k_{z}^2+\ell ^2} \\
+   \left(\omega_{S}^2-\omega _A^2\right)} \hat{V}_{x}(x)\right)}{k_{z}^2+k_{y} ^2} \\
 \hat{V}_{z}(x) &=& \frac{i k_{z} \left(\hat{V}_{x}'(x)- \frac{ \left((f+S) \omega
    _S^2-S \omega _A^2\right)}{\omega_{S}
-   \left(\omega_{S}^2-\omega _A^2\right)}  \ell 
-   \hat{V}_{x}(x)\right)}{k_{z}^2+\ell ^2} \\
+   \left(\omega_{S}^2-\omega _A^2\right)}  k_{y} 
+   \hat{V}_{x}(x)\right)}{k_{z}^2+k_{y} ^2} \\
    \hat{P}(x) &=& \frac{i \left(\omega _A^2-\omega_{S}^2\right)
-   \left(\hat{V}_{x}'(x) -  \ell \frac{ \left((f+S) \omega
+   \left(\hat{V}_{x}'(x) -  k_{y} \frac{ \left((f+S) \omega
    _S^2-S \omega _A^2\right)}{\omega_{S}
    \left(\omega_{S}^2-\omega _A^2\right)}
-   \hat{V}_{x}(x)\right)}{\left(k_{z}^2+\ell ^2\right)
+   \hat{V}_{x}(x)\right)}{\left(k_{z}^2+k_{y} ^2\right)
    \omega_{S}} \\
    \hat{B}_{x}(x) &=& \frac{\omega _A \hat{V}_{x}(x)}{\omega_{S}} \\
    \hat{B}_{y}(x) &=&\frac{\omega _A \hat{V}_{y}(x)}{\omega_{S}} -\frac{i S \omega _A \hat{V}_{x}(x)}{\omega_{S}^2} \\
@@ -302,29 +300,26 @@ One can substitute everything into equation (\ref{u-eq}) to get a second-order e
 \Eeq
 where
 \Beq
-   C_{1}(x) &=& \frac{ S \ell  \omega _A^2}{\omega_{S} ( \omega_{S}^2-\omega _A^2 )} \\
-   C_{0}(x) &=&  \frac{\frac{f^{2} k_{z}^2 \omega_{S}^{2}}{\omega_{S}^{2}-\omega
-   _A^2}+f  S  k_{z}^2 -\frac{2 S^2  k_{y}^2 \omega _A^2}{\omega_{S}^{2}}}{\omega_{S}^2-\omega _A^2}  -\left(k_{z}^2+\ell^2 \right) .
+   C_{1}(x) \ = \  \frac{ S k_{y}  \omega _A^2}{\omega_{S} ( \omega_{S}^2-\omega _A^2 )} , \quad C_{0}(x) \ = \   \frac{\frac{f^{2} k_{z}^2 \omega_{S}^{2}}{\omega_{S}^{2}-\omega
+   _A^2}+f  S  k_{z}^2 -\frac{2 S^2  k_{y}^2 \omega _A^2}{\omega_{S}^{2}}}{\omega_{S}^2-\omega _A^2}  -\left(k_{y}^{2} + k_{z}^2 \right) .
 \Eeq
-
 We can eliminate the first-order term via
 \Beq
-\hat{V}_{x}(x) \ = \ \chi(x)\, \psi(x) \quad \text{where} \quad \frac{\chi'(x)}{\chi(x)} \  = \ - C_{1} (x)
+\hat{V}_{x}(x) \ = \ \chi(x)\, \psi(x) \quad \text{where} \quad \frac{\chi'(x)}{\chi(x)} \  = \ - C_{1} (x).
 \Eeq
+Therefore 
 \Beq
--\psi''(x) + \Phi(x) \psi(x) \ = \ 0 \label{Schr-eq}
-\Eeq
-\Beq
+-\psi''(x) + \Phi(x) \psi(x) \ = \ 0 \label{Schr-eq}, \quad \text{where}\quad
 \Phi(x)  \ = \ C_{1}'(x) + C_{1} (x)^{2} - C_{0}(x).
 \Eeq
 Finally, by putting everything together 
 \Beq
-\Phi(x) \ = \ \frac{S  \left(f k_{z}^2-S \ell
+\Phi(x) \ = \ \frac{S  \left(f k_{z}^2-S k_{y}
    ^2\right) \omega _A^2 -f k_{z}^2 (f+S) \omega
    _S^2}{\left(\omega _A^2-\omega
-   _S^2\right)^2} + k_{z}^2 + \ell^{2}.
+   _S^2\right)^2} + k_{y}^{2} + k_{z}^2 .
 \Eeq
-The denominator of $\Phi(x)$ cannot vanish if $\omega_{S}=-i \gamma+Sx\ell$, with $Re(\gamma)\neq0$. 
+The denominator of $\Phi(x)$ cannot vanish if $\omega_{S}=-i \gamma+Sxk_{y}$, with $Re(\gamma)\neq0$. 
 We want to solve the Schr\"{o}dinger-type equation~(\ref{Schr-eq}) with the boundary conditions 
 \Beq
 \psi(x=\pm d/2) = 0.
@@ -335,7 +330,7 @@ The boundary conditions for $\psi(x)$ are the same as $V_{x}(x)$ because
 \Eeq
 We solve perturbatively near the critical values for the 2D instability. We rescale each parameter in terms of a bookkeeping parameter, $\eps$.
 \Beq
-S  \ \to \  - \frac{\pi ^2 B_{0}^2}{d^2 f} ( 1 + \eps^{2} R), \quad \omega \ \to \ \eps^{2} \omega , \quad k_{z} \ \to \ \eps k_{z}, \quad \ell \ \to \ \eps^{2} \ell,
+S  \ \to \  - \frac{\pi ^2 B_{0}^2}{d^2 f} ( 1 + \eps^{2} R), \quad \omega \ \to \ \eps^{2} \omega , \quad k_{z} \ \to \ \eps k_{z}, \quad k_{y} \ \to \ \eps^{2} k_{y},
 \Eeq 
 keeping in mind
 \Beq
@@ -343,7 +338,7 @@ keeping in mind
 \Eeq
 Expanding equation~(\ref{Schr-eq}) to $\mathcal{O}(\eps^{2})$, we arrive at
 \Beq
-\Phi(x) \ = \ \frac{\pi^{2}}{d^{2}} + \eps^{2} \frac{B_{0}^2 f^2 \Ro\, \left(k_{z}^2 R+\Ro\, \ell ^2\right) - B_{0}^4 k^4 +f^2 (\Ro+1) (\omega -f\, \Ro\, x\, \ell
+\Phi(x) \ = \ \frac{\pi^{2}}{d^{2}} + \eps^{2} \frac{B_{0}^2 f^2 \Ro\, \left(k_{z}^2 R+\Ro\, k_{y} ^2\right) - B_{0}^4 k^4 +f^2 (\Ro+1) (\omega -f\, \Ro\, x\, k_{y}
    )^2  }{B_{0}^4 k_{z}^2}.
 \Eeq
 The leading order balance is
