@@ -387,13 +387,13 @@ We analyse the growth rate as a function of  $k_{y},k_{z}$ and $\SSC$ near $k_{y
 We use the same asymptotic techniques as before to obtain each progressive correction. We solve the leading order by virtue that all non-constant coefficients vanish for 2D modes. The following dispersion relations determine the maximum growth rate and the corresponding wavenumber,
 \Beq
 \mathfrak{D}_{0}(k_{z}) &=& \frac{f k_z^2 \left(B_0^2 S k_z^2+\gamma _0^2 (f+S)\right)}{\left(B_0^2 k_z^2+\gamma _0^2\right){}^2}+\frac{\pi ^2}{d^2}+k_z^2 \ = \ 0 \\
-\frac{\mathfrak{D}_{0}'(k_{z})}{2k_{z}} &=& \frac{\gamma _0^2 f \left(B_0^2 k^2 (S-f)+\gamma _0^2 (f+S)\right)}{\left(B_0^2 k^2+\gamma _0^2\right)^3}+1 \ = \ 0.
+\frac{\mathfrak{D}_{0}'(k_{z})}{2k_{z}} &=& \frac{\gamma _0^2 f \left(B_0^2 k_{z}^2 (S-f)+\gamma _0^2 (f+S)\right)}{\left(B_0^2 k_{z}^2+\gamma _0^2\right)^3}+1 \ = \ 0.
 \Eeq
-We can transform the these relations into a polynomials in terms of non-dimensional variables,
+We transform these relations into polynomials in terms of non-dimensional variables,
 \Beq
 \label{dispersion}
- \Ro^2 \s^2 \y^2+   (2 \Ro + \s - \Ro \, \s + \Ro^2 \s \y)\s  \y \x + (1 - \s + 2 \Ro\, \s \, \y) \x^2 +\x^3 \ = \ 0 \\ 
-(2 \Ro + \s - \Ro \, \s + \Ro^2 \s \y) \s  \y + 2(1 - \s + 2 \Ro\, \s \, \y) \x +3\x^2 \ = \ 0
+\y^2 \s^2 \Ro^2 +  \y \, \s  \, ( \y \, \s \, \Ro^2 + (2  - \s)  \, \Ro + \s ) \x + ( 2 \y \,\s \,  \Ro - \s  + 1 ) \x^2 +\x^3 &=& 0 \\ 
+\y \, \s  \, (\y \, \s \, \Ro^2 + (2  - \s)  \, \Ro + \s    )  + 2 ( 2 \y \,\s \,  \Ro - \s  + 1 ) \x +3\x^2 &=& 0,
 \label{critical-dispersion}
 \Eeq
 where
@@ -407,16 +407,16 @@ We find the higher-order $\gamma_{n}(\s,k_{z})$ coefficients by applying order-b
 \Beq
 \gamma(\s,k_{y},k_{z}) \ = \ \gamma_{0}(\s,\x) + \gamma_{2}(\s,\x) k_{y}^{2} \ + \ \ldots 
 \Eeq
-This is the same structure as the asymptotic calculation in the previous section. Now effectively $\Upsilon \propto \gamma_{2}$. The case with dominant 2D modes corresponds to $\gamma_{2}(\s,\x)=0$. Finding this condition is a formidable calculation, which produces the polynomial expression  
+This is the same structure as the asymptotic calculation in the previous section. Now effectively $\Upsilon \propto \gamma_{2}$. The case with dominant 2D modes corresponds to $\gamma_{2}(\s,\x)=0$. Finding this condition is a formidable calculation, which produces the degree-6 polynomial expression  
 \Beq
-\Ro^6 \s^6 \y^6 + \Ro^4 \s^5 \y^4 (3 \xi  (\Ro-1) \s+\Ro (6 \y-1)) \x + \nonumber \\  
-\frac{\Ro^2 \s^4 \y^3}{12}  \left(12 \Ro^2 (15 \y-4)-3 (4 \xi -3)
-   (\Ro-1)^2 \s^2+24 \xi  (4 \Ro+1) \Ro \, \s\right)\x^{2} + \nonumber \\ 
-\frac{\Ro\, \s^3 \y^2}{6}  \left(-3 (4 \xi -3) \left(\Ro^2-1\right) \s^2+12
-   \Ro^2 (10 \y-3)+36 \xi  (\Ro+2) \Ro\, \s\right)\x^{3} +\nonumber \\ 
-   \left(\Ro^2 \s^2 \y (15 \y-4)-\frac{1}{4} (4 \xi -3) (\Ro+1)^2 \s^4 \y+6 \xi 
-   \Ro\, \s^3 \y\right) \x^{4} +\nonumber \\ 
-   -\s (\xi  \Ro \, \s-6 \Ro \, \y+\Ro+\xi  \s) \x^{5} +  
+& \y^{6} \s^6\Ro^6  \ + \
+ \y^4 \s^5 \Ro^4   \left( (3 \xi  \s+6 \y-1)\Ro -3 \xi  \s \right) \, \x +
+  \nonumber \\  
+& \frac{ \y^3 \s^4 \Ro^2  }{4}  \left( (60 \y -4 \xi  (\s-8) \s-16 + 3 \s^2)\Ro^{2} + 2 \s (4 \xi  (\s+1)-3 \s) \Ro - (4 \xi -3 ) \s^2 \right) \, \x^{2} + \nonumber \\ 
+& \frac{\y^2  \s^3 \Ro }{2}  \left( (3 \s^2-4 \xi  (\s-3) \s+40 \y-12) \Ro^{2} + 24 \xi \s \Ro + (4 \xi -3) s^2 \right) \, \x^{3} + 
+\nonumber \\ 
+&  \frac{\y \,\s^2}{4} \left( (60 \y -(4 \xi -3) \s^2 - 16)\Ro^{2} + 2\s(3 \s-4 \xi  (\s-3)) \Ro - (4 \xi -3) \s^2 \right)\, \x^{4} +\nonumber \\ 
+ &  \s\, (( 6 \y -\xi  \s-1) \Ro- \xi  \s) \, \x^{5}  \ + \   
    \x^{6} \ = \ 0.
    \label{2D-condition}
 \Eeq
@@ -431,11 +431,12 @@ Given $\Ro$, we solve \eq{dispersion}, \eq{critical-dispersion}, and  \eq{2D-con
 \begin{center}
 \begin{tabular}{cccccccccccccc}
 \textbf{$\Ro$} & \textbf{$k_{z} d/\pi$}  & \textbf{$\gamma_{\max}/|S_{2D}|$}  &  \textbf{$S_{2D}/S_{c}$} \\
-                   1.00  & 0.708276 & 0.209120 &   2.13892 \\ 
+                   1.00  & 0.689610 & 0.208727 &   2.09694 \\ 
                    0.75 & 0.682819 & 0.214895 & 2.05136 \\
-                   0.50 & 0.651764 & 0.220102 & 1.95000 \\
-                   0.25 & 0.615396 & 0.224939 & 1.83881 \\
-                   0.10 & 0.593345 & 0.229047 & 1.77526
+                   0.50 & 0.676062 & 0.221309 & 2.00061 \\
+                   0.25 & 0.671528 & 0.228551 & 1.94963 \\
+                   0.10 & 0.673164 & 0.234376 & 1.92692 \\
+                   0.00 & 0.462324 & 0.240212 & 1.92465
 \end{tabular}
 \end{center}
 The numbers for $\Ro = 0.75$ match the numerical results shown in Figure~\ref{fig:growth_rate} excellently. 
