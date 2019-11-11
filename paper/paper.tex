@@ -379,12 +379,17 @@ We reject spurious eigenvalues by using \texttt{eigentools} \footnote{\protect\u
 
 We can understand the transition from three- to two-dimensional instability semi-analytically. We do this by conducting a similar analysis as the above asymptotic calculation, only close to the fastest growing 2D modes. We can look for values for $\SSC$ where the analogous value of $\Upsilon(\SSC) = 0$. 
 
-The calculation becomes very messy. We therefore only sketch the details, and report the main results.
 We analyse the growth rate as a function of  $k_{y},k_{z}$ and $\SSC$ near $k_{y} \approx0$.  We therefore expand the whole problem in a power-series ansatz
 \Beq
-\gamma(\SSC,k_{y},k_{z}) \ = \   \sum_{n\ge 0} \gamma_{n}(\SSC,k_{z}) k_{y}^{n}. 
+\gamma(\SSC,k_{y},k_{z}) \ = \   \sum_{n\ge 0} \gamma_{n}(\SSC,k_{z}) k_{y}^{n}, \quad \psi(x) \ = \ \sum_{n\ge 0} \psi_{n}(x) k_{y}^{n}
 \Eeq
-We use the same asymptotic techniques as before to obtain each progressive correction. We solve the leading order by virtue that all non-constant coefficients vanish for 2D modes. The following dispersion relations determine the maximum growth rate and the corresponding wavenumber,
+We use the same asymptotic techniques as before to obtain each progressive correction. 
+\Beq
+\psi_{0}'' - \Phi_{0} \psi_{0} & = & 0 \label{eq:psi0} \\
+\psi_{1}'' - \Phi_{0} \psi_{1} & = & \Phi_{1} \psi_{0} \label{eq:psi1} \\
+\psi_{2}'' - \Phi_{0} \psi_{2} & = & \Phi_{2} \psi_{0} + \Phi_{1} \psi_{1} \label{eq:psi2}  
+\Eeq
+We solve the leading order by virtue that all non-constant coefficients vanish for 2D modes. The leading-order eigenfunction is $\psi_{0} = \cos(\pi x / d)$, just as before. The following dispersion relations determine the maximum growth rate and the corresponding wavenumber,
 \Beq
 \mathfrak{D}_{0}(k_{z}) &=& \frac{f k_z^2 \left(B_0^2 S k_z^2+\gamma _0^2 (f+S)\right)}{\left(B_0^2 k_z^2+\gamma _0^2\right){}^2}+\frac{\pi ^2}{d^2}+k_z^2 \ = \ 0 \\
 \frac{\mathfrak{D}_{0}'(k_{z})}{2k_{z}} &=& \frac{\gamma _0^2 f \left(B_0^2 k_{z}^2 (S-f)+\gamma _0^2 (f+S)\right)}{\left(B_0^2 k_{z}^2+\gamma _0^2\right)^3}+1 \ = \ 0.
@@ -403,11 +408,19 @@ where
 These are directly related to the parameters reported on figure~\ref{fig:growth_rate}.
 The two polynomials are straightforward to solve numerically for $\x,\y$ given $\s, \Ro$. However we  still want to find critical values for $\s$, where the fastest growing modes are two dimensional. From now on, the calculation becomes sufficiently complicated that we only outline the methodology. 
 
-We find the higher-order $\gamma_{n}(\s,k_{z})$ coefficients by applying order-by-order solvability conditions. We first find that $\gamma_{1}(\s, k_{z}) = 0$ identically. This renders the first-order correction problem solvable, which means solving it and moving on the the 2nd-order corrections. The structure of the growth rate is therefore 
+We find the higher-order $\gamma_{n}(\s,k_{z})$ coefficients by applying order-by-order solvability conditions. We first find that $\gamma_{1}(\s, k_{z}) = 0$ identically. This renders the first-order correction \eq{eq:psi1} solvable. The 1st-order eigenfunction takes the form 
+\Beq
+\psi_{1}(x) \propto F(\pi x/d) \quad \text{where} \quad  F(\vartheta) = \vartheta (\vartheta \sin (\vartheta)+\cos (\vartheta))-\frac{\pi^{2}}{4} \sin (\vartheta).
+\Eeq
+The structure of the growth rate is therefore 
 \Beq
 \gamma(\s,k_{y},k_{z}) \ = \ \gamma_{0}(\s,\x) + \gamma_{2}(\s,\x) k_{y}^{2} \ + \ \ldots 
 \Eeq
-This is the same structure as the asymptotic calculation in the previous section. Now effectively $\Upsilon \propto \gamma_{2}$. The case with dominant 2D modes corresponds to $\gamma_{2}(\s,\x)=0$. Finding this condition is a formidable calculation, which produces the degree-6 polynomial expression  
+This is the same structure as the asymptotic calculation in the previous section. Now effectively $\Upsilon \propto \gamma_{2}$. The case with dominant 2D modes corresponds to $\gamma_{2}(\s,\x)=0$.  The final result derives from the 2nd-order solvability condition 
+\Beq
+\int_{-d/2}^{d/2} ( \Phi_{2} \psi_{0} + \Phi_{1} \psi_{1} ) \psi_{0} \dd{x}  \ = \ 0,
+\Eeq
+which produces the degree-6 polynomial expression  
 \Beq
 & \y^{6} \s^6\Ro^6  \ + \
  \y^4 \s^5 \Ro^4   \left( (3 \xi  \s+6 \y-1)\Ro -3 \xi  \s \right) \, \x +
