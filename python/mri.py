@@ -106,7 +106,8 @@ problem.meta[:]['x']['dirichlet'] = True
 # Local parameters
 
 problem.parameters['S'] = S
-problem.parameters['f'] = f
+problem.parameters['fz'] = f*np.cos(lat)
+problem.parameters['fx'] = f*np.sin(lat)
 problem.parameters['B'] = B
 
 problem.parameters['ky'] = 0
@@ -132,9 +133,9 @@ problem.substitutions['jz'] = "dx(by) - dy(bx)"
 
 problem.add_equation("dx(vx) + dy(vy) + dz(vz) = 0")
 
-problem.add_equation("Dt(vx)  -     f*vy + dx(p) - B*dz(bx) + ν*(dy(ωz) - dz(ωy)) = 0")
-problem.add_equation("Dt(vy)  + (f+S)*vx + dy(p) - B*dz(by) + ν*(dz(ωx) - dx(ωz)) = 0")
-problem.add_equation("Dt(vz)             + dz(p) - B*dz(bz) + ν*(dx(ωy) - dy(ωx)) = 0")
+problem.add_equation("Dt(vx)  -     fz*vy         + dx(p) - B*dz(bx) + ν*(dy(ωz) - dz(ωy)) = 0")
+problem.add_equation("Dt(vy)  + (fz+S)*vx - fx*vz + dy(p) - B*dz(by) + ν*(dz(ωx) - dx(ωz)) = 0")
+problem.add_equation("Dt(vz)              + fx*vy + dz(p) - B*dz(bz) + ν*(dx(ωy) - dy(ωx)) = 0")
 
 problem.add_equation("ωy - dz(vx) + dx(vz) = 0")
 problem.add_equation("ωz - dx(vy) + dy(vx) = 0")
