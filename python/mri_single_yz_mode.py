@@ -4,11 +4,11 @@ The magnetorotational instability prefers three dimensions.
 Single mode calculation. Returns spectrum.
 
 Usage:
-    mri_single_yz_mode.py [--ideal] <config_file> <ky> <kz>
+    mri_single_yz_mode.py  [--ideal --hardwall] <config_file> <ky> <kz>
 
 Options:
-    --ideal    Use Ideal MHD
-    --hardwall Use experimental boundary conditions
+    --ideal     Use Ideal MHD
+    --hardwall  Use experimental boundary conditions
 """
 
 from docopt import docopt
@@ -45,9 +45,11 @@ try:
 except:
     dense = False
 if dense:
+    sparse = False
     logger.info("Using dense solver.")
     dense_threshold = config.getfloat('solver','dense_threshold')
 else:
+    sparse = True
     logger.info("Using sparse solver.")
 
 Nx = config.getint('parameters','Nx')
@@ -173,66 +175,20 @@ if not ideal:
 
 
 # GO
-EP = Eigenproblem(problem,sparse=False)
+EP = Eigenproblem(problem)
 t1 = time.time()
-gr, idx, freq = EP.growth_rate({})
+gr, idx, freq = EP.growth_rate(sparse=sparse)
 t2 = time.time()
 logger.info("Solve time: {}".format(t2-t1))
+logger.info("growth rate = {}, freq = {}".format(gr,freq))
 
-gamma = EP.evalues_good
-eigenvectors = EP.solver.eigenvectors[:,EP.evalues_good_index]
-index = np.argsort(-gamma.real)
+#     save_vtk = False
+#     if save_vtk:
+#         vtkfile = filename.stem + '.vtk'
+#         from pyevtk.hl import gridToVTK 
+#         pointData = {'p':p.copy(), 'u':u.copy(), 'v':v.copy(), 'w':w.copy(),
+#                      'Bx':Bx.copy(), 'By':By.copy(), 'Bz':Bz.copy()}
+#         print("p flags", pointData['p'].flags)
 
-logger.info("saving eigenvector with gamma = {}".format(gamma[index[0]]))
-nvars = len(problem_variables)
-eigvec = np.zeros((nvars,Nx),dtype=np.complex128)
-EP.solver.set_state(index[0])
-for k in range(nvars):
-    eigvec[k,:] = EP.solver.state[problem_variables[k]]['g']
-
-# Save either or both eigenvalues and eigenvectors to a single .h5 file
-# Output file will be the .cfg file name with _output.h5
-if CW.rank == 0:
-    tail = '_single_mode.h5'
-    if ideal:
-        tail = '_ideal' + tail
-    output_file_name = Path(filename.stem + tail)
-    output_file = h5py.File(outbase/output_file_name, 'w')
-    dset_eval = output_file.create_dataset('eigvals',data=gamma)
-    dset_eval.attrs.create("ky", ky)
-    dset_eval.attrs.create("kz", kz)
-    dset_eval.attrs.create("R", R)
-    dset_eval.attrs.create("B", B)
-    dset_eval.attrs.create("q", q)
-    dset_eval.attrs.create("d", Lx)
-    dset_evec = output_file.create_dataset('eigvecs',data=eigvec)
-    dset_evec.attrs.create('x',x_basis.grid())
-
-    n_yz = 128
-    Ly = 2*np.pi/ky
-    Lz = 2*np.pi/kz
-    x = x_basis.grid()
-    y = np.linspace(0, Ly, n_yz, endpoint=False)
-    z = np.linspace(0, Lz, n_yz, endpoint=False)
-
-    zz,yy,xx = np.meshgrid(z,y,x,indexing='ij')
-    yz_dep = np.exp(1j*(ky*yy +kz*zz))
-
-    p = (eigvec[0,:]*yz_dep).real
-    u = (eigvec[1,:]*yz_dep).real
-    v = (eigvec[2,:]*yz_dep).real
-    w = (eigvec[3,:]*yz_dep).real
-    Bx =(eigvec[6,:]*yz_dep).real
-    By =(eigvec[7,:]*yz_dep).real
-    Bz =(eigvec[8,:]*yz_dep).real
-
-    save_vtk = False
-    if save_vtk:
-        vtkfile = filename.stem + '.vtk'
-        from pyevtk.hl import gridToVTK 
-        pointData = {'p':p.copy(), 'u':u.copy(), 'v':v.copy(), 'w':w.copy(),
-                     'Bx':Bx.copy(), 'By':By.copy(), 'Bz':Bz.copy()}
-        print("p flags", pointData['p'].flags)
-
-        gridToVTK(vtkfile, xx, yy, zz, pointData=pointData)
+#         gridToVTK(vtkfile, xx, yy, zz, pointData=pointData)
 
